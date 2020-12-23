@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace MyRecipes3.Data.Migrations
+namespace RecipeLewis.Data.Migrations
 {
     public partial class InitialCreate2 : Migration
     {

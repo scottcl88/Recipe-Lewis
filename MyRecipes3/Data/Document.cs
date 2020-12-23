@@ -4,12 +4,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Recipe
+    public class Document
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int RecipeID { get; set; }
-        public DateTime Date { get; set; }
-        public string Title { get; set; }
+        public int DocumentID { get; set; }
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }

@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using MyRecipes3.Data;
+using RecipeLewis.Data;
 
-namespace MyRecipes3.Data.Migrations
+namespace RecipeLewis.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     [Migration("20201223182217_InitialCreate2")]
