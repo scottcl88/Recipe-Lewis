@@ -1,0 +1,43 @@
+﻿@page "/fetchdata"
+
+@using MyRecipes3.Data
+@inject RecipeService RecipeService
+
+<h1>Recipes</h1>
+
+<p>This component demonstrates fetching data from a service.</p>
+
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.Title</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@code {
+    private List<Recipe> forecasts;
+
+    protected override async Task OnInitializedAsync()
+    {
+      //forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
+      forecasts = await RecipeService.GetForecastsAsync();
+    }
+}
