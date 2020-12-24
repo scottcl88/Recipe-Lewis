@@ -3,29 +3,91 @@
 @using RecipeLewis.Data
 @inherits RecipesBase
 
-<h1>Recipes</h1>
 
-@if (Recipes == null)
-{
-  <p><em>Loading...</em></p>
-}
-else
-{
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Title</th>
-      </tr>
-    </thead>
-    <tbody>
-      @foreach (var recipe in Recipes)
-      {
-        <tr>
-          <td>@recipe.Date.ToShortDateString()</td>
-          <td>@recipe.Title</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+@using IModel = Models.RecipeModel
+
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      <h1>Boarding</h1>
+    </div>
+  </div>
+  @if (ShowEditData)
+  {
+  <div class="row justify-content-start mt-1">
+    <div class="col-12">
+      <EditForm Model="Model" OnValidSubmit="HandleValidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+        <div class="row justify-content-start mt-1">
+          <div class="col-6">
+            <div class="form-group">
+              <label>Start</label>
+              <RadzenDatePicker Style="display: block;" @bind-Value="Model.Date" HourFormat="12" DateFormat="MM/dd/yyyy h:mm tt" ShowTime="true" />
+            </div>
+            <div class="form-group">
+              <label>End</label>
+              <RadzenTextBox class="col-6" Style="display: block;" @bind-Value="Model.Title" />
+            </div>
+          </div>
+        </div>
+        @if (Model.RecipeID > 0)
+          {
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Update</button>
+        <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2" @onclick="CancelEditData">Cancel</button>
+        <button type="button" class="btn btn-danger mr-3 mt-2 mb-2 offset-3" @onclick="ConfirmDelete">Delete</button>
+          }
+          else
+          {
+        <button type="submit" class="btn btn-primary mt-2 mb-2">Add</button>
+        <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="CancelEditData">Cancel</button>
+          }
+
+      </EditForm>
+    </div>
+  </div>
+  }
+  @if (!ShowEditData)
+  {
+  <div class="row justify-content-start">
+    <div class="col-auto">
+      <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData">ADD DATA</button>
+    </div>
+  </div>
+  <hr />
+  <div class="row justify-content-start mt-1">
+    <div class="col-12">
+      <h3>Data</h3>
+      <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="4"
+                  AllowSorting="true" Data="@Recipes" TItem="IModel">
+        <Columns>
+          <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="125px" Property="BoardingId.Value" Title="Id">
+            <FooterTemplate>
+              Total Visits: <b>@Recipes.Count()</b>
+            </FooterTemplate>
+          </RadzenGridColumn>
+          <RadzenGridColumn TItem="IModel" Property="Date" Title="Start Date" />
+          <RadzenGridColumn TItem="IModel" Property="Title" Width="125px" Title="Title" />
+          <RadzenGridColumn TItem="IModel" Width="75px">
+            <Template Context="data">
+              <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => EditData(e, data)">Edit</button>
+            </Template>
+          </RadzenGridColumn>
+        </Columns>
+      </RadzenGrid>
+    </div>
+  </div>
+  }
+</div>
+@code {
+  async Task ConfirmDelete() => await DialogService.OpenAsync("Are you sure?", ds =>
+  @<div>
+    <p Style="margin-bottom: 1rem">Are you sure you want to delete?</p>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Text="Yes" Click="() => ds.Close(true)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
+      </div>
+    </div>
+  </div>);
 }

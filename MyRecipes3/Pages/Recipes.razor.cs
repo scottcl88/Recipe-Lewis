@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
 using Radzen;
 using RecipeLewis.Data;
 using RecipeLewis.Models;
@@ -12,6 +13,15 @@ namespace RecipeLewis.Pages
 {
     public class RecipesBase: ComponentBase
     {
+        public RecipesBase()
+        {
+            Model = new RecipeModel
+            {
+                CreatedDateTime = DateTime.UtcNow
+            };
+            ShowEditData = false;
+            Recipes = new List<RecipeModel>();
+        }
         public List<RecipeModel> Recipes { get; set; }
         [Inject]
         public RecipeService RecipeService { get; set; }
@@ -23,20 +33,87 @@ namespace RecipeLewis.Pages
         {
             try
             {
-
-                //var logger = LoggerFactory.CreateLogger<Recipe>();
-                //logger.LogDebug("Forecasts init!");
-                Console.WriteLine("Forecasts init");
-                //forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
                 Recipes = await RecipeService.GetAllRecipesAsync();
                 NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");
             }
             catch (Exception ex)
             {
                 NotificationService.Notify(NotificationSeverity.Error, "Failed", ex.Message, 6000);
-
             }
+        }
 
+        [Inject]
+        protected DialogService DialogService { get; set; }
+        public RecipeModel Model { get; set; }
+        public bool ShowEditData { get; set; }
+        public void Change(object value)
+        {
+            try
+            {
+                StateHasChanged();
+            }
+            catch (Exception ex)
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Failed", ex.Message, 6000);
+            }
+        }
+        public async Task HandleValidSubmit()
+        {
+            var result = await RecipeService.AddRecipe(Model);
+            if (result.Success)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");
+                ShowEditData = false;
+                Recipes = await RecipeService.GetAllRecipesAsync();
+                StateHasChanged();
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Failed", result.Message, 6000);
+            }
+        }
+        public void AddData(MouseEventArgs e)
+        {
+            ShowEditData = true;
+            Model = new RecipeModel
+            {
+                CreatedDateTime = DateTime.UtcNow
+            };
+            StateHasChanged();
+        }
+        public void EditData(MouseEventArgs e, RecipeModel model)
+        {
+            ShowEditData = true;
+            Model = model;
+            StateHasChanged();
+        }
+        public void CancelEditData(MouseEventArgs e)
+        {
+            ShowEditData = false;
+            StateHasChanged();
+        }
+        public async Task DeleteData()
+        {
+            var result = await RecipeService.DeleteRecipe(Model);
+            if (result.Success)
+            {
+                NotificationService.Notify(NotificationSeverity.Success, "Deleted successfully");
+                ShowEditData = false;
+                Recipes = await RecipeService.GetAllRecipesAsync();
+                StateHasChanged();
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Failed", result.Message, 6000);
+            }
+        }
+
+        public async Task Close(dynamic result)
+        {
+            if (result)
+            {
+                await DeleteData();
+            }
         }
     }
 }

@@ -13,5 +13,9 @@ namespace RecipeLewis.DataExtensions
         {
             return new RecipeModel();
         }
+        public static Recipe ToData(this RecipeModel model)
+        {
+            return new Recipe();
+        }
     }
 }

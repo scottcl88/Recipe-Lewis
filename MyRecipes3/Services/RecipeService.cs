@@ -19,24 +19,46 @@ namespace RecipeLewis.Services
         public ApplicationDbContext _context { get; set; }
         public async Task<List<RecipeModel>> GetAllRecipesAsync()
         {
-            //try
-            //{
-                Console.WriteLine("Forecasts started");
-                _context.Add(new Recipe() { Title = "Test", Date = DateTime.UtcNow });
-                var result = await _context.SaveChangesAsync();
-                Console.WriteLine("Forecast added");
-                return await Task.FromResult(_context.Recipes.Select(x => x.ToModel()).ToList());
-            //}
-            //catch (Exception ex)
-            //{
-            //    Console.WriteLine("Forecast failed: "+ex.Message);
-            //    var rng = new Random();
-            //    return await Task.FromResult(Enumerable.Range(1, 5).Select(index => new Recipe
-            //    {
-            //        Date = DateTime.UtcNow.AddDays(index)
-            //    }).ToList());
-            //}
+            try
+            {
+                var list = _context.Recipes.Select(x => x.ToModel()).ToList();
+                return await Task.FromResult(list);
+            }
+            catch (Exception ex)
+            {
+                return null;
+            }
 
+        }
+
+        public async Task<ServiceResult> AddRecipe(RecipeModel model)
+        {
+            try
+            {
+                var data = model.ToData();
+                _context.Add(data);
+                var result = await _context.SaveChangesAsync();
+                return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
+            }
+            catch(Exception ex)
+            {
+                return new ServiceResult(false, ex.Message);
+            }
+        }
+
+        public async Task<ServiceResult> DeleteRecipe(RecipeModel model)
+        {
+            try
+            {
+                var data = model.ToData();
+                _context.Update(data);
+                var result = await _context.SaveChangesAsync();
+                return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(false, ex.Message);
+            }
         }
     }
 }
