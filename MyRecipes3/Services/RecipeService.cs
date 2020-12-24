@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Components;
 using Radzen;
+using RecipeLewis.Data;
+using RecipeLewis.DataExtensions;
+using RecipeLewis.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace RecipeLewis.Data
+namespace RecipeLewis.Services
 {
     public class RecipeService
     {
@@ -14,7 +17,7 @@ namespace RecipeLewis.Data
             _context = context;
         }
         public ApplicationDbContext _context { get; set; }
-        public async Task<List<Recipe>> GetForecastsAsync()
+        public async Task<List<RecipeModel>> GetAllRecipesAsync()
         {
             //try
             //{
@@ -22,7 +25,7 @@ namespace RecipeLewis.Data
                 _context.Add(new Recipe() { Title = "Test", Date = DateTime.UtcNow });
                 var result = await _context.SaveChangesAsync();
                 Console.WriteLine("Forecast added");
-                return await Task.FromResult(_context.Recipes.ToList());
+                return await Task.FromResult(_context.Recipes.Select(x => x.ToModel()).ToList());
             //}
             //catch (Exception ex)
             //{

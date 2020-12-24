@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Radzen;
 using RecipeLewis.Data;
+using RecipeLewis.Models;
+using RecipeLewis.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +12,7 @@ namespace RecipeLewis.Pages
 {
     public class RecipesBase: ComponentBase
     {
-        public List<Recipe> Recipes { get; set; }
+        public List<RecipeModel> Recipes { get; set; }
         [Inject]
         public RecipeService RecipeService { get; set; }
         [Inject]
@@ -26,7 +28,7 @@ namespace RecipeLewis.Pages
                 //logger.LogDebug("Forecasts init!");
                 Console.WriteLine("Forecasts init");
                 //forecasts = await ForecastService.GetForecastAsync(DateTime.Now);
-                Recipes = await RecipeService.GetForecastsAsync();
+                Recipes = await RecipeService.GetAllRecipesAsync();
                 NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");
             }
             catch (Exception ex)
