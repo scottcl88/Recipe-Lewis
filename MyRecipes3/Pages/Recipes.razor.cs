@@ -28,17 +28,15 @@ namespace RecipeLewis.Pages
         [Inject]
         public NotificationService NotificationService { get; set; }
 
-
         protected override async Task OnInitializedAsync()
         {
             try
             {
                 Recipes = await RecipeService.GetAllRecipesAsync();
-                NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Failed", ex.Message, 6000);
+                NotificationService.Notify(NotificationSeverity.Error, "Failed to load", ex.Message, 6000);
             }
         }
 
@@ -59,7 +57,15 @@ namespace RecipeLewis.Pages
         }
         public async Task HandleValidSubmit()
         {
-            var result = await RecipeService.AddRecipe(Model);
+            ServiceResult result;
+            if (Model.RecipeID > 0)
+            {
+                result = await RecipeService.UpdateRecipe(Model);
+            }
+            else
+            {
+                result = await RecipeService.AddRecipe(Model);
+            }
             if (result.Success)
             {
                 NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");

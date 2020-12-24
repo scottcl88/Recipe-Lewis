@@ -6,7 +6,7 @@
 
 @using IModel = Models.RecipeModel
 
-<div class="container">
+<div id="recipePage">
   <div class="row justify-content-center">
     <div class="col-auto">
       <h1>Boarding</h1>
@@ -22,11 +22,11 @@
         <div class="row justify-content-start mt-1">
           <div class="col-6">
             <div class="form-group">
-              <label>Start</label>
+              <label>Date</label>
               <RadzenDatePicker Style="display: block;" @bind-Value="Model.Date" HourFormat="12" DateFormat="MM/dd/yyyy h:mm tt" ShowTime="true" />
             </div>
             <div class="form-group">
-              <label>End</label>
+              <label>Title</label>
               <RadzenTextBox class="col-6" Style="display: block;" @bind-Value="Model.Title" />
             </div>
           </div>

@@ -44,6 +44,7 @@ namespace RecipeLewis
             services.AddServerSideBlazor();
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddScoped<RecipeService>();
+            services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
             services.AddLogging(builder => builder
                 .SetMinimumLevel(LogLevel.Trace)

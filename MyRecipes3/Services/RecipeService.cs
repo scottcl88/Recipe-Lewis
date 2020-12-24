@@ -46,6 +46,21 @@ namespace RecipeLewis.Services
             }
         }
 
+        public async Task<ServiceResult> UpdateRecipe(RecipeModel model)
+        {
+            try
+            {
+                var data = model.ToData();
+                _context.Update(data);
+                var result = await _context.SaveChangesAsync();
+                return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResult(false, ex.Message);
+            }
+        }
+
         public async Task<ServiceResult> DeleteRecipe(RecipeModel model)
         {
             try
