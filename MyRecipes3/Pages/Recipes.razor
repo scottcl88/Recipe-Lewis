@@ -1,0 +1,31 @@
+﻿@page "/recipes"
+
+@using RecipeLewis.Data
+@inherits RecipesBase
+
+<h1>Recipes</h1>
+
+@if (Recipes == null)
+{
+  <p><em>Loading...</em></p>
+}
+else
+{
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Title</th>
+      </tr>
+    </thead>
+    <tbody>
+      @foreach (var recipe in Recipes)
+      {
+        <tr>
+          <td>@recipe.Date.ToShortDateString()</td>
+          <td>@recipe.Title</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+}

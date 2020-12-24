@@ -8,6 +8,9 @@ namespace RecipeLewis.Data
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StepID { get; set; }
+        public virtual Category Category { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }
