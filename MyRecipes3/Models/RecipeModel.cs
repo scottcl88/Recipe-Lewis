@@ -8,6 +8,13 @@ namespace RecipeLewis.Models
 {
     public class RecipeModel
     {
+        public RecipeModel()
+        {
+            Ingredients = new List<IngredientModel>();
+            Steps = new List<StepModel>();
+            Documents = new List<DocumentModel>();
+            CreatedDateTime = DateTime.UtcNow;
+        }
         public int RecipeID { get; set; }
         public DateTime Date { get; set; }
         public string Title { get; set; }
@@ -18,9 +25,9 @@ namespace RecipeLewis.Models
         public TimeSpan CookTime { get; set; }
         public TimeSpan InactiveTime { get; set; }
         public TimeSpan TotalTime { get; set; }
-        public virtual List<Ingredient> Ingredients { get; set; }
-        public virtual List<Step> Steps { get; set; }
-        public virtual List<Document> Documents { get; set; }
+        public virtual List<IngredientModel> Ingredients { get; set; }
+        public virtual List<StepModel> Steps { get; set; }
+        public virtual List<DocumentModel> Documents { get; set; }
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }

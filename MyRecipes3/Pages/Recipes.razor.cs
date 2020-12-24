@@ -98,6 +98,16 @@ namespace RecipeLewis.Pages
             ShowEditData = false;
             StateHasChanged();
         }
+        public string NewIngredient { get; set; }
+        public void AddIngredient(MouseEventArgs e)
+        {
+            Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient });
+        }
+        public string NewStep { get; set; }
+        public void AddStep(MouseEventArgs e)
+        {
+            Model.Steps.Add(new StepModel() { Title = NewStep });
+        }
         public async Task DeleteData()
         {
             var result = await RecipeService.DeleteRecipe(Model);
