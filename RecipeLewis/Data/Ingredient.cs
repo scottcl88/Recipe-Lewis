@@ -9,7 +9,6 @@ namespace RecipeLewis.Data
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IngredientID { get; set; }
         public virtual Category Category { get; set; }
-        public virtual Recipe Recipe { get; set; }
         public string Title { get; set; }
         public string Amount { get; set; }
         public bool IsLiquid { get; set; }
