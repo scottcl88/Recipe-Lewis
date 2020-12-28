@@ -25,15 +25,16 @@ namespace RecipeLewis.Pages
         [Inject]
         public NotificationService NotificationService { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
             base.OnInitialized();
-            LoadRecipes();
+            StateHasChanged();
+            await LoadRecipes();
         }
 
-        private void LoadRecipes()
+        private async Task LoadRecipes()
         {
-            var result = RecipeService.GetAllRecipes();
+            var result = await RecipeService.GetAllRecipes();
             if (result.Success)
             {
                 Recipes = result.Data;
@@ -74,7 +75,7 @@ namespace RecipeLewis.Pages
             {
                 NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");
                 ShowEditData = false;
-                LoadRecipes();
+                await LoadRecipes();
                 StateHasChanged();
             }
             else
@@ -121,7 +122,7 @@ namespace RecipeLewis.Pages
             {
                 NotificationService.Notify(NotificationSeverity.Success, "Deleted successfully");
                 ShowEditData = false;
-                LoadRecipes();
+                await LoadRecipes();
                 StateHasChanged();
             }
             else

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Components;
+using Microsoft.EntityFrameworkCore;
 using Radzen;
 using RecipeLewis.Data;
 using RecipeLewis.DataExtensions;
@@ -17,11 +18,11 @@ namespace RecipeLewis.Services
             _context = context;
         }
         public ApplicationDbContext _context { get; set; }
-        public ServiceResult<RecipeModel> GetAllRecipes()
+        public async Task<ServiceResult<RecipeModel>> GetAllRecipes()
         {
             try
             {
-                var list = _context.Recipes.Select(x => x.ToModel()).ToList();
+                var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).Select(x => x.ToModel()).ToListAsync();
                 return new ServiceResult<RecipeModel>(true) { Data = list };
             }
             catch (Exception ex)
