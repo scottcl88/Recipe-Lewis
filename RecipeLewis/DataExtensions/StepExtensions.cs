@@ -16,7 +16,7 @@ namespace RecipeLewis.DataExtensions
             {
                 StepID = data.StepID,
                 Title = data.Title,
-                Category = data.Category,
+                Category = data.Category.ToModel(),
                 Description = data.Description,
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
@@ -30,7 +30,7 @@ namespace RecipeLewis.DataExtensions
             {
                 StepID = model.StepID,
                 Title = model.Title,
-                Category = model.Category,
+                Category = model.Category.ToData(),
                 Description = model.Description,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,

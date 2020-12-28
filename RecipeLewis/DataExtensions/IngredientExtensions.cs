@@ -19,13 +19,12 @@ namespace RecipeLewis.DataExtensions
                 Amount = data.Amount,
                 Category = data.Category.ToModel(),
                 IsLiquid = data.IsLiquid,
-                Recipe = data.Recipe.ToModel(),
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
             };
         }
-        public static Ingredient ToData(this IngredientModel model)
+        public static Ingredient ToData(this IngredientModel model, RecipeModel recipeModel)
         {
             if (model == null) return null;
             return new Ingredient()
@@ -35,7 +34,7 @@ namespace RecipeLewis.DataExtensions
                 Amount = model.Amount,
                 Category = model.Category.ToData(),
                 IsLiquid = model.IsLiquid,
-                Recipe = model.Recipe.ToData(),
+                Recipe = recipeModel.ToData(),
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,
                 DeletedDateTime = model.DeletedDateTime

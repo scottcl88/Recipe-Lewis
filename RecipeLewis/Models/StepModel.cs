@@ -8,7 +8,7 @@ namespace RecipeLewis.Models
     public class StepModel
     {
         public int StepID { get; set; }
-        public virtual Category Category { get; set; }
+        public virtual CategoryModel Category { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         [Required]

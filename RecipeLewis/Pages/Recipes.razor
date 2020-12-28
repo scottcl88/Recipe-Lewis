@@ -51,9 +51,11 @@
                 <RadzenLabel Text="Title" />
               </div>
               <div class="col-md-6">
-                <RadzenTextBox style="width: 100%;" Name="Title" @bind-Value="NewIngredient" />
+                <RadzenTextBox Name="Title" @bind-Value="NewIngredient" />
+                <button type="button" class="btn btn-secondary btn-sm" @onclick="AddIngredient">Add</button>
               </div>
-              <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="AddIngredient">Add</button>
+            </div>
+            <div class="row mt-3">
               <ul>
                 <RadzenDataList WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
                   <Template Context="ingredient">
@@ -73,11 +75,11 @@
                 <RadzenLabel Text="Title" />
               </div>
               <div class="col-md-6">
-                <RadzenTextBox style="width: 100%;" Name="Title" @bind-Value="NewStep" />
-                <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="AddStep">Add</button>
+                <RadzenTextBox Name="Title" @bind-Value="NewStep" />
+                <button type="button" class="btn btn-secondary btn-sm" @onclick="AddStep">Add</button>
               </div>
             </div>
-            <div class="row mt-1">
+            <div class="row mt-3">
               <ol>
                 <RadzenDataList WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
                   <Template Context="step">

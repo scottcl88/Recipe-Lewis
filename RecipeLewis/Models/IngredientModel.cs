@@ -9,7 +9,6 @@ namespace RecipeLewis.Models
     {
         public int IngredientID { get; set; }
         public virtual CategoryModel Category { get; set; }
-        public virtual RecipeModel Recipe { get; set; }
         public string Title { get; set; }
         public string Amount { get; set; }
         public bool IsLiquid { get; set; }

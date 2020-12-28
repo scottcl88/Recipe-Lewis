@@ -44,7 +44,7 @@ namespace RecipeLewis.DataExtensions
                 Description = model.Description,
                 Documents = model.Documents.Select(x => x.ToData()).ToList(),
                 InactiveTime = model.InactiveTime,
-                Ingredients = model.Ingredients.Select(x => x.ToData()).ToList(),
+                Ingredients = model.Ingredients.Select(x => x.ToData(model)).ToList(),
                 PrepTime = model.PrepTime,
                 ServingSize = model.ServingSize,
                 Steps = model.Steps.Select(x => x.ToData()).ToList(),

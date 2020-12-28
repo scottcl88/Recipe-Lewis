@@ -17,16 +17,16 @@ namespace RecipeLewis.Services
             _context = context;
         }
         public ApplicationDbContext _context { get; set; }
-        public async Task<List<RecipeModel>> GetAllRecipesAsync()
+        public ServiceResult<RecipeModel> GetAllRecipes()
         {
             try
             {
                 var list = _context.Recipes.Select(x => x.ToModel()).ToList();
-                return await Task.FromResult(list);
+                return new ServiceResult<RecipeModel>(true) { Data = list };
             }
             catch (Exception ex)
             {
-                return null;
+                return new ServiceResult<RecipeModel>(false, ex.Message);
             }
 
         }

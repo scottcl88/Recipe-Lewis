@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace RecipeLewis.Pages
 {
-    public class RecipesBase: ComponentBase
+    public class RecipesBase : ComponentBase
     {
         public RecipesBase()
         {
@@ -25,15 +25,22 @@ namespace RecipeLewis.Pages
         [Inject]
         public NotificationService NotificationService { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            try
+            base.OnInitialized();
+            LoadRecipes();
+        }
+
+        private void LoadRecipes()
+        {
+            var result = RecipeService.GetAllRecipes();
+            if (result.Success)
             {
-                Recipes = await RecipeService.GetAllRecipesAsync();
+                Recipes = result.Data;
             }
-            catch (Exception ex)
+            else
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Failed to load", ex.Message, 6000);
+                NotificationService.Notify(NotificationSeverity.Error, "Failed to load", result.Message, 6000);
             }
         }
 
@@ -67,7 +74,7 @@ namespace RecipeLewis.Pages
             {
                 NotificationService.Notify(NotificationSeverity.Success, "Saved successfully");
                 ShowEditData = false;
-                Recipes = await RecipeService.GetAllRecipesAsync();
+                LoadRecipes();
                 StateHasChanged();
             }
             else
@@ -79,7 +86,7 @@ namespace RecipeLewis.Pages
         {
             ShowEditData = true;
             Model = new RecipeModel
-            {   
+            {
                 CreatedDateTime = DateTime.UtcNow
             };
             StateHasChanged();
@@ -114,7 +121,7 @@ namespace RecipeLewis.Pages
             {
                 NotificationService.Notify(NotificationSeverity.Success, "Deleted successfully");
                 ShowEditData = false;
-                Recipes = await RecipeService.GetAllRecipesAsync();
+                LoadRecipes();
                 StateHasChanged();
             }
             else
