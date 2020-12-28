@@ -22,8 +22,8 @@ namespace RecipeLewis.Services
         {
             try
             {
-                var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).Select(x => x.ToModel()).ToListAsync();
-                return new ServiceResult<RecipeModel>(true) { Data = list };
+                var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).ToListAsync();
+                return new ServiceResult<RecipeModel>(true) { Data = list.Select(x => x.ToModel()).ToList() };
             }
             catch (Exception ex)
             {
