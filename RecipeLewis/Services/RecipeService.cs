@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using Radzen;
 using RecipeLewis.Data;
 using RecipeLewis.DataExtensions;
@@ -13,20 +14,25 @@ namespace RecipeLewis.Services
 {
     public class RecipeService
     {
-        public RecipeService(ApplicationDbContext context)
+        private readonly ILogger _logger;
+        public RecipeService(ApplicationDbContext context, ILogger<Recipe> logger)
         {
             _context = context;
+            _logger = logger;
         }
         public ApplicationDbContext _context { get; set; }
         public async Task<ServiceResult<RecipeModel>> GetAllRecipes()
         {
             try
             {
+                _logger.LogInformation("Getting recipes");
                 var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).ToListAsync();
+                _logger.LogInformation("Recipes returned: "+list.Count);
                 return new ServiceResult<RecipeModel>(true) { Data = list.Select(x => x.ToModel()).ToList() };
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, "Recipes failed to get all");
                 return new ServiceResult<RecipeModel>(false, ex.Message);
             }
 

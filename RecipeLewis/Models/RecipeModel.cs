@@ -25,9 +25,9 @@ namespace RecipeLewis.Models
         public TimeSpan CookTime { get; set; }
         public TimeSpan InactiveTime { get; set; }
         public TimeSpan TotalTime { get; set; }
-        public virtual List<IngredientModel> Ingredients { get; set; }
-        public virtual List<StepModel> Steps { get; set; }
-        public virtual List<DocumentModel> Documents { get; set; }
+        public List<IngredientModel> Ingredients { get; set; }
+        public List<StepModel> Steps { get; set; }
+        public List<DocumentModel> Documents { get; set; }
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }
