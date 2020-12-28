@@ -19,27 +19,25 @@
         <div class="col-md-12">
           <RadzenFieldset Text="Recipe Info">
             <div class="row">
-              <div class="col-md-4 align-items-center d-flex">
-                <RadzenLabel Text="Card #" />
+              <div class="col-md-1 d-flex">
+                <RadzenLabel Text="Title" />
               </div>
-              <div class="col-md-8">
-                <RadzenTextBox style="width: 100%;" Name="CardNr" />
+              <div class="col-md-4">
+                <RadzenTextBox Name="Title" Style="width: 100%;" @bind-Value="Model.Title" />
               </div>
-            </div>
-            <div class="row">
-              <div class="col-md-4 align-items-center d-flex">
-                <RadzenLabel Text="Expiry Date" />
+              <div class="col-md-1 col-offset-2 d-flex">
+                <RadzenLabel Text="Author" />
               </div>
-              <div class="col-md-8">
-                <RadzenDatePicker style="width: 100%;" Name="ExpiryDate" @bind-Value="Model.Date" />
+              <div class="col-md-4">
+                <RadzenTextBox Name="Author" Style="width: 100%;" @bind-Value="Model.Author" />
               </div>
             </div>
-            <div class="row">
-              <div class="col-md-4 align-items-center d-flex">
-                <RadzenLabel Text="Cardholder" />
+            <div class="row mt-2">
+              <div class="col-md-1 d-flex">
+                <RadzenLabel Text="Description" />
               </div>
-              <div class="col-md-8">
-                <RadzenTextBox style="width: 100%;" Name="CardHolder" />
+              <div class="col-md-9">
+                <RadzenTextArea Name="Description" Style="width: 100%;" @bind-Value="Model.Description" />
               </div>
             </div>
           </RadzenFieldset>
@@ -49,10 +47,10 @@
         <div class="col-md-6">
           <RadzenFieldset Text="Ingredients">
             <div class="row">
-              <div class="col-md-4 align-items-center d-flex">
+              <div class="col-md-1 align-items-center d-flex">
                 <RadzenLabel Text="Title" />
               </div>
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <RadzenTextBox style="width: 100%;" Name="Title" @bind-Value="NewIngredient" />
               </div>
               <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="AddIngredient">Add</button>
@@ -71,13 +69,15 @@
         <div class="col-md-6">
           <RadzenFieldset Text="Steps">
             <div class="row">
-              <div class="col-md-4 align-items-center d-flex">
+              <div class="col-md-1 align-items-center d-flex">
                 <RadzenLabel Text="Title" />
               </div>
-              <div class="col-md-8">
+              <div class="col-md-6">
                 <RadzenTextBox style="width: 100%;" Name="Title" @bind-Value="NewStep" />
+                <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="AddStep">Add</button>
               </div>
-              <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="AddStep">Add</button>
+            </div>
+            <div class="row mt-1">
               <ol>
                 <RadzenDataList WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
                   <Template Context="step">
@@ -91,8 +91,8 @@
           </RadzenFieldset>
         </div>
       </div>
-      <div class="row justify-content-center">
-        <div class="col-md-12 d-flex align-items-end justify-content-center" style="margin-top: 16px;">
+      <div class="row">
+        <div class="col-md-12 d-flex align-items-end justify-content-between" style="margin-top: 16px;">
           @if (Model.RecipeID > 0)
           {
             <button type="submit" class="btn btn-primary mt-2 mb-2">Update</button>
@@ -104,8 +104,6 @@
             <button type="submit" class="btn btn-primary mt-2 mb-2">Add</button>
             <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="CancelEditData">Cancel</button>
           }
-          @*<RadzenButton ButtonType="ButtonType.Submit" Icon="save" Text="Save" />*@
-          @*<RadzenButton ButtonStyle="ButtonStyle.Light" Icon="cancel" style="display: inline-block; margin-left: 10px;" Text="Cancel" />*@
         </div>
       </div>
     </EditForm>
@@ -114,23 +112,21 @@
   {
     <div class="row justify-content-start">
       <div class="col-auto">
-        <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData">ADD DATA</button>
+        <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData">Add Recipe</button>
       </div>
     </div>
     <hr />
     <div class="row justify-content-start mt-1">
       <div class="col-12">
-        <h3>Data</h3>
+        <h3>List</h3>
         <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="4"
                     AllowSorting="true" Data="@Recipes" TItem="IModel">
           <Columns>
-            <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="125px" Property="BoardingId.Value" Title="Id">
-              <FooterTemplate>
-                Total Visits: <b>@Recipes.Count()</b>
-              </FooterTemplate>
+            <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
             </RadzenGridColumn>
-            <RadzenGridColumn TItem="IModel" Property="Date" Title="Start Date" />
-            <RadzenGridColumn TItem="IModel" Property="Title" Width="125px" Title="Title" />
+            <RadzenGridColumn TItem="IModel" Property="Title" Title="Title" />
+            <RadzenGridColumn TItem="IModel" Property="Description" Width="200px" Title="Description" />
+            <RadzenGridColumn TItem="IModel" Property="Author" Title="Author" />
             <RadzenGridColumn TItem="IModel" Width="75px">
               <Template Context="data">
                 <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => EditData(e, data)">Edit</button>

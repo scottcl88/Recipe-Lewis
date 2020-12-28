@@ -15,10 +15,7 @@ namespace RecipeLewis.Pages
     {
         public RecipesBase()
         {
-            Model = new RecipeModel
-            {
-                CreatedDateTime = DateTime.UtcNow
-            };
+            Model = new RecipeModel();
             ShowEditData = false;
             Recipes = new List<RecipeModel>();
         }
@@ -82,7 +79,7 @@ namespace RecipeLewis.Pages
         {
             ShowEditData = true;
             Model = new RecipeModel
-            {
+            {   
                 CreatedDateTime = DateTime.UtcNow
             };
             StateHasChanged();
@@ -102,11 +99,13 @@ namespace RecipeLewis.Pages
         public void AddIngredient(MouseEventArgs e)
         {
             Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient });
+            NewIngredient = string.Empty;
         }
         public string NewStep { get; set; }
         public void AddStep(MouseEventArgs e)
         {
             Model.Steps.Add(new StepModel() { Title = NewStep });
+            NewStep = string.Empty;
         }
         public async Task DeleteData()
         {
