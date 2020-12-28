@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>aspnet-MyRecipes3-C0F9785F-61F6-4D15-8455-05AFBC1B5796</UserSecretsId>
+    <UserSecretsId>aspnet-RecipeLewis-C0F9785F-61F6-4D15-8455-05AFBC1B5796</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>
