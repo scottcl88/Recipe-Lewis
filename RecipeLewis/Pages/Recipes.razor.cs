@@ -22,6 +22,7 @@ namespace RecipeLewis.Pages
             ShowEditData = false;
             Recipes = new List<RecipeModel>();
         }
+        public List<RecipeModel> OriginalRecipes { get; set; }
         public List<RecipeModel> Recipes { get; set; }
         [Inject]
         public RecipeService RecipeService { get; set; }
@@ -54,6 +55,7 @@ namespace RecipeLewis.Pages
             if (result.Success)
             {
                 Recipes = result.DataList;
+                OriginalRecipes = result.DataList;
             }
             else
             {
@@ -229,6 +231,20 @@ namespace RecipeLewis.Pages
             if (result)
             {
                 await DeleteData();
+            }
+        }
+
+        public void Search(string input)
+        {
+            if (!string.IsNullOrWhiteSpace(input))
+            {
+                Recipes = OriginalRecipes.Where(x => (!string.IsNullOrWhiteSpace(x.Title) && x.Title.ToLower().Contains(input.ToLower())) 
+                || (!string.IsNullOrWhiteSpace(x.Author) && x.Author.ToLower().Contains(input.ToLower())) 
+                || (!string.IsNullOrWhiteSpace(x.Description) && x.Description.ToLower().Contains(input.ToLower()))).ToList();
+            }
+            else
+            {
+                Recipes = OriginalRecipes;
             }
         }
 

@@ -229,8 +229,8 @@
         }
         else
         {
-          <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
-                      AllowSorting="true" Data="@Recipes" TItem="IModel" EmptyText="No recipes found">
+          <RadzenTextBox Placeholder="Search..." Change=@(args => Search(args)) Style="width:100%;" class="mb-2" />
+          <RadzenGrid AllowPaging="true" PageSize="5" Data="@Recipes" TItem="IModel" EmptyText="No recipes found">
             <Columns>
               <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
               </RadzenGridColumn>
