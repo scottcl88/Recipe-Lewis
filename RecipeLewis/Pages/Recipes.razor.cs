@@ -50,6 +50,7 @@ namespace RecipeLewis.Pages
         protected DialogService DialogService { get; set; }
         public RecipeModel Model { get; set; }
         public bool ShowEditData { get; set; }
+        public bool ShowViewData { get; set; }
         public void ChangeTime(string value, string inputName)
         {
             try
@@ -163,12 +164,21 @@ namespace RecipeLewis.Pages
         public void EditData(MouseEventArgs e, RecipeModel model)
         {
             ShowEditData = true;
+            ShowViewData = false;
+            Model = model;
+            StateHasChanged();
+        }
+        public void ViewData(MouseEventArgs e, RecipeModel model)
+        {
+            ShowViewData = true;
+            ShowEditData = false;
             Model = model;
             StateHasChanged();
         }
         public void CancelEditData(MouseEventArgs e)
         {
             ShowEditData = false;
+            ShowViewData = false;
             StateHasChanged();
         }
         public string NewIngredient { get; set; }
