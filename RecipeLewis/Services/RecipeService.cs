@@ -27,8 +27,22 @@ namespace RecipeLewis.Services
             {
                 _logger.LogInformation("Getting recipes");
                 var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).ToListAsync();
-                _logger.LogInformation("Recipes returned: "+list.Count);
-                return new ServiceResult<RecipeModel>(true) { Data = list.Select(x => x.ToModel()).ToList() };
+                _logger.LogInformation("Recipes returned: " + list.Count);
+                return new ServiceResult<RecipeModel>(true) { DataList = list.Select(x => x.ToModel()).ToList() };
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Recipes failed to get all");
+                return new ServiceResult<RecipeModel>(false, ex.Message);
+            }
+
+        }
+        public async Task<ServiceResult<RecipeModel>> GetRecipe(int recipeId)
+        {
+            try
+            {
+                var data = await _context.Recipes.FirstOrDefaultAsync(x => x.RecipeID == recipeId && x.DeletedDateTime == null);
+                return new ServiceResult<RecipeModel>(true) { Data = data.ToModel() };
             }
             catch (Exception ex)
             {
@@ -47,7 +61,7 @@ namespace RecipeLewis.Services
                 var result = await _context.SaveChangesAsync();
                 return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 return new ServiceResult(false, ex.Message);
             }

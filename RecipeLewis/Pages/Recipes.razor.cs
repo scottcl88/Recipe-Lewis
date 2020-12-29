@@ -38,7 +38,7 @@ namespace RecipeLewis.Pages
             var result = await RecipeService.GetAllRecipes();
             if (result.Success)
             {
-                Recipes = result.Data;
+                Recipes = result.DataList;
             }
             else
             {

@@ -190,9 +190,10 @@
             <RadzenGridColumn TItem="IModel" Property="Title" Title="Title" />
             <RadzenGridColumn TItem="IModel" Property="Description" Width="200px" Title="Description" />
             <RadzenGridColumn TItem="IModel" Property="Author" Title="Author" />
-            <RadzenGridColumn TItem="IModel" Width="75px">
+            <RadzenGridColumn TItem="IModel" Filterable="false" Sortable="false" Width="150px">
               <Template Context="data">
                 <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => ViewData(e, data)">View</button>
+                <a type="button" class="btn btn-outline-secondary btn-sm" href=@($"/recipeprint/{data.RecipeID}")>Print</a>
               </Template>
             </RadzenGridColumn>
           </Columns>

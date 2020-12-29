@@ -32,6 +32,7 @@ namespace RecipeLewis.Services
         public static ServiceResult FailureResult = new ServiceResult(false);
         public bool Success { get; set; }
         public string Message { get; set; }
-        public List<T> Data { get; set; }
+        public List<T> DataList { get; set; }
+        public T Data { get; set; }
     }
 }
