@@ -27,6 +27,7 @@ namespace RecipeLewis.DataExtensions
                 Steps = data.Steps?.Select(x => x.ToModel()).ToList(),
                 Title = data.Title,
                 TotalTime = data.TotalTime,
+                TotalTimeCalculated = data.TotalTimeCalculated,
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
@@ -50,6 +51,7 @@ namespace RecipeLewis.DataExtensions
                 Steps = model.Steps?.Select(x => x.ToData()).ToList(),
                 Title = model.Title,
                 TotalTime = model.TotalTime,
+                TotalTimeCalculated = model.TotalTimeCalculated,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,
                 DeletedDateTime = model.DeletedDateTime

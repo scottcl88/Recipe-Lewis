@@ -18,6 +18,7 @@ namespace RecipeLewis.Data
         public TimeSpan CookTime { get; set; }
         public TimeSpan InactiveTime { get; set; }
         public TimeSpan TotalTime { get; set; }
+        public bool TotalTimeCalculated { get; set; }
         public virtual List<Ingredient> Ingredients { get; set; }
         public virtual List<Step> Steps { get; set; }
         public virtual List<Document> Documents { get; set; }

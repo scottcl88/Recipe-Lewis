@@ -14,6 +14,7 @@ namespace RecipeLewis.Models
             Steps = new List<StepModel>();
             Documents = new List<DocumentModel>();
             CreatedDateTime = DateTime.UtcNow;
+            TotalTimeCalculated = true;
         }
         public int RecipeID { get; set; }
         public DateTime Date { get; set; }
@@ -22,9 +23,14 @@ namespace RecipeLewis.Models
         public string ServingSize { get; set; }
         public string Author { get; set; }
         public TimeSpan PrepTime { get; set; }
+        public string PrepTimeStr { get; set; }
         public TimeSpan CookTime { get; set; }
+        public string CookTimeStr { get; set; }
         public TimeSpan InactiveTime { get; set; }
+        public string InactiveTimeStr { get; set; }
         public TimeSpan TotalTime { get; set; }
+        public bool TotalTimeCalculated { get; set; }
+        public string TotalTimeStr { get; set; }
         public List<IngredientModel> Ingredients { get; set; }
         public List<StepModel> Steps { get; set; }
         public List<DocumentModel> Documents { get; set; }

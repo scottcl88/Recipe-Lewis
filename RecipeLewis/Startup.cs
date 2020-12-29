@@ -41,7 +41,7 @@ namespace RecipeLewis
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor(options => options.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(3));
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddScoped<RecipeService>();
             services.AddScoped<DialogService>();

@@ -7,6 +7,7 @@ using RecipeLewis.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RecipeLewis.Pages
@@ -49,11 +50,78 @@ namespace RecipeLewis.Pages
         protected DialogService DialogService { get; set; }
         public RecipeModel Model { get; set; }
         public bool ShowEditData { get; set; }
-        public void Change(object value)
+        public void ChangeTime(string value, string inputName)
         {
             try
             {
-                StateHasChanged();
+                var regexResult = Regex.Matches(value, @"([0-9]+\s+)(hour|hr|minute|min)?((s)?(\s)?(and)?(&)?(\s)?)");
+                if (regexResult.Count == 0)
+                {
+                    NotificationService.Notify(NotificationSeverity.Error, "Invalid time entered");
+                    return;
+                }
+                TimeSpan result = new TimeSpan();
+                if(regexResult.Count == 1)
+                {
+                    if (!string.IsNullOrEmpty(regexResult[0].Groups[0].Value))
+                    {
+                        var timeStr = regexResult[0].Groups[1].Value;
+                        int time = Int32.Parse(timeStr);
+                        if (regexResult[0].Groups[0].Value.Contains("hour") || regexResult[0].Groups[0].Value.Contains("hr"))
+                        {
+                            result = result.Add(TimeSpan.FromHours(time));
+                        }
+                        else
+                        {
+                            result = result.Add(TimeSpan.FromMinutes(time));
+                        }
+                    }
+                }
+                else
+                {
+                    if (!string.IsNullOrEmpty(regexResult[0].Groups[0].Value))
+                    {
+                        var hourStr = regexResult[0].Groups[1].Value;
+                        int hours = Int32.Parse(hourStr);
+                        result = result.Add(TimeSpan.FromHours(hours));
+                    }
+                    if (!string.IsNullOrEmpty(regexResult[1].Groups[0].Value))
+                    {
+                        var hourStr = regexResult[1].Groups[1].Value;
+                        int hours = Int32.Parse(hourStr);
+                        result = result.Add(TimeSpan.FromMinutes(hours));
+                    }
+                }                
+                switch (inputName)
+                {
+                    case "PrepTimeStr":
+                        {
+                            Model.PrepTime = result;
+                            break;
+                        }
+                    case "CookTimeStr":
+                        {
+                            Model.CookTime = result;
+                            break;
+                        }
+                    case "InactiveTimeStr":
+                        {
+                            Model.InactiveTime = result;
+                            break;
+                        }
+                    case "TotalTimeStr":
+                        {
+                            Model.TotalTime = result;
+                            Model.TotalTimeCalculated = false;
+                            break;
+                        }
+                }
+                if (Model.TotalTimeCalculated)
+                {
+                    Model.TotalTime = Model.PrepTime + Model.CookTime + Model.InactiveTime;
+                    Model.TotalTimeStr = $"{Model.TotalTime.Hours} hours and {Model.TotalTime.Minutes} minutes";
+                }
+                NotificationService.Notify(NotificationSeverity.Success, "Parsed time to: " + result.ToString());
             }
             catch (Exception ex)
             {
