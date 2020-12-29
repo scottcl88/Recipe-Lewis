@@ -9,7 +9,21 @@
 <div id="recipePage">
   <div class="row justify-content-center">
     <div class="col-auto">
-      <h1>Recipes</h1>
+      @if (ShowEditData)
+      {
+        @if (Model.RecipeID > 0)
+        {
+          <h2>Edit Recipe</h2>
+        }
+        else
+        {
+          <h2>Add Recipe</h2>
+        }
+      }
+      else
+      {
+        <h1>Recipes</h1>
+      }
     </div>
   </div>
   @if (ShowEditData || ShowViewData)
@@ -38,6 +52,22 @@
               </div>
               <div class="col-md-9">
                 <RadzenTextArea Name="Description" Style="width: 100%;" @bind-disabled="ShowViewData" @bind-Value="Model.Description" />
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-auto">
+                <button type="button" id="selectFileButton" class="btn btn-sm btn-secondary">Add Picture</button>
+                <InputFile id="files" style="display: none;" OnChange="@OnInputFileChange" multiple accept=".gif,.jpg,.jpeg,.png,.tif,.tiff" />
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col-auto">
+                <div class="images">
+                  @foreach (var document in Model.Documents)
+                  {
+                    <img class="mr-2" src="@document.ImageSource" alt="@document.Filename" width="200" height="150">
+                  }
+                </div>
               </div>
             </div>
           </RadzenFieldset>
@@ -146,25 +176,32 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-md-12 d-flex align-items-end justify-content-between" style="margin-top: 16px;">
-
+        <div class="align-content-center col-md-12 d-flex justify-content-center" style="margin-top: 16px;">
           @if (!ShowViewData)
           {
             @if (Model.RecipeID > 0)
             {
-              <button type="submit" class="btn btn-primary mt-2 mb-2">Update</button>
-              <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2" @onclick="CancelEditData">Cancel</button>
-              <button type="button" class="btn btn-danger mr-3 mt-2 mb-2 offset-3" @onclick="ConfirmDelete">Delete</button>
+              <button type="submit" class="btn btn-primary" disabled="@IsSaving">Update</button>
+              <button type="button" class="btn btn-secondary offset-1" disabled="@IsSaving" @onclick="CancelEditData">Cancel</button>
+              <button type="button" class="btn btn-danger offset-1" disabled="@IsSaving" @onclick="ConfirmDelete">Delete</button>
             }
             else
             {
-              <button type="submit" class="btn btn-primary mt-2 mb-2">Add</button>
-              <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="CancelEditData">Cancel</button>
+              <button type="submit" class="btn btn-primary" disabled="@IsSaving">Add</button>
+              <button type="button" class="btn btn-secondary offset-1" disabled="@IsSaving" @onclick="CancelEditData">Cancel</button>
             }
           }
           else
           {
-            <button type="button" class="btn btn-secondary mr-3 mt-2 mb-2 offset-4" @onclick="CancelEditData">Go Back</button>
+            <button type="button" class="btn btn-secondary" @onclick="CancelEditData">Go Back</button>
+          }
+        </div>
+      </div>
+      <div class="row">
+        <div class="align-content-center col-md-12 d-flex justify-content-center" style="margin-top: 16px;">
+          @if (IsSaving)
+          {
+            <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="width: 30%; opacity: .3;" />
           }
         </div>
       </div>
@@ -182,22 +219,34 @@
     <div class="row justify-content-start mt-1">
       <div class="col-12">
         <h3>List</h3>
-        <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="4"
-                    AllowSorting="true" Data="@Recipes" TItem="IModel">
-          <Columns>
-            <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
-            </RadzenGridColumn>
-            <RadzenGridColumn TItem="IModel" Property="Title" Title="Title" />
-            <RadzenGridColumn TItem="IModel" Property="Description" Width="200px" Title="Description" />
-            <RadzenGridColumn TItem="IModel" Property="Author" Title="Author" />
-            <RadzenGridColumn TItem="IModel" Filterable="false" Sortable="false" Width="150px">
-              <Template Context="data">
-                <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => ViewData(e, data)">View</button>
-                <a type="button" class="btn btn-outline-secondary btn-sm" href=@($"/recipeprint/{data.RecipeID}")>Print</a>
-              </Template>
-            </RadzenGridColumn>
-          </Columns>
-        </RadzenGrid>
+
+        @if (IsLoading)
+        {
+          <br />
+          <br />
+          <p>Loading...</p>
+          <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="width: 50%;" />
+        }
+        else
+        {
+          <RadzenGrid AllowFiltering="true" FilterCaseSensitivity="FilterCaseSensitivity.CaseInsensitive" AllowPaging="true" PageSize="5"
+                      AllowSorting="true" Data="@Recipes" TItem="IModel" EmptyText="No recipes found">
+            <Columns>
+              <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
+              </RadzenGridColumn>
+              <RadzenGridColumn TItem="IModel" Property="Title" Title="Title" />
+              <RadzenGridColumn TItem="IModel" Property="Author" Width="220px" Title="Author" />
+              <RadzenGridColumn TItem="IModel" Property="Description" Title="Description" />
+              <RadzenGridColumn TItem="IModel" Filterable="false" Sortable="false" Width="175px">
+                <Template Context="data">
+                  <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => EditData(e, data)">Edit</button>
+                  <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => ViewData(e, data)">View</button>
+                  <a type="button" class="btn btn-outline-secondary btn-sm" href=@($"/recipeprint/{data.RecipeID}")>Print</a>
+                </Template>
+              </RadzenGridColumn>
+            </Columns>
+          </RadzenGrid>
+        }
       </div>
     </div>
   }

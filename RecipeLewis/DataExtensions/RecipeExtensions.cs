@@ -33,29 +33,26 @@ namespace RecipeLewis.DataExtensions
                 DeletedDateTime = data.DeletedDateTime
             };
         }
-        public static Recipe ToData(this RecipeModel model)
+        public static Recipe ToData(this RecipeModel model, Recipe data)
         {
             if (model == null) return null;
-            return new Recipe()
-            {
-                RecipeID = model.RecipeID,
-                Author = model.Author,
-                CookTime = model.CookTime,
-                Date = model.Date,
-                Description = model.Description,
-                Documents = model.Documents?.Select(x => x.ToData()).ToList(),
-                InactiveTime = model.InactiveTime,
-                Ingredients = model.Ingredients?.Select(x => x.ToData()).ToList(),
-                PrepTime = model.PrepTime,
-                ServingSize = model.ServingSize,
-                Steps = model.Steps?.Select(x => x.ToData()).ToList(),
-                Title = model.Title,
-                TotalTime = model.TotalTime,
-                TotalTimeCalculated = model.TotalTimeCalculated,
-                CreatedDateTime = model.CreatedDateTime,
-                ModifiedDateTime = model.ModifiedDateTime,
-                DeletedDateTime = model.DeletedDateTime
-            };
+            data.Author = model.Author;
+            data.CookTime = model.CookTime;
+            data.Date = model.Date;
+            data.Description = model.Description;
+            data.Documents = model.Documents?.Select(x => x.ToData()).ToList();
+            data.InactiveTime = model.InactiveTime;
+            data.Ingredients = model.Ingredients?.Select(x => x.ToData()).ToList();
+            data.PrepTime = model.PrepTime;
+            data.ServingSize = model.ServingSize;
+            data.Steps = model.Steps?.Select(x => x.ToData()).ToList();
+            data.Title = model.Title;
+            data.TotalTime = model.TotalTime;
+            data.TotalTimeCalculated = model.TotalTimeCalculated;
+            data.CreatedDateTime = model.CreatedDateTime;
+            data.ModifiedDateTime = model.ModifiedDateTime;
+            data.DeletedDateTime = model.DeletedDateTime;
+            return data;
         }
     }
 }

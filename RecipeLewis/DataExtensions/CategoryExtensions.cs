@@ -26,7 +26,6 @@ namespace RecipeLewis.DataExtensions
             if (model == null) return null;
             return new Category()
             {
-                CategoryID = model.CategoryID,
                 Title = model.Title,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,

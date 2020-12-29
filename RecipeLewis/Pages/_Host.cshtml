@@ -15,7 +15,9 @@
   <link rel="shortcut icon" href="favicon.ico" />
   <link rel="stylesheet" href="css/bootstrap/bootstrap.min.css" />
   <link href="css/site.css" rel="stylesheet" />
+  <link href="css/images.css" rel="stylesheet" />
   <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
+  <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 </head>
 <body>
   <app>
@@ -32,7 +34,22 @@
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
   </div>
-
+  <div id="image-viewer">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="full-image">
+  </div>
+  <script>
+    $(document).on("click", ".images img", (e) => {
+      $("#full-image").attr("src", $(e.target).attr("src"));
+      $('#image-viewer').show();
+    });
+    $(document).on("click", "#image-viewer .close", () => {
+      $('#image-viewer').hide();
+    });
+    $(document).on("click", "#selectFileButton", () => {
+      $('#files').click();
+    });
+  </script>
   <script src="_framework/blazor.server.js"></script>
   <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
 </body>

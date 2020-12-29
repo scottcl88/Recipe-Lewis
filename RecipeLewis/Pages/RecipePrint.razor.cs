@@ -33,13 +33,13 @@ namespace RecipeLewis.Pages
         protected DialogService DialogService { get; set; }
         public RecipeModel Model { get; set; }
 
-        protected override async Task OnInitializedAsync()
+        protected override async Task OnAfterRenderAsync(bool firstRender)
         {
-            base.OnInitialized();
-            StateHasChanged();
-            await LoadRecipe();
-            StateHasChanged();
-            await JSRuntime.InvokeVoidAsync("window.print");
+            if (firstRender)
+            {
+                await LoadRecipe();
+                await JSRuntime.InvokeVoidAsync("window.print");
+            }
         }
 
         private async Task LoadRecipe()
@@ -53,11 +53,15 @@ namespace RecipeLewis.Pages
             {
                 NotificationService.Notify(NotificationSeverity.Error, "Failed to load", result.Message, 6000);
             }
+            StateHasChanged();
+        }
+        public async Task Print(MouseEventArgs e)
+        {
+            await JSRuntime.InvokeVoidAsync("window.print");
         }
         public async Task Close(MouseEventArgs e)
         {
             await JSRuntime.InvokeVoidAsync("window.history.back");
-            StateHasChanged();
         }
     }
 }

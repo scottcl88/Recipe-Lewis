@@ -28,7 +28,6 @@ namespace RecipeLewis.DataExtensions
             if (model == null) return null;
             return new Step()
             {
-                StepID = model.StepID,
                 Title = model.Title,
                 Category = model.Category.ToData(),
                 Description = model.Description,

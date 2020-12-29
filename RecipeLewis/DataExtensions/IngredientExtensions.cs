@@ -29,7 +29,6 @@ namespace RecipeLewis.DataExtensions
             if (model == null) return null;
             return new Ingredient()
             {
-                IngredientID = model.IngredientID,
                 Title = model.Title,
                 Amount = model.Amount,
                 Category = model.Category.ToData(),

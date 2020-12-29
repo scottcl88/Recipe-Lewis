@@ -12,7 +12,7 @@ namespace RecipeLewis.DataExtensions
         public static DocumentModel ToModel(this Document data)
         {
             if (data == null) return null;
-            return new DocumentModel()
+            var model = new DocumentModel()
             {
                 DocumentID = data.DocumentID,
                 Bytes = data.Bytes,
@@ -24,13 +24,16 @@ namespace RecipeLewis.DataExtensions
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
             };
+            var base64 = Convert.ToBase64String(model.Bytes);
+            var imgSrc = $"data:image/{model.Extension};base64,{base64}";
+            model.ImageSource = imgSrc;
+            return model;
         }
         public static Document ToData(this DocumentModel model)
         {
             if (model == null) return null;
             return new Document()
             {
-                DocumentID = model.DocumentID,
                 Bytes = model.Bytes,
                 ContentType = model.ContentType,
                 Extension = model.Extension,

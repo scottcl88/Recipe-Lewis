@@ -21,6 +21,7 @@ namespace RecipeLewis.Services
             _logger = logger;
         }
         public ApplicationDbContext _context { get; set; }
+        private readonly string[] permittedExtensions = new string[] { "gif", "jpg", "jpeg", "png", "tif", "tiff" };
         public async Task<ServiceResult<RecipeModel>> GetAllRecipes()
         {
             try
@@ -56,7 +57,22 @@ namespace RecipeLewis.Services
         {
             try
             {
-                var data = model.ToData();
+                var data = model.ToData(new Recipe());
+                if (data.Documents.Count > 3)
+                {
+                    return new ServiceResult(false, "Cannot upload more than 3 files at once");
+                }
+                foreach (var file in data.Documents)
+                {
+                    if (file.Bytes.Length > 10485760)
+                    {
+                        return new ServiceResult(false, "Each file cannot exceed 10mb");
+                    }
+                    if (string.IsNullOrEmpty(file.Extension) || !permittedExtensions.Contains(file.Extension))
+                    {
+                        return new ServiceResult(false, "Invalid file extension");
+                    }
+                }
                 _context.Add(data);
                 var result = await _context.SaveChangesAsync();
                 return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
@@ -71,7 +87,20 @@ namespace RecipeLewis.Services
         {
             try
             {
-                var data = model.ToData();
+                var data = await _context.Recipes.FirstOrDefaultAsync(x => x.RecipeID == model.RecipeID && x.DeletedDateTime == null);
+                data = model.ToData(data);
+                data.ModifiedDateTime = DateTime.UtcNow;
+                foreach (var file in data.Documents)
+                {
+                    if (file.Bytes.Length > 10485760)
+                    {
+                        return new ServiceResult(false, "Each file cannot exceed 10mb");
+                    }
+                    if (string.IsNullOrEmpty(file.Extension) || !permittedExtensions.Contains(file.Extension))
+                    {
+                        return new ServiceResult(false, "Invalid file extension");
+                    }
+                }
                 _context.Update(data);
                 var result = await _context.SaveChangesAsync();
                 return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
@@ -86,7 +115,9 @@ namespace RecipeLewis.Services
         {
             try
             {
-                var data = model.ToData();
+                var data = await _context.Recipes.FirstOrDefaultAsync(x => x.RecipeID == model.RecipeID && x.DeletedDateTime == null);
+                data = model.ToData(data);
+                data.DeletedDateTime = DateTime.UtcNow;
                 _context.Update(data);
                 var result = await _context.SaveChangesAsync();
                 return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
