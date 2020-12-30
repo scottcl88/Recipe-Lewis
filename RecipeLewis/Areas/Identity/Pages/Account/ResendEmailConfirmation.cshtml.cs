@@ -37,7 +37,8 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
         }
-
+        public string Message { get; set; } = "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.";
+        public bool Confirmed { get; set; }
         public void OnGet()
         {
         }
@@ -48,11 +49,11 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
             {
                 return Page();
             }
-
+            Confirmed = true;
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
+                //ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
                 return Page();
             }
 
@@ -70,7 +71,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
 
             _emailSender2.Test();
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
+            //ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
             return Page();
         }
     }
