@@ -62,10 +62,10 @@ namespace RecipeLewis
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    IConfigurationSection googleAuthNSection =
-                        Configuration.GetSection("Authentication:Google");
-                    options.ClientId = googleAuthNSection["ClientId"];
-                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                    //IConfigurationSection googleAuthNSection =
+                    //    Configuration.GetSection("Authentication:Google");
+                    options.ClientId = Configuration["GoogleClientSecret"];
+                    options.ClientSecret = Configuration["GoogleClientSecret"];
                 });
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);

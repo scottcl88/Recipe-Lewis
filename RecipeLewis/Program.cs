@@ -23,9 +23,9 @@ namespace RecipeLewis
             Host.CreateDefaultBuilder(args)
                 .ConfigureAppConfiguration((context, config) =>
                 {
-                    var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+                    //var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
                     config.AddAzureKeyVault(
-                    keyVaultEndpoint,
+                    new Uri("https://recipelewisvault.vault.azure.net/"),
                     new DefaultAzureCredential());
                 })
                 .ConfigureLogging(logging =>
