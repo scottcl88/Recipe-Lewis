@@ -18,6 +18,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RecipeLewis.Services;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace RecipeLewis
 {
@@ -58,6 +59,17 @@ namespace RecipeLewis
                 options.ExcludedHosts.Add("recipelewis.com");
                 options.ExcludedHosts.Add("www.recipelewis.com");
             });
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    IConfigurationSection googleAuthNSection =
+                        Configuration.GetSection("Authentication:Google");
+                    options.ClientId = googleAuthNSection["ClientId"];
+                    options.ClientSecret = googleAuthNSection["ClientSecret"];
+                });
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
+            services.AddScoped<EmailSender>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

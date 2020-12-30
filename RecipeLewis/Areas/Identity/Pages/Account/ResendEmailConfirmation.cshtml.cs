@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using RecipeLewis.Services;
 
 namespace RecipeLewis.Areas.Identity.Pages.Account
 {
@@ -18,11 +19,13 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
+        private readonly EmailSender _emailSender2;
 
-        public ResendEmailConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender emailSender)
+        public ResendEmailConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, EmailSender emailSender2)
         {
             _userManager = userManager;
             _emailSender = emailSender;
+            _emailSender2 = emailSender2;
         }
 
         [BindProperty]
@@ -49,7 +52,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+                ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
                 return Page();
             }
 
@@ -63,10 +66,11 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
                 protocol: Request.Scheme);
             await _emailSender.SendEmailAsync(
                 Input.Email,
-                "Confirm your email",
-                $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                "Confirm your email", callbackUrl);
 
-            ModelState.AddModelError(string.Empty, "Verification email sent. Please check your email.");
+            _emailSender2.Test();
+
+            ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
             return Page();
         }
     }
