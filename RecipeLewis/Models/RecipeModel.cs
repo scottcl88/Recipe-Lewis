@@ -33,6 +33,7 @@ namespace RecipeLewis.Models
         public List<IngredientModel> Ingredients { get; set; }
         public List<StepModel> Steps { get; set; }
         public List<DocumentModel> Documents { get; set; }
+        public List<TagModel> Tags { get; set; }
 
         [Required]
         [Display(Name = "Created Date")]

@@ -44,6 +44,7 @@ namespace RecipeLewis.DataExtensions
             data.PrepTime = model.PrepTime;
             data.ServingSize = model.ServingSize;
             data.Steps = model.Steps?.Select(x => x.ToData()).ToList();
+            data.Tags = model.Tags?.Select(x => x.ToData()).ToList();
             data.Title = model.Title;
             data.TotalTime = model.TotalTime;
             data.TotalTimeCalculated = model.TotalTimeCalculated;

@@ -10,7 +10,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
     {
         private UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
-        private ILogger<ResetAuthenticatorModel> _logger;
+        private readonly ILogger<ResetAuthenticatorModel> _logger;
 
         public ResetAuthenticatorModel(
             UserManager<IdentityUser> userManager,
