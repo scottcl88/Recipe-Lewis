@@ -3,7 +3,6 @@
 @using RecipeLewis.Data
 @inherits RecipesBase
 
-
 @using IModel = Models.RecipeModel
 
 <div id="recipePage">
@@ -237,9 +236,13 @@
               <RadzenGridColumn TItem="IModel" Property="Title" Title="Title" />
               <RadzenGridColumn TItem="IModel" Property="Author" Width="220px" Title="Author" />
               <RadzenGridColumn TItem="IModel" Property="Description" Title="Description" />
-              <RadzenGridColumn TItem="IModel" Filterable="false" Sortable="false" Width="175px">
+              <RadzenGridColumn TItem="IModel" Filterable="false" Sortable="false" Width="auto">
                 <Template Context="data">
-                  <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => EditData(e, data)">Edit</button>
+                  <AuthorizeView>
+                    <Authorized>
+                      <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => EditData(e, data)">Edit</button>
+                    </Authorized>
+                  </AuthorizeView>
                   <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => ViewData(e, data)">View</button>
                   <a type="button" class="btn btn-outline-secondary btn-sm" href=@($"/recipeprint/{data.RecipeID}")>Print</a>
                 </Template>

@@ -1,12 +1,9 @@
-using Microsoft.AspNetCore.Components;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Radzen;
 using RecipeLewis.Data;
 using RecipeLewis.DataExtensions;
 using RecipeLewis.Models;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -15,13 +12,16 @@ namespace RecipeLewis.Services
     public class RecipeService
     {
         private readonly ILogger _logger;
+
         public RecipeService(ApplicationDbContext context, ILogger<Recipe> logger)
         {
             _context = context;
             _logger = logger;
         }
+
         public ApplicationDbContext _context { get; set; }
         private readonly string[] permittedExtensions = new string[] { "gif", "jpg", "jpeg", "png", "tif", "tiff" };
+
         public async Task<ServiceResult<RecipeModel>> GetAllRecipes()
         {
             try
@@ -36,8 +36,8 @@ namespace RecipeLewis.Services
                 _logger.LogError(ex, "Recipes failed to get all");
                 return new ServiceResult<RecipeModel>(false, ex.Message);
             }
-
         }
+
         public async Task<ServiceResult<RecipeModel>> GetRecipe(int recipeId)
         {
             try
@@ -50,7 +50,6 @@ namespace RecipeLewis.Services
                 _logger.LogError(ex, "Recipes failed to get all");
                 return new ServiceResult<RecipeModel>(false, ex.Message);
             }
-
         }
 
         public async Task<ServiceResult> AddRecipe(RecipeModel model)

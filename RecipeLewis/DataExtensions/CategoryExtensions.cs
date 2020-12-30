@@ -1,9 +1,5 @@
 ﻿using RecipeLewis.Data;
 using RecipeLewis.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RecipeLewis.DataExtensions
 {
@@ -21,6 +17,7 @@ namespace RecipeLewis.DataExtensions
                 DeletedDateTime = data.DeletedDateTime
             };
         }
+
         public static Category ToData(this CategoryModel model)
         {
             if (model == null) return null;

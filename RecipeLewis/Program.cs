@@ -1,14 +1,6 @@
-using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using Azure.Identity;
 
 namespace RecipeLewis
 {
@@ -24,9 +16,9 @@ namespace RecipeLewis
                 .ConfigureAppConfiguration((context, config) =>
                 {
                     //var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
-                    config.AddAzureKeyVault(
-                    new Uri("https://recipelewisvault.vault.azure.net/"),
-                    new DefaultAzureCredential());
+                    //config.AddAzureKeyVault(
+                    //new Uri("https://recipelewisvault.vault.azure.net/"),
+                    //new DefaultAzureCredential());
                 })
                 .ConfigureLogging(logging =>
                 {

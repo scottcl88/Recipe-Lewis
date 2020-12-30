@@ -1,9 +1,6 @@
 ﻿using RecipeLewis.Data;
 using RecipeLewis.Models;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RecipeLewis.DataExtensions
 {
@@ -29,6 +26,7 @@ namespace RecipeLewis.DataExtensions
             model.ImageSource = imgSrc;
             return model;
         }
+
         public static Document ToData(this DocumentModel model)
         {
             if (model == null) return null;

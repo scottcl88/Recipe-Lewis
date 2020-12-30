@@ -9,6 +9,7 @@ namespace RecipeLewis.Data
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RecipeID { get; set; }
+
         public DateTime Date { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
@@ -22,11 +23,14 @@ namespace RecipeLewis.Data
         public virtual List<Ingredient> Ingredients { get; set; }
         public virtual List<Step> Steps { get; set; }
         public virtual List<Document> Documents { get; set; }
+
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }
+
         [Display(Name = "Modified Date")]
         public DateTime? ModifiedDateTime { get; set; }
+
         [Display(Name = "Deleted Date")]
         public DateTime? DeletedDateTime { get; set; }
     }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using Radzen;
-using RecipeLewis.Data;
 using RecipeLewis.Models;
 using RecipeLewis.Services;
 using System;
@@ -22,15 +21,19 @@ namespace RecipeLewis.Pages
             ShowEditData = false;
             Recipes = new List<RecipeModel>();
         }
+
         public List<RecipeModel> OriginalRecipes { get; set; }
         public List<RecipeModel> Recipes { get; set; }
+
         [Inject]
         public RecipeService RecipeService { get; set; }
+
         [Inject]
         public NotificationService NotificationService { get; set; }
 
         [Inject]
         protected DialogService DialogService { get; set; }
+
         public RecipeModel Model { get; set; }
         public bool ShowEditData { get; set; }
         public bool ShowViewData { get; set; }
@@ -64,6 +67,7 @@ namespace RecipeLewis.Pages
             IsLoading = false;
             StateHasChanged();
         }
+
         public void ChangeTime(string value, string inputName)
         {
             try
@@ -142,6 +146,7 @@ namespace RecipeLewis.Pages
                 NotificationService.Notify(NotificationSeverity.Error, "Failed", ex.Message, 6000);
             }
         }
+
         public async Task HandleValidSubmit()
         {
             ServiceResult result;
@@ -168,6 +173,7 @@ namespace RecipeLewis.Pages
             IsSaving = false;
             StateHasChanged();
         }
+
         public void AddData(MouseEventArgs e)
         {
             ShowEditData = true;
@@ -177,6 +183,7 @@ namespace RecipeLewis.Pages
             };
             StateHasChanged();
         }
+
         public void EditData(MouseEventArgs e, RecipeModel model)
         {
             ShowEditData = true;
@@ -184,6 +191,7 @@ namespace RecipeLewis.Pages
             Model = model;
             StateHasChanged();
         }
+
         public void ViewData(MouseEventArgs e, RecipeModel model)
         {
             ShowViewData = true;
@@ -191,24 +199,30 @@ namespace RecipeLewis.Pages
             Model = model;
             StateHasChanged();
         }
+
         public void CancelEditData(MouseEventArgs e)
         {
             ShowEditData = false;
             ShowViewData = false;
             StateHasChanged();
         }
+
         public string NewIngredient { get; set; }
+
         public void AddIngredient(MouseEventArgs e)
         {
             Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient });
             NewIngredient = string.Empty;
         }
+
         public string NewStep { get; set; }
+
         public void AddStep(MouseEventArgs e)
         {
             Model.Steps.Add(new StepModel() { Title = NewStep });
             NewStep = string.Empty;
         }
+
         public async Task DeleteData()
         {
             IsSaving = true;
@@ -238,8 +252,8 @@ namespace RecipeLewis.Pages
         {
             if (!string.IsNullOrWhiteSpace(input))
             {
-                Recipes = OriginalRecipes.Where(x => (!string.IsNullOrWhiteSpace(x.Title) && x.Title.ToLower().Contains(input.ToLower())) 
-                || (!string.IsNullOrWhiteSpace(x.Author) && x.Author.ToLower().Contains(input.ToLower())) 
+                Recipes = OriginalRecipes.Where(x => (!string.IsNullOrWhiteSpace(x.Title) && x.Title.ToLower().Contains(input.ToLower()))
+                || (!string.IsNullOrWhiteSpace(x.Author) && x.Author.ToLower().Contains(input.ToLower()))
                 || (!string.IsNullOrWhiteSpace(x.Description) && x.Description.ToLower().Contains(input.ToLower()))).ToList();
             }
             else
@@ -252,7 +266,7 @@ namespace RecipeLewis.Pages
         {
             try
             {
-                if(e.FileCount > 3)
+                if (e.FileCount > 3)
                 {
                     NotificationService.Notify(NotificationSeverity.Error, "Cannot upload more than 3 files at once");
                     return;
@@ -283,7 +297,7 @@ namespace RecipeLewis.Pages
                                 fileBytes = ms2.ToArray();
                                 imageStr = Convert.ToBase64String(fileBytes);
                             }
-                        }                        
+                        }
                     }
                     var newDoc = new DocumentModel()
                     {
@@ -297,7 +311,7 @@ namespace RecipeLewis.Pages
                     Model.Documents.Add(newDoc);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 NotificationService.Notify(NotificationSeverity.Error, "Failed to upload files", ex.Message, 6000);
             }

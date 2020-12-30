@@ -1,7 +1,5 @@
-using RecipeLewis.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Models
 {
@@ -12,11 +10,14 @@ namespace RecipeLewis.Models
         public string Title { get; set; }
         public string Amount { get; set; }
         public bool IsLiquid { get; set; }
+
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }
+
         [Display(Name = "Modified Date")]
         public DateTime? ModifiedDateTime { get; set; }
+
         [Display(Name = "Deleted Date")]
         public DateTime? DeletedDateTime { get; set; }
     }

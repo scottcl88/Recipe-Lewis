@@ -2,13 +2,8 @@
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using Radzen;
-using RecipeLewis.Data;
 using RecipeLewis.Models;
 using RecipeLewis.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RecipeLewis.Pages
@@ -19,10 +14,13 @@ namespace RecipeLewis.Pages
         {
             Model = new RecipeModel();
         }
+
         [Parameter]
         public int RecipeID { get; set; }
+
         [Inject]
         public RecipeService RecipeService { get; set; }
+
         [Inject]
         public NotificationService NotificationService { get; set; }
 
@@ -31,6 +29,7 @@ namespace RecipeLewis.Pages
 
         [Inject]
         protected DialogService DialogService { get; set; }
+
         public RecipeModel Model { get; set; }
 
         protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -55,10 +54,12 @@ namespace RecipeLewis.Pages
             }
             StateHasChanged();
         }
+
         public async Task Print(MouseEventArgs e)
         {
             await JSRuntime.InvokeVoidAsync("window.print");
         }
+
         public async Task Close(MouseEventArgs e)
         {
             await JSRuntime.InvokeVoidAsync("window.history.back");

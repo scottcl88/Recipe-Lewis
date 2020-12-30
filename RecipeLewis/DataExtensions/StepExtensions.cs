@@ -1,9 +1,5 @@
 ﻿using RecipeLewis.Data;
 using RecipeLewis.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace RecipeLewis.DataExtensions
 {
@@ -23,6 +19,7 @@ namespace RecipeLewis.DataExtensions
                 DeletedDateTime = data.DeletedDateTime
             };
         }
+
         public static Step ToData(this StepModel model)
         {
             if (model == null) return null;

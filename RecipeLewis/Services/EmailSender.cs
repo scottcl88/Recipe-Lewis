@@ -3,8 +3,6 @@ using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace RecipeLewis.Services
@@ -14,6 +12,7 @@ namespace RecipeLewis.Services
         public string SendGridUser { get; set; }
         public string SendGridKey { get; set; }
     }
+
     public class EmailSender : IEmailSender
     {
         public EmailSender(IOptions<AuthMessageSenderOptions> optionsAccessor)

@@ -1,16 +1,13 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
-using System.Text.Encodings.Web;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using RecipeLewis.Services;
+using System.ComponentModel.DataAnnotations;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace RecipeLewis.Areas.Identity.Pages.Account
 {
@@ -37,8 +34,10 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
             [EmailAddress]
             public string Email { get; set; }
         }
+
         public string Message { get; set; } = "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.";
         public bool Confirmed { get; set; }
+
         public void OnGet()
         {
         }

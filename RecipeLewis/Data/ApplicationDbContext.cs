@@ -2,8 +2,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace RecipeLewis.Data
 {
@@ -13,7 +11,9 @@ namespace RecipeLewis.Data
             : base(options)
         {
         }
+
         public DbSet<Recipe> Recipes { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);

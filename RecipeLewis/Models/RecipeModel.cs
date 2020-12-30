@@ -1,8 +1,6 @@
-using RecipeLewis.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Models
 {
@@ -16,6 +14,7 @@ namespace RecipeLewis.Models
             CreatedDateTime = DateTime.UtcNow;
             TotalTimeCalculated = true;
         }
+
         public int RecipeID { get; set; }
         public DateTime Date { get; set; }
         public string Title { get; set; }
@@ -34,11 +33,14 @@ namespace RecipeLewis.Models
         public List<IngredientModel> Ingredients { get; set; }
         public List<StepModel> Steps { get; set; }
         public List<DocumentModel> Documents { get; set; }
+
         [Required]
         [Display(Name = "Created Date")]
         public DateTime CreatedDateTime { get; set; }
+
         [Display(Name = "Modified Date")]
         public DateTime? ModifiedDateTime { get; set; }
+
         [Display(Name = "Deleted Date")]
         public DateTime? DeletedDateTime { get; set; }
     }
