@@ -25,14 +25,12 @@ namespace RecipeLewis
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
-        // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseLazyLoadingProxies()
                 .UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+                    Configuration["DefaultConnection"]));
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
             services.AddRazorPages();
@@ -56,8 +54,6 @@ namespace RecipeLewis
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
-                    //IConfigurationSection googleAuthNSection =
-                    //    Configuration.GetSection("Authentication:Google");
                     options.ClientId = Configuration["GoogleClientId"];
                     options.ClientSecret = Configuration["GoogleClientSecret"];
                 });
@@ -69,16 +65,14 @@ namespace RecipeLewis
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseDeveloperExceptionPage();
-            app.UseMigrationsEndPoint();
             if (env.IsDevelopment())
             {
-                //app.UseDeveloperExceptionPage();
-                //app.UseDatabaseErrorPage();
+                app.UseDeveloperExceptionPage();
+                app.UseMigrationsEndPoint();
             }
             else
             {
-                //app.UseExceptionHandler("/Error");
+                app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
 
