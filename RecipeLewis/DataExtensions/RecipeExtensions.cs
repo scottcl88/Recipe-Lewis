@@ -22,6 +22,7 @@ namespace RecipeLewis.DataExtensions
                 PrepTime = data.PrepTime,
                 ServingSize = data.ServingSize,
                 Steps = data.Steps?.Select(x => x.ToModel()).ToList(),
+                Tags = data.Tags?.Select(x => x.ToModel()).ToList(),
                 Title = data.Title,
                 TotalTime = data.TotalTime,
                 TotalTimeCalculated = data.TotalTimeCalculated,

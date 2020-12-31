@@ -13,11 +13,11 @@ namespace RecipeLewis.Data
         }
 
         public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<Tag> Tags { get; set; }
 
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        protected override void OnModelCreating(ModelBuilder builder)
         {
-            base.OnModelCreating(modelBuilder);
-            //modelBuilder.Entity<VehicleMake>().HasData(new VehicleMake { Name = "" });
+            base.OnModelCreating(builder);
             var dateTimeConverter = new ValueConverter<DateTime, DateTime>(
                                                     v => v.ToUniversalTime(),
                                                     v => DateTime.SpecifyKind(v, DateTimeKind.Utc));
@@ -26,7 +26,7 @@ namespace RecipeLewis.Data
                 v => v.HasValue ? v.Value.ToUniversalTime() : v,
                 v => v.HasValue ? DateTime.SpecifyKind(v.Value, DateTimeKind.Utc) : v);
 
-            foreach (var entityType in modelBuilder.Model.GetEntityTypes())
+            foreach (var entityType in builder.Model.GetEntityTypes())
             {
                 if (entityType.IsKeyless)
                 {

@@ -37,6 +37,7 @@ namespace RecipeLewis
             services.AddServerSideBlazor(options => options.JSInteropDefaultCallTimeout = TimeSpan.FromMinutes(3));
             services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
             services.AddScoped<RecipeService>();
+            services.AddScoped<TagService>();
             services.AddScoped<DialogService>();
             services.AddScoped<NotificationService>();
             services.AddDatabaseDeveloperPageExceptionFilter();

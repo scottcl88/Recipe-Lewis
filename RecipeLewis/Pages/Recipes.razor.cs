@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 using Radzen;
 using RecipeLewis.Models;
 using RecipeLewis.Services;
@@ -20,13 +21,19 @@ namespace RecipeLewis.Pages
             Model = new RecipeModel();
             ShowEditData = false;
             Recipes = new List<RecipeModel>();
+            AllTags = new List<TagModel>();
         }
 
         public List<RecipeModel> OriginalRecipes { get; set; }
         public List<RecipeModel> Recipes { get; set; }
 
+        public List<TagModel> AllTags { get; set; }
+        public string AvailableTags { get; set; }
         [Inject]
         public RecipeService RecipeService { get; set; }
+        [Inject]
+        public TagService TagService { get; set; }
+
 
         [Inject]
         public NotificationService NotificationService { get; set; }
@@ -59,6 +66,24 @@ namespace RecipeLewis.Pages
             {
                 Recipes = result.DataList;
                 OriginalRecipes = result.DataList;
+            }
+            else
+            {
+                NotificationService.Notify(NotificationSeverity.Error, "Failed to load", result.Message, 6000);
+            }
+            IsLoading = false;
+            StateHasChanged();
+        }
+        private async Task LoadTags()
+        {
+            if (AllTags.Count > 0) return;//Already loadded it
+            IsLoading = true;
+            StateHasChanged();
+            var result = await TagService.GetAllTags();
+            if (result.Success)
+            {
+                AllTags = result.DataList;
+                AvailableTags = string.Join(",", AllTags.Select(x => x.Title));
             }
             else
             {
@@ -152,6 +177,19 @@ namespace RecipeLewis.Pages
             ServiceResult result;
             IsSaving = true;
             StateHasChanged();
+
+            //Make sure they only add new unique tags            
+            List<TagModel> newTags = Model.Tags.ToList();
+            foreach(var newTag in newTags)
+            {
+                var existingTag = AllTags.FirstOrDefault(x => x.Title == newTag.Title);
+                if(existingTag != null)
+                {
+                    newTag.TagID = existingTag.TagID;
+                }
+            }
+            Model.Tags = newTags;
+
             if (Model.RecipeID > 0)
             {
                 result = await RecipeService.UpdateRecipe(Model);
@@ -174,8 +212,9 @@ namespace RecipeLewis.Pages
             StateHasChanged();
         }
 
-        public void AddData(MouseEventArgs e)
+        public async Task AddData(MouseEventArgs e)
         {
+            await LoadTags();
             ShowEditData = true;
             Model = new RecipeModel
             {
@@ -184,8 +223,9 @@ namespace RecipeLewis.Pages
             StateHasChanged();
         }
 
-        public void EditData(MouseEventArgs e, RecipeModel model)
+        public async Task EditData(MouseEventArgs e, RecipeModel model)
         {
+            await LoadTags();
             ShowEditData = true;
             ShowViewData = false;
             Model = model;
@@ -259,6 +299,27 @@ namespace RecipeLewis.Pages
             else
             {
                 Recipes = OriginalRecipes;
+            }
+        }
+        public string NewTag { get; set; }
+        public void AddTag()
+        {
+            //Don't add dupe tags
+            var existingTag = Model.Tags.FirstOrDefault(x => x.Title == NewTag);
+            if (existingTag == null)
+            {
+                Model.Tags.Add(new TagModel() { Title = NewTag });
+            }
+            NewTag = "";
+            StateHasChanged();
+        }
+        public void RemoveTag(int tagId)
+        {
+            var foundTag = Model.Tags.FirstOrDefault(x => x.TagID == tagId);
+            if (foundTag != null)
+            {
+                Model.Tags.Remove(foundTag);
+                StateHasChanged();
             }
         }
 

@@ -17,7 +17,10 @@
   <link href="css/site.css" rel="stylesheet" />
   <link href="css/images.css" rel="stylesheet" />
   <link rel="stylesheet" href="_content/Radzen.Blazor/css/default-base.css">
+  @*<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">*@
   <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
+  <link href="~/tags.css" rel="stylesheet" />
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 </head>
 <body>
   <app>
@@ -38,19 +41,8 @@
     <span class="close">&times;</span>
     <img class="modal-content" id="full-image">
   </div>
-  <script>
-    $(document).on("click", ".images img", (e) => {
-      $("#full-image").attr("src", $(e.target).attr("src"));
-      $('#image-viewer').show();
-    });
-    $(document).on("click", "#image-viewer .close", () => {
-      $('#image-viewer').hide();
-    });
-    $(document).on("click", "#selectFileButton", () => {
-      $('#files').click();
-    });
-  </script>
   <script src="_framework/blazor.server.js"></script>
   <script src="_content/Radzen.Blazor/Radzen.Blazor.js"></script>
+  <script src="~/site.js"></script>
 </body>
 </html>

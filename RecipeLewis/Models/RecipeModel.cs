@@ -11,6 +11,7 @@ namespace RecipeLewis.Models
             Ingredients = new List<IngredientModel>();
             Steps = new List<StepModel>();
             Documents = new List<DocumentModel>();
+            Tags = new List<TagModel>();
             CreatedDateTime = DateTime.UtcNow;
             TotalTimeCalculated = true;
         }
