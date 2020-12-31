@@ -61,25 +61,31 @@
                 <div id="tags">
                   @foreach (var tag in Model.Tags)
                   {
-                    <span class="tag" data-tag-id="@tag.TagID" @onclick="(args => RemoveTag(tag.TagID))">@tag.Title</span>
+                    <span class="tag" @onclick="(args => RemoveTag(tag.TagID, tag.TempID))">@tag.Title</span>
                   }
                   <RadzenTextBox id="tagInput" Change="@((arg) => AddTag())" Name="TagInput" Placeholder="Add a tag" type="text" @bind-Value="NewTag" @bind-disabled="ShowViewData" />
                   <input id="hiddenTagInput" @bind-value="AvailableTags" hidden />
                 </div>
               </div>
             </div>
-            <div class="row mt-3 align-items-center">
-              <div class="col-auto offset-1">
-                <button type="button" id="selectFileButton" class="btn btn-sm btn-secondary">Add Picture</button>
-                <InputFile id="files" style="display: none;" OnChange="@OnInputFileChange" multiple accept=".gif,.jpg,.jpeg,.png,.tif,.tiff" />
+            @if (!ShowViewData)
+            {
+              <div class="row mt-3 align-items-center">
+                <div class="col-auto offset-1">
+                  <button type="button" id="selectFileButton" class="btn btn-sm btn-secondary">Add Picture</button>
+                  <InputFile id="files" style="display: none;" OnChange="@OnInputFileChange" multiple accept=".gif,.jpg,.jpeg,.png,.tif,.tiff" />
+                </div>
               </div>
-            </div>
+            }
             <div class="row mt-2">
               <div class="col-auto">
-                <div class="images">
+                <div class="images" style="display:inline-flex;">
                   @foreach (var document in Model.Documents)
                   {
-                    <img class="mr-2" src="@document.ImageSource" alt="@document.Filename" width="200" height="150">
+                    <div style="position:relative;">
+                      <img class="mr-2" src="@document.ImageSource" alt="@document.Filename" width="200" height="150">
+                      <span class="close-image" @onclick="(args => ConfirmDeleteDocument(document.DocumentID, document.TempID))"></span>
+                    </div>
                   }
                 </div>
               </div>
@@ -196,13 +202,13 @@
             @if (Model.RecipeID > 0)
             {
               <button type="submit" class="btn btn-primary" disabled="@IsSaving">Update</button>
-              <button type="button" class="btn btn-secondary offset-1" disabled="@IsSaving" @onclick="CancelEditData">Cancel</button>
-              <button type="button" class="btn btn-danger offset-1" disabled="@IsSaving" @onclick="ConfirmDelete">Delete</button>
+              <button type="button" class="btn btn-secondary offset-1" disabled="@IsSaving" @onclick="ConfirmCancel">Cancel</button>
+              <button type="button" class="btn btn-danger offset-1" disabled="@IsSaving" @onclick="ConfirmDeleteRecipe">Delete</button>
             }
             else
             {
               <button type="submit" class="btn btn-primary" disabled="@IsSaving">Add</button>
-              <button type="button" class="btn btn-secondary offset-1" disabled="@IsSaving" @onclick="CancelEditData">Cancel</button>
+              <button type="button" class="btn btn-secondary offset-1" disabled="@IsSaving" @onclick="ConfirmCancel">Cancel</button>
             }
           }
           else
@@ -242,7 +248,7 @@
         else
         {
           <RadzenTextBox Placeholder="Search..." @oninput=@(args => Search(args)) @bind-value="SearchText" Style="width:100%;" class="mb-2" />
-          <RadzenGrid AllowPaging="true" PageSize="5" Data="@Recipes" TItem="IModel" EmptyText="No recipes found">
+          <RadzenGrid AllowPaging="true" PageSize="10" Data="@Recipes" TItem="IModel" EmptyText="No recipes found">
             <Columns>
               <RadzenGridColumn TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
               </RadzenGridColumn>
@@ -254,7 +260,7 @@
                   <div id="tags" class="readonly">
                     @foreach (var tag in data.Tags)
                     {
-                      <span class="tag" data-tag-id="@tag.TagID" @onclick="(args => RemoveTag(tag.TagID))">@tag.Title</span>
+                      <span class="tag">@tag.Title</span>
                     }
                   </div>
                 </Template>
@@ -278,12 +284,34 @@
   }
 </div>
 @code {
-  async Task ConfirmDelete() => await DialogService.OpenAsync("Are you sure?", ds =>
+  async Task ConfirmDeleteRecipe() => await DialogService.OpenAsync("Are you sure?", ds =>
   @<div>
-    <p Style="margin-bottom: 1rem">Are you sure you want to delete?</p>
+    <p Style="margin-bottom: 1rem">Are you sure you want to delete this recipe?</p>
     <div class="row">
       <div class="col-md-12">
-        <RadzenButton Text="Yes" Click="() => ds.Close(true)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Yes" Click="() => DeleteRecipe(ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
+      </div>
+    </div>
+  </div>
+  );
+  async Task ConfirmDeleteDocument(int documentId, int tempId) => await DialogService.OpenAsync("Are you sure?", ds =>
+  @<div>
+    <p Style="margin-bottom: 1rem">Are you sure you want to delete this document?</p>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Text="Yes" Click="() => RemoveDocument(documentId, tempId, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
+      </div>
+    </div>
+  </div>
+  );
+  async Task ConfirmCancel() => await DialogService.OpenAsync("Are you sure?", ds =>
+  @<div>
+    <p Style="margin-bottom: 1rem">Are you sure you want to cancel and lose your changes?</p>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Text="Yes" Click="() => CancelEditData(ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
         <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
       </div>
     </div>

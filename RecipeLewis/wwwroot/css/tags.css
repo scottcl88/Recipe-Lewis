@@ -41,13 +41,6 @@
             font-size: 10px;
         }
 
-    /* #tags.readonly span.tag:after {
-        content: none !important;
-        border: none !important;
-        padding: 0 !important;
-        margin: 0 !important;
-    } */
-
     #tags input {
         background: #eee;
         border: 0;

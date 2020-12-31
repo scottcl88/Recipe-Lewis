@@ -5,10 +5,6 @@ img {
     transition: 0.3s;
 }
 
-/*img:hover {
-        opacity: 0.7;
-    }*/
-
 /* The Modal (background) */
 #image-viewer {
     display: none;
@@ -23,6 +19,23 @@ img {
     background-color: rgb(0,0,0);
     background-color: rgba(0,0,0,0.9);
 }
+
+
+.close-image {
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+    padding-right: 35px;
+    color: red;
+    font-size: 24px;
+    text-shadow: black;
+    text-shadow: 1px 1px black;
+}
+
+    .close-image:before {
+        content: 'x';
+    }
 
 .modal-content {
     margin: auto;

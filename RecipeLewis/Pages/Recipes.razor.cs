@@ -51,7 +51,6 @@ namespace RecipeLewis.Pages
         {
             if (firstRender)
             {
-                DialogService.OnClose += (res) => Close(res);
                 await LoadRecipes();
             }
         }
@@ -246,6 +245,13 @@ namespace RecipeLewis.Pages
             StateHasChanged();
         }
 
+        public void CancelEditData(DialogService ds)
+        {
+            ds.Close();
+            ShowEditData = false;
+            ShowViewData = false;
+            StateHasChanged();
+        }
         public string NewIngredient { get; set; }
 
         public void AddIngredient(MouseEventArgs e)
@@ -262,8 +268,9 @@ namespace RecipeLewis.Pages
             NewStep = string.Empty;
         }
 
-        public async Task DeleteData()
+        public async Task DeleteRecipe(DialogService ds)
         {
+            ds.Close();
             IsSaving = true;
             var result = await RecipeService.DeleteRecipe(Model);
             if (result.Success)
@@ -279,13 +286,6 @@ namespace RecipeLewis.Pages
             IsSaving = false;
         }
 
-        public async Task Close(dynamic result)
-        {
-            if (result)
-            {
-                await DeleteData();
-            }
-        }
         public string SearchText { get; set; }
         public void Search(ChangeEventArgs changeEvent)
         {
@@ -316,12 +316,38 @@ namespace RecipeLewis.Pages
             NewTag = "";
             StateHasChanged();
         }
-        public void RemoveTag(int tagId)
+        public void RemoveTag(int tagId, int tempId)
         {
-            var foundTag = Model.Tags.FirstOrDefault(x => x.TagID == tagId);
+            TagModel foundTag = null;
+            if (tagId <= 0)
+            {
+                foundTag = Model.Tags.FirstOrDefault(x => x.TempID == tempId);
+            }
+            else
+            {
+                foundTag = Model.Tags.FirstOrDefault(x => x.TagID == tagId);
+            }
             if (foundTag != null)
             {
                 Model.Tags.Remove(foundTag);
+                StateHasChanged();
+            }
+        }
+        public void RemoveDocument(int documentId, int tempId, DialogService ds)
+        {
+            ds.Close();
+            DocumentModel foundDoc = null;
+            if(documentId <= 0)
+            {
+                foundDoc = Model.Documents.FirstOrDefault(x => x.TempID == tempId);
+            }
+            else
+            {
+                foundDoc = Model.Documents.FirstOrDefault(x => x.DocumentID == documentId);
+            }
+            if (foundDoc != null)
+            {
+                Model.Documents.Remove(foundDoc);
                 StateHasChanged();
             }
         }
