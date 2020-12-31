@@ -16,13 +16,13 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly IEmailSender _emailSender;
-        private readonly EmailSender _emailSender2;
+        private readonly EmailSender _myEmailSender;
 
-        public ResendEmailConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, EmailSender emailSender2)
+        public ResendEmailConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender emailSender, EmailSender myEmailSender)
         {
             _userManager = userManager;
             _emailSender = emailSender;
-            _emailSender2 = emailSender2;
+            _myEmailSender = myEmailSender;
         }
 
         [BindProperty]
@@ -52,7 +52,6 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
             var user = await _userManager.FindByEmailAsync(Input.Email);
             if (user == null)
             {
-                //ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
                 return Page();
             }
 
@@ -64,13 +63,9 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
                 pageHandler: null,
                 values: new { userId = userId, code = code },
                 protocol: Request.Scheme);
-            await _emailSender.SendEmailAsync(
-                Input.Email,
-                "Confirm your email", callbackUrl);
 
-            _emailSender2.Test();
+            await _myEmailSender.SendEmailConfirmation(callbackUrl, user.UserName, Input.Email);
 
-            //ModelState.AddModelError(string.Empty, "Verification email sent. If you have an account with us, you should recieve it shortly. Please check your email.");
             return Page();
         }
     }

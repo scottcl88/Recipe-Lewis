@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Options;
+using RecipeLewis.DataExtensions;
 using SendGrid;
 using SendGrid.Helpers.Mail;
-using System;
 using System.Threading.Tasks;
 
 namespace RecipeLewis.Services
@@ -11,6 +11,7 @@ namespace RecipeLewis.Services
     {
         public string SendGridUser { get; set; }
         public string SendGridKey { get; set; }
+        public string PersonalEmail { get; set; }
     }
 
     public class EmailSender : IEmailSender
@@ -22,9 +23,9 @@ namespace RecipeLewis.Services
 
         public AuthMessageSenderOptions Options { get; } //set only via Secret Manager
 
-        public Task SendEmailAsync(string email, string subject, string message)
+        public Task SendEmailAsync(string email, string subject, string htmlMessage)
         {
-            return Execute(Options.SendGridKey, subject, message, email);
+            return Execute(Options.SendGridKey, subject, htmlMessage, email);
         }
 
         public async Task Execute(string apiKey, string subject, string message, string email)
@@ -32,22 +33,32 @@ namespace RecipeLewis.Services
             var client = new SendGridClient(apiKey);
             var from = new EmailAddress("admin@recipelewis.com", "Recipe Lewis");
             var to = new EmailAddress(email);
-            var msg = MailHelper.CreateSingleTemplateEmail(from, to, "d-1f0e2ee3bada4a7d9dcfd8b7e2d24926", new
-            {
-                Sender_Name = "John Smith",
-                code = message
-            });
-            //var msg = MailHelper.CreateSingleEmail(from, to, subject, plainTextContent, htmlContent);
+            var msg = MailHelper.CreateSingleEmail(from, to, subject, message, message);
             var response = await client.SendEmailAsync(msg);
             if (!response.IsSuccessStatusCode)
             {
-                throw new Exception("Email failed to send");
+                throw new EmailSendException($"Email failed to send to {to.Email}");
             }
         }
 
-        public void Test()
+        public async Task SendEmailConfirmation(string code, string senderName, string toEmail)
         {
-            //test
+            var client = new SendGridClient(Options.SendGridKey);
+            var from = new EmailAddress("admin@recipelewis.com", "Recipe Lewis");
+            var to = new EmailAddress(toEmail);
+            var msg = MailHelper.CreateSingleTemplateEmail(from, to, "d-1f0e2ee3bada4a7d9dcfd8b7e2d24926", new
+            {
+                Sender_Name = senderName,
+                code = code
+            });
+            var response = await client.SendEmailAsync(msg);
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new EmailSendException($"Email failed to send to {to.Email}");
+            }
+            var adminTo = new EmailAddress(Options.PersonalEmail, "Recipe Lewis");
+            msg = MailHelper.CreateSingleEmail(from, adminTo, "RecipeLewis-Confirm Email", "", "");
+            await client.SendEmailAsync(msg);
         }
     }
 }
