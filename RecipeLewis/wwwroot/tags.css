@@ -5,6 +5,11 @@
     font-family: Arial;
 }
 
+    #tags.readonly {
+        border: none !important;
+        cursor: context-menu !important;
+    }
+
     #tags span.tag {
         cursor: pointer;
         display: block;
@@ -16,11 +21,17 @@
         margin: 4px;
     }
 
-        #tags span.tag:hover {
+    #tags.readonly span.tag{
+        border: none !important;
+        cursor: context-menu !important;
+        padding-right: 10px !important;
+    }
+
+        #tags:not(.readonly) span.tag:hover {
             opacity: 0.7;
         }
 
-        #tags span.tag:after {
+        #tags:not(.readonly) span.tag:after {
             position: absolute;
             content: "×";
             border: 1px solid;
@@ -29,6 +40,13 @@
             margin: 3px 0 10px 7px;
             font-size: 10px;
         }
+
+    /* #tags.readonly span.tag:after {
+        content: none !important;
+        border: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    } */
 
     #tags input {
         background: #eee;

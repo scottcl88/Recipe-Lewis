@@ -1,9 +1,8 @@
 ﻿
-$(document).on('focusin', '#tags > input[type=text]', function () {
+$(document).on('focusin', '#tags:not(".readonly") > input[type=text]', function () {
     var tagValue = $("#hiddenTagInput").val();
     var availableTags = tagValue.split(',');
-    console.log("Setting up autocomplete: ", availableTags);
-    $("#tags > input[type=text]").autocomplete({
+    $('#tags:not(".readonly") > input[type=text]').autocomplete({
         source: availableTags,
         select: function (event, ui) {
             //small hack workaround to trigger the change which is handled by code to actually add the tag to the model, then refocus it
@@ -15,7 +14,7 @@ $(document).on('focusin', '#tags > input[type=text]', function () {
         }
     });
 });
-$(document).on('keyup', '#tags > input[type=text]', function (e) {
+$(document).on('keyup', '#tags:not(".readonly") > input[type=text]', function (e) {
     if (/(188|13|32)/.test(e.which)) {
         //small hack workaround to trigger the change which is handled by code to actually add the tag to the model, then refocus it
         $("#selectFileButton").focus();

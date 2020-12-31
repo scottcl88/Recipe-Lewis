@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
 using Radzen;
 using RecipeLewis.Models;
 using RecipeLewis.Services;
@@ -287,19 +286,23 @@ namespace RecipeLewis.Pages
                 await DeleteData();
             }
         }
-
-        public void Search(string input)
+        public string SearchText { get; set; }
+        public void Search(ChangeEventArgs changeEvent)
         {
-            if (!string.IsNullOrWhiteSpace(input))
+            SearchText = (string)changeEvent?.Value;
+            if (!string.IsNullOrWhiteSpace(SearchText))
             {
-                Recipes = OriginalRecipes.Where(x => (!string.IsNullOrWhiteSpace(x.Title) && x.Title.ToLower().Contains(input.ToLower()))
-                || (!string.IsNullOrWhiteSpace(x.Author) && x.Author.ToLower().Contains(input.ToLower()))
-                || (!string.IsNullOrWhiteSpace(x.Description) && x.Description.ToLower().Contains(input.ToLower()))).ToList();
+                var text = SearchText.ToLower();
+                Recipes = OriginalRecipes.Where(x => (!string.IsNullOrWhiteSpace(x.Title) && x.Title.ToLower().Contains(text))
+                || (!string.IsNullOrWhiteSpace(x.Author) && x.Author.ToLower().Contains(text))
+                || (x.Tags.Any(y => y.Title.ToLower().Contains(text)))
+                || (!string.IsNullOrWhiteSpace(x.Description) && x.Description.ToLower().Contains(text))).ToList();
             }
             else
             {
                 Recipes = OriginalRecipes;
             }
+            StateHasChanged();
         }
         public string NewTag { get; set; }
         public void AddTag()

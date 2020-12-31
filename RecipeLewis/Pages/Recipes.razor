@@ -64,7 +64,7 @@
                     <span class="tag" data-tag-id="@tag.TagID" @onclick="(args => RemoveTag(tag.TagID))">@tag.Title</span>
                   }
                   <RadzenTextBox id="tagInput" Change="@((arg) => AddTag())" Name="TagInput" Placeholder="Add a tag" type="text" @bind-Value="NewTag" @bind-disabled="ShowViewData" />
-                  <input id="hiddenTagInput" @bind-value="AvailableTags" hidden/>
+                  <input id="hiddenTagInput" @bind-value="AvailableTags" hidden />
                 </div>
               </div>
             </div>
@@ -226,14 +226,12 @@
   {
     <div class="row justify-content-start">
       <div class="col-auto">
-        <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData">Add Recipe</button>
+        <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData" disabled="@IsLoading">Add Recipe</button>
       </div>
     </div>
     <hr />
     <div class="row justify-content-start mt-1">
       <div class="col-12">
-        <h3>List</h3>
-
         @if (IsLoading)
         {
           <br />
@@ -243,15 +241,25 @@
         }
         else
         {
-          <RadzenTextBox Placeholder="Search..." Change=@(args => Search(args)) Style="width:100%;" class="mb-2" />
+          <RadzenTextBox Placeholder="Search..." @oninput=@(args => Search(args)) @bind-value="SearchText" Style="width:100%;" class="mb-2" />
           <RadzenGrid AllowPaging="true" PageSize="5" Data="@Recipes" TItem="IModel" EmptyText="No recipes found">
             <Columns>
-              <RadzenGridColumn Filterable="false" Sortable="false" TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
+              <RadzenGridColumn TItem="IModel" Width="50px" Property="RecipeID" Title="Id">
               </RadzenGridColumn>
               <RadzenGridColumn TItem="IModel" Property="Title" Title="Title" />
-              <RadzenGridColumn TItem="IModel" Property="Author" Width="220px" Title="Author" />
+              <RadzenGridColumn TItem="IModel" Property="Author" Title="Author" />
               <RadzenGridColumn TItem="IModel" Property="Description" Title="Description" />
-              <RadzenGridColumn TItem="IModel" Filterable="false" Sortable="false" Width="auto">
+              <RadzenGridColumn TItem="IModel" Width="225px" Title="Tags">
+                <Template Context="data">
+                  <div id="tags" class="readonly">
+                    @foreach (var tag in data.Tags)
+                    {
+                      <span class="tag" data-tag-id="@tag.TagID" @onclick="(args => RemoveTag(tag.TagID))">@tag.Title</span>
+                    }
+                  </div>
+                </Template>
+              </RadzenGridColumn>
+              <RadzenGridColumn TItem="IModel" Width="175px">
                 <Template Context="data">
                   <AuthorizeView>
                     <Authorized>
