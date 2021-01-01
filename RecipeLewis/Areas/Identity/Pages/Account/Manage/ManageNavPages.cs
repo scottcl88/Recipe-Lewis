@@ -9,6 +9,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
         public static string Admin => "Admin";
 
         public static string Email => "Email";
+        public static string DownloadRecipes => "Download Recipes";
 
         public static string ChangePassword => "ChangePassword";
 
@@ -38,6 +39,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
         public static string AdminNavClass(ViewContext viewContext) => PageNavClass(viewContext, Admin);
+        public static string DownloadRecipesNavClass(ViewContext viewContext) => PageNavClass(viewContext, DownloadRecipes);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

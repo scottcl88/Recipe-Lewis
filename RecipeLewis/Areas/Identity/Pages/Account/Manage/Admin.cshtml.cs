@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using RecipeLewis.Data;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,17 +13,12 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
     public partial class AdminModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public AdminModel(ApplicationDbContext context,
-            UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminModel(UserManager<IdentityUser> userManager)
         {
-            _context = context;
             _userManager = userManager;
-            _roleManager = roleManager;
             Input = new InputModel();
         }
-        public ApplicationDbContext _context { get; set; }
         public IdentityUser FoundUser { get; set; }
         public bool FoundUserIsMod { get; set; }
         public IList<string> FoundUserRoles { get; set; }

@@ -1,3 +1,4 @@
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -23,6 +24,7 @@ namespace RecipeLewis.Data
         public virtual List<Tag> Tags { get; set; }
         public virtual List<Ingredient> Ingredients { get; set; }
         public virtual List<Step> Steps { get; set; }
+        [JsonIgnore]
         public virtual List<Document> Documents { get; set; }
 
         [Required]

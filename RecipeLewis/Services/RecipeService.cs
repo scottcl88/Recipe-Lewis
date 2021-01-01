@@ -59,6 +59,7 @@ namespace RecipeLewis.Services
             try
             {
                 var data = model.ToData(new Recipe());
+                data.CreatedDateTime = DateTime.UtcNow;
                 if (data.Documents.Count > 3)
                 {
                     return new ServiceResult(false, "Cannot upload more than 3 files at once");
