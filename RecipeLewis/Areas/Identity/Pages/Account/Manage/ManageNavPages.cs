@@ -6,6 +6,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
     public static class ManageNavPages
     {
         public static string Index => "Index";
+        public static string Admin => "Admin";
 
         public static string Email => "Email";
 
@@ -36,6 +37,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
         public static string PersonalDataNavClass(ViewContext viewContext) => PageNavClass(viewContext, PersonalData);
 
         public static string TwoFactorAuthenticationNavClass(ViewContext viewContext) => PageNavClass(viewContext, TwoFactorAuthentication);
+        public static string AdminNavClass(ViewContext viewContext) => PageNavClass(viewContext, Admin);
 
         private static string PageNavClass(ViewContext viewContext, string page)
         {

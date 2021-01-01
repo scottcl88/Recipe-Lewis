@@ -1,0 +1,68 @@
+﻿@page
+@model AdminModel
+@{
+  ViewData["Title"] = "Manage Users";
+  ViewData["ActivePage"] = ManageNavPages.Admin;
+}
+
+<h4>@ViewData["Title"]</h4>
+<partial name="_StatusMessage" model="Model.StatusMessage" />
+<div class="row">
+  <div class="col-md-6">
+    <form id="admin-form" method="post">
+      <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+      <p>Enter a username and search to modify user</p>
+      <div class="form-group">
+        <label asp-for="Input.Username"></label>
+        <input asp-for="Input.Username" class="form-control" />
+        <span asp-validation-for="Input.Username" class="text-danger"></span>
+      </div>
+      <button id="searcg-button" type="submit" class="btn btn-primary">Search</button>
+    </form>
+  </div>
+</div>
+<hr />
+<br />
+@if (Model.FoundUser != null)
+{
+  <h3>User found</h3>
+  <p>Username: @Model.FoundUser.UserName</p>
+  <p>Email: @Model.FoundUser.Email</p>
+  <p>UserId: @Model.FoundUser.Id</p>
+  <p>
+    Roles:
+    <ul>
+      @foreach (var role in Model.FoundUserRoles)
+      {
+        <li>@role</li>
+      }
+    </ul>
+  </p>
+  @if (!Model.FoundUserIsMod)
+  {
+    <a id="make-moderator-button" type="button" class="btn btn-primary" asp-page-handler="MakeModerator" asp-route-id="@Model.FoundUser.Id">Make Moderator</a>
+  }
+  @if (Model.FoundUserIsMod)
+  {
+    <a id="remove-all-button" type="button" class="btn btn-danger" asp-page-handler="RemoveRoles" asp-route-id="@Model.FoundUser.Id">Remove All Roles</a>
+  }
+}
+else
+{
+  @Model.StatusMessage
+}
+
+@section Scripts {
+  <partial name="_ValidationScriptsPartial" />
+  @*<script type="text/javascript">
+      $(document).on("click", "#make-moderator-button", (e) => {
+        $.ajax({
+          type: 'GET',
+          url: '/MakeModerator',
+          success: function (result) {
+            alert(result);
+          }
+        });
+      });
+    </script>*@
+}

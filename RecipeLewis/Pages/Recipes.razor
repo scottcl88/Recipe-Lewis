@@ -267,7 +267,7 @@
               </RadzenGridColumn>
               <RadzenGridColumn TItem="IModel" Width="175px">
                 <Template Context="data">
-                  <AuthorizeView>
+                  <AuthorizeView Roles="Moderator">
                     <Authorized>
                       <button type="button" class="btn btn-outline-secondary btn-sm" @onclick="(e) => EditData(e, data)">Edit</button>
                     </Authorized>

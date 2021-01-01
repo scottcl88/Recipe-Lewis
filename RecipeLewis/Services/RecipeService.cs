@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using RecipeLewis.Data;
@@ -12,6 +13,7 @@ namespace RecipeLewis.Services
     public class RecipeService
     {
         private readonly ILogger _logger;
+        private readonly ApplicationDbContext _context;
 
         public RecipeService(ApplicationDbContext context, ILogger<Recipe> logger)
         {
@@ -19,7 +21,6 @@ namespace RecipeLewis.Services
             _logger = logger;
         }
 
-        public ApplicationDbContext _context { get; set; }
         private readonly string[] permittedExtensions = new string[] { "gif", "jpg", "jpeg", "png", "tif", "tiff" };
 
         public async Task<ServiceResult<RecipeModel>> GetAllRecipes()
@@ -52,6 +53,7 @@ namespace RecipeLewis.Services
             }
         }
 
+        [Authorize(Roles = "Moderator")]
         public async Task<ServiceResult> AddRecipe(RecipeModel model)
         {
             try
@@ -82,6 +84,7 @@ namespace RecipeLewis.Services
             }
         }
 
+        [Authorize(Roles = "Moderator")]
         public async Task<ServiceResult> UpdateRecipe(RecipeModel model)
         {
             try
@@ -110,6 +113,7 @@ namespace RecipeLewis.Services
             }
         }
 
+        [Authorize(Roles = "Moderator")]
         public async Task<ServiceResult> DeleteRecipe(RecipeModel model)
         {
             try
