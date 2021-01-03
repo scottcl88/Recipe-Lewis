@@ -230,12 +230,16 @@
 
   @if (!ShowEditData && !ShowViewData)
   {
-    <div class="row justify-content-start">
-      <div class="col-auto">
-        <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData" disabled="@IsLoading">Add Recipe</button>
-      </div>
-    </div>
-    <hr />
+    <AuthorizeView Roles="Moderator">
+      <Authorized>
+        <div class="row justify-content-start">
+          <div class="col-auto">
+            <button type="button" class="btn btn-outline-primary btn-md" @onclick="AddData" disabled="@IsLoading">Add Recipe</button>
+          </div>
+        </div>
+        <hr />
+      </Authorized>
+    </AuthorizeView>
     <div class="row justify-content-start mt-1">
       <div class="col-12">
         @if (IsLoading)
