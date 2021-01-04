@@ -20,7 +20,25 @@ $(document).on('keyup', '#tags:not(".readonly") > input[type=text]', function (e
         $("#selectFileButton").focus();
         setTimeout(() => {
             $("#tagInput").focus();
-        }, 300);
+        }, 100);
+    }
+});
+$(document).on('keyup', '#ingredientInput', function (e) {
+    if (event.keyCode == 13) {
+        $("#ingredientAdd").focus();
+        setTimeout(() => {
+            $("#ingredientAdd").click();
+            $("#ingredientInput").focus();
+        }, 100);
+    }
+});
+$(document).on('keyup', '#stepInput', function (e) {
+    if (event.keyCode == 13) {
+        $("#stepAdd").focus();
+        setTimeout(() => {
+            $("#stepAdd").click();
+            $("#stepInput").focus();
+        }, 100);
     }
 });
 $(document).ready(function () {

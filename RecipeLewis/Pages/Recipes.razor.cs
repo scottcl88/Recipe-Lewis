@@ -162,11 +162,10 @@ namespace RecipeLewis.Pages
                     Model.TotalTime = Model.PrepTime + Model.CookTime + Model.InactiveTime;
                     Model.TotalTimeStr = $"{Model.TotalTime.Hours} hours and {Model.TotalTime.Minutes} minutes";
                 }
-                NotificationService.Notify(NotificationSeverity.Success, "Parsed time to: " + result.ToString());
             }
             catch (Exception ex)
             {
-                NotificationService.Notify(NotificationSeverity.Error, "Failed", ex.Message, 6000);
+                NotificationService.Notify(NotificationSeverity.Error, "Failed to save time", ex.Message, 6000);
             }
         }
 

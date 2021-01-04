@@ -26,6 +26,10 @@ app {
     align-items: center;
 }
 
+.datalist-block > div {
+    display: block !important;
+}
+
 .main {
     flex: 1;
 }
