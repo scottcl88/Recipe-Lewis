@@ -58,12 +58,15 @@
                 <RadzenLabel Text="Tags" />
               </div>
               <div class="col-md-9">
-                <div id="tags">
+                <div id="tags" class="@(ShowViewData ? "readonly" : "")">
                   @foreach (var tag in Model.Tags)
                   {
                     <span class="tag" @onclick="(args => RemoveTag(tag.TagID, tag.TempID))">@tag.Title</span>
                   }
-                  <RadzenTextBox id="tagInput" Change="@((arg) => AddTag())" Name="TagInput" Placeholder="Add a tag" type="text" @bind-Value="NewTag" @bind-disabled="ShowViewData" />
+                  @if (!ShowViewData)
+                  {
+                    <RadzenTextBox id="tagInput" Change="@((arg) => AddTag())" Name="TagInput" Placeholder="Add a tag" type="text" @bind-Value="NewTag" @bind-disabled="ShowViewData" />
+                  }
                   <input id="hiddenTagInput" @bind-value="AvailableTags" hidden />
                 </div>
               </div>
@@ -84,7 +87,10 @@
                   {
                     <div style="position:relative;">
                       <img class="mr-2" src="@document.ImageSource" alt="@document.Filename" width="200" height="150">
-                      <span class="close-image" @onclick="(args => ConfirmDeleteDocument(document.DocumentID, document.TempID))"></span>
+                      @if (!ShowViewData)
+                      {
+                        <span class="close-image" @onclick="(args => ConfirmDeleteDocument(document.DocumentID, document.TempID))"></span>
+                      }
                     </div>
                   }
                 </div>
@@ -159,7 +165,7 @@
                 <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
                   <Template Context="ingredient">
                     <li>
-                      <RadzenTextBox class="form-group" style="width: 100%;" Name="IngredientTitle" @bind-Value="@ingredient.Title" />
+                      <RadzenTextBox class="form-group" style="width: 100%;" Name="IngredientTitle" @bind-disabled="ShowViewData" @bind-Value="@ingredient.Title" />
                     </li>
                   </Template>
                 </RadzenDataList>
@@ -186,7 +192,7 @@
                 <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
                   <Template Context="step">
                     <li>
-                      <RadzenTextBox class="form-group" style="width: 100%;" Name="StepTitle" @bind-Value="@step.Title" />
+                      <RadzenTextBox class="form-group" style="width: 100%;" Name="StepTitle" @bind-disabled="ShowViewData" @bind-Value="@step.Title" />
                     </li>
                   </Template>
                 </RadzenDataList>

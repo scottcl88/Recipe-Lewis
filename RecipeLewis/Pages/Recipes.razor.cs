@@ -255,6 +255,7 @@ namespace RecipeLewis.Pages
 
         public void AddIngredient(MouseEventArgs e)
         {
+            if (ShowViewData) return;
             Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient });
             NewIngredient = string.Empty;
         }
@@ -263,12 +264,14 @@ namespace RecipeLewis.Pages
 
         public void AddStep(MouseEventArgs e)
         {
+            if (ShowViewData) return;
             Model.Steps.Add(new StepModel() { Title = NewStep });
             NewStep = string.Empty;
         }
 
         public async Task DeleteRecipe(DialogService ds)
         {
+            if (ShowViewData) return;
             ds.Close();
             IsSaving = true;
             var result = await RecipeService.DeleteRecipe(Model);
@@ -306,6 +309,7 @@ namespace RecipeLewis.Pages
         public string NewTag { get; set; }
         public void AddTag()
         {
+            if (ShowViewData) return;
             //Don't add dupe tags
             var existingTag = Model.Tags.FirstOrDefault(x => x.Title == NewTag);
             if (existingTag == null)
@@ -317,6 +321,7 @@ namespace RecipeLewis.Pages
         }
         public void RemoveTag(int tagId, int tempId)
         {
+            if (ShowViewData) return;
             TagModel foundTag = null;
             if (tagId <= 0)
             {
@@ -334,6 +339,7 @@ namespace RecipeLewis.Pages
         }
         public void RemoveDocument(int documentId, int tempId, DialogService ds)
         {
+            if (ShowViewData) return;
             ds.Close();
             DocumentModel foundDoc = null;
             if(documentId <= 0)
@@ -355,6 +361,7 @@ namespace RecipeLewis.Pages
         {
             try
             {
+                if (ShowViewData) return;
                 if (e.FileCount > 3)
                 {
                     NotificationService.Notify(NotificationSeverity.Error, "Cannot upload more than 3 files at once");
