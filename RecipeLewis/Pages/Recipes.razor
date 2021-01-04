@@ -79,6 +79,15 @@
                   <InputFile id="files" style="display: none;" OnChange="@OnInputFileChange" multiple accept=".gif,.jpg,.jpeg,.png,.tif,.tiff" />
                 </div>
               </div>
+              <div class="row">
+                <div class="align-content-start col-md-12 d-flex offset-1" style="margin-top: 16px;">
+                  @if (IsUploading)
+                  {
+                    <p class="mr-3" style="color: #6c757d;">Uploading...</p>
+                    <RadzenProgressBar Value="100" ShowValue="false" Mode="ProgressBarMode.Indeterminate" Style="width: 30%; opacity: .3;" />
+                  }
+                </div>
+              </div>
             }
             <div class="row mt-2">
               <div class="col-auto">

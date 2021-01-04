@@ -357,20 +357,26 @@ namespace RecipeLewis.Pages
             }
         }
 
+        public bool IsUploading { get; set; }
+
         public async Task OnInputFileChange(InputFileChangeEventArgs e)
         {
             try
             {
+                IsUploading = true;
                 if (ShowViewData) return;
                 if (e.FileCount > 3)
                 {
+                    IsUploading = false;
                     NotificationService.Notify(NotificationSeverity.Error, "Cannot upload more than 3 files at once");
                     return;
                 }
+                List<DocumentModel> newDocuments = new List<DocumentModel>();
                 foreach (var file in e.GetMultipleFiles(3))
                 {
                     if (file.Size > 10485760)
                     {
+                        IsUploading = false;
                         NotificationService.Notify(NotificationSeverity.Error, "Each file cannot exceed 10mb");
                         return;
                     }
@@ -378,6 +384,7 @@ namespace RecipeLewis.Pages
                     var extension = file.Name.Substring(extensionIndex, file.Name.Length - extensionIndex).Replace(".", "");
                     if (string.IsNullOrEmpty(extension) || !permittedExtensions.Contains(extension))
                     {
+                        IsUploading = false;
                         NotificationService.Notify(NotificationSeverity.Error, "Invalid file extension");
                         return;
                     }
@@ -404,11 +411,14 @@ namespace RecipeLewis.Pages
                     };
                     var imgSrc = $"data:image/{extension};base64,{imageStr}";
                     newDoc.ImageSource = imgSrc;
-                    Model.Documents.Add(newDoc);
+                    newDocuments.Add(newDoc);
                 }
+                Model.Documents.AddRange(newDocuments);
+                IsUploading = false;
             }
             catch (Exception ex)
             {
+                IsUploading = false;
                 NotificationService.Notify(NotificationSeverity.Error, "Failed to upload files", ex.Message, 6000);
             }
         }
