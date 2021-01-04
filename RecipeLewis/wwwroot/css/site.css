@@ -26,6 +26,10 @@ app {
     align-items: center;
 }
 
+.nav-link > .material-icons {
+    margin-right: 12px;
+}
+
 .datalist-block > div {
     display: block !important;
 }
