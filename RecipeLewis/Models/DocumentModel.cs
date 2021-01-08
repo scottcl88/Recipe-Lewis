@@ -19,6 +19,7 @@ namespace RecipeLewis.Models
         public string ImageSource { get; set; }
         public string Extension { get; set; }
         public string ContentType { get; set; }
+        public static readonly long MaxSize = 26214400;//20 MB
 
         [Required]
         [Display(Name = "Created Date")]

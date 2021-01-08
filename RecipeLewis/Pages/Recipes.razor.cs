@@ -177,10 +177,10 @@ namespace RecipeLewis.Pages
 
             //Make sure they only add new unique tags            
             List<TagModel> newTags = Model.Tags.ToList();
-            foreach(var newTag in newTags)
+            foreach (var newTag in newTags)
             {
                 var existingTag = AllTags.FirstOrDefault(x => x.Title == newTag.Title);
-                if(existingTag != null)
+                if (existingTag != null)
                 {
                     newTag.TagID = existingTag.TagID;
                 }
@@ -342,7 +342,7 @@ namespace RecipeLewis.Pages
             if (ShowViewData) return;
             ds.Close();
             DocumentModel foundDoc = null;
-            if(documentId <= 0)
+            if (documentId <= 0)
             {
                 foundDoc = Model.Documents.FirstOrDefault(x => x.TempID == tempId);
             }
@@ -374,7 +374,7 @@ namespace RecipeLewis.Pages
                 List<DocumentModel> newDocuments = new List<DocumentModel>();
                 foreach (var file in e.GetMultipleFiles(3))
                 {
-                    if (file.Size > 10485760)
+                    if (file.Size > DocumentModel.MaxSize)
                     {
                         IsUploading = false;
                         NotificationService.Notify(NotificationSeverity.Error, "Each file cannot exceed 10mb");
@@ -392,7 +392,7 @@ namespace RecipeLewis.Pages
                     byte[] fileBytes = new byte[0];
                     if (file.Size > 0)
                     {
-                        using (var ms = file.OpenReadStream(maxAllowedSize: 10485760))
+                        using (var ms = file.OpenReadStream(maxAllowedSize: DocumentModel.MaxSize))
                         {
                             using (var ms2 = new MemoryStream())
                             {

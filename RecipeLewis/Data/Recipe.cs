@@ -15,6 +15,7 @@ namespace RecipeLewis.Data
         public string Title { get; set; }
         public string Description { get; set; }
         public string ServingSize { get; set; }
+        public string NumberOfServings { get; set; }
         public string Author { get; set; }
         public TimeSpan PrepTime { get; set; }
         public TimeSpan CookTime { get; set; }

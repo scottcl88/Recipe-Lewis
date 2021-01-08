@@ -66,7 +66,7 @@ namespace RecipeLewis.Services
                 }
                 foreach (var file in data.Documents)
                 {
-                    if (file.Bytes.Length > 10485760)
+                    if (file.Bytes.Length > DocumentModel.MaxSize)
                     {
                         return new ServiceResult(false, "Each file cannot exceed 10mb");
                     }
@@ -95,7 +95,7 @@ namespace RecipeLewis.Services
                 data.ModifiedDateTime = DateTime.UtcNow;
                 foreach (var file in data.Documents)
                 {
-                    if (file.Bytes.Length > 10485760)
+                    if (file.Bytes.Length > DocumentModel.MaxSize)
                     {
                         return new ServiceResult(false, "Each file cannot exceed 10mb");
                     }
