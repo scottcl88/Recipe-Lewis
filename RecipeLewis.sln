@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30804.86
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeLewis", "RecipeLewis\RecipeLewis.csproj", "{CED4F376-21A0-487C-B6A1-577344504875}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RecipeLewis", "RecipeLewis\RecipeLewis.csproj", "{CED4F376-21A0-487C-B6A1-577344504875}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RecipeLewisTests", "RecipeLewisTests\RecipeLewisTests.csproj", "{630B4462-1C88-4A72-B991-ABBCCA6E1E14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{CED4F376-21A0-487C-B6A1-577344504875}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CED4F376-21A0-487C-B6A1-577344504875}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CED4F376-21A0-487C-B6A1-577344504875}.Release|Any CPU.Build.0 = Release|Any CPU
+		{630B4462-1C88-4A72-B991-ABBCCA6E1E14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{630B4462-1C88-4A72-B991-ABBCCA6E1E14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{630B4462-1C88-4A72-B991-ABBCCA6E1E14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{630B4462-1C88-4A72-B991-ABBCCA6E1E14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -13,9 +13,9 @@ namespace RecipeLewis.Services
     public class RecipeService
     {
         private readonly ILogger _logger;
-        private readonly ApplicationDbContext _context;
+        private readonly IAppDbContext _context;
 
-        public RecipeService(ApplicationDbContext context, ILogger<Recipe> logger)
+        public RecipeService(IAppDbContext context, ILogger<Recipe> logger)
         {
             _context = context;
             _logger = logger;
@@ -28,7 +28,7 @@ namespace RecipeLewis.Services
             try
             {
                 _logger.LogInformation("Getting recipes");
-                var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).ToListAsync();
+                var list = _context.Recipes.Where(x => x.DeletedDateTime == null).ToList();
                 _logger.LogInformation("Recipes returned: " + list.Count);
                 return new ServiceResult<RecipeModel>(true) { DataList = list.Select(x => x.ToModel()).ToList() };
             }
