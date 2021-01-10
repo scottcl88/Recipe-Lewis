@@ -15,6 +15,7 @@ namespace RecipeLewis.DataExtensions
                 Amount = data.Amount,
                 Category = data.Category.ToModel(),
                 IsLiquid = data.IsLiquid,
+                DisplayOrder = data.DisplayOrder,
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
@@ -30,6 +31,7 @@ namespace RecipeLewis.DataExtensions
                 Amount = model.Amount,
                 Category = model.Category.ToData(),
                 IsLiquid = model.IsLiquid,
+                DisplayOrder = model.DisplayOrder,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,
                 DeletedDateTime = model.DeletedDateTime

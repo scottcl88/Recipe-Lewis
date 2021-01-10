@@ -14,6 +14,7 @@ namespace RecipeLewis.DataExtensions
                 Title = data.Title,
                 Category = data.Category.ToModel(),
                 Description = data.Description,
+                DisplayOrder = data.DisplayOrder,
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
@@ -28,6 +29,7 @@ namespace RecipeLewis.DataExtensions
                 Title = model.Title,
                 Category = model.Category.ToData(),
                 Description = model.Description,
+                DisplayOrder = model.DisplayOrder,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,
                 DeletedDateTime = model.DeletedDateTime

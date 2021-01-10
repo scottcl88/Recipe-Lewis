@@ -10,6 +10,7 @@ namespace RecipeLewis.Data
         public int StepID { get; set; }
 
         public virtual Category Category { get; set; }
+        public int DisplayOrder { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
 

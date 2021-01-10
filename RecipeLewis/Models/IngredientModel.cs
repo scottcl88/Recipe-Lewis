@@ -10,6 +10,7 @@ namespace RecipeLewis.Models
         public string Title { get; set; }
         public string Amount { get; set; }
         public bool IsLiquid { get; set; }
+        public int DisplayOrder { get; set; }
 
         [Required]
         [Display(Name = "Created Date")]

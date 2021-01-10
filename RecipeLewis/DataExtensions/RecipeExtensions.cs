@@ -16,13 +16,13 @@ namespace RecipeLewis.DataExtensions
                 CookTime = data.CookTime,
                 Date = data.Date,
                 Description = data.Description,
-                Documents = data.Documents?.Select(x => x.ToModel()).ToList(),
+                Documents = data.Documents?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 InactiveTime = data.InactiveTime,
-                Ingredients = data.Ingredients?.Select(x => x.ToModel()).ToList(),
+                Ingredients = data.Ingredients?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).OrderBy(x => x.DisplayOrder).ToList(),
                 PrepTime = data.PrepTime,
                 ServingSize = data.ServingSize,
                 NumberOfServings = data.NumberOfServings,
-                Steps = data.Steps?.Select(x => x.ToModel()).ToList(),
+                Steps = data.Steps?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).OrderBy(x => x.DisplayOrder).ToList(),
                 Tags = data.Tags?.Select(x => x.ToModel()).ToList(),
                 Title = data.Title,
                 TotalTime = data.TotalTime,
@@ -71,7 +71,7 @@ namespace RecipeLewis.DataExtensions
             data.ServingSize = model.ServingSize;
             data.NumberOfServings = model.NumberOfServings;
             data.Steps = model.Steps?.Select(x => x.ToData()).ToList();
-            data.Tags = model.Tags?.Select(x => x.ToData()).ToList();
+            data.Tags = model.Tags?.Select(x => x.ToData()).Where(x => !x.DeletedDateTime.HasValue).ToList();
             data.Title = model.Title;
             data.TotalTime = model.TotalTime;
             data.TotalTimeCalculated = model.TotalTimeCalculated;

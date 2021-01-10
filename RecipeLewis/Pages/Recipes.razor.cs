@@ -144,11 +144,11 @@ namespace RecipeLewis.Pages
 
         public async Task EditData(MouseEventArgs e, RecipeModel model)
         {
-            await LoadTags();
             ShowEditData = true;
             ShowViewData = false;
             var fullModel = await RecipeService.GetRecipe(model.RecipeID);
             Model = fullModel.Data;
+            await LoadTags();
             StateHasChanged();
         }
 
@@ -180,8 +180,24 @@ namespace RecipeLewis.Pages
         public void AddIngredient(MouseEventArgs e)
         {
             if (ShowViewData) return;
-            Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient });
+            int order = 1;
+            if (Model.Ingredients.Any())
+            {
+                order = Model.Ingredients.OrderBy(x => x.DisplayOrder).First().DisplayOrder + 1;
+            }
+            Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient, DisplayOrder = order });
             NewIngredient = string.Empty;
+        }
+        public void RemoveIngredient(int ingredientId, int displayOrder, DialogService ds)
+        {
+            if (ShowViewData) return;
+            ds.Close();
+            IngredientModel foundIngredient = Model.Ingredients.FirstOrDefault(x => x.IngredientID == ingredientId && x.DisplayOrder == displayOrder);
+            if (foundIngredient != null)
+            {
+                foundIngredient.DeletedDateTime = DateTime.UtcNow;
+                StateHasChanged();
+            }
         }
 
         public string NewStep { get; set; }
@@ -189,9 +205,26 @@ namespace RecipeLewis.Pages
         public void AddStep(MouseEventArgs e)
         {
             if (ShowViewData) return;
-            Model.Steps.Add(new StepModel() { Title = NewStep });
+            int order = 1;
+            if (Model.Steps.Any())
+            {
+                order = Model.Steps.OrderBy(x => x.DisplayOrder).First().DisplayOrder + 1;
+            }
+            Model.Steps.Add(new StepModel() { Title = NewStep, DisplayOrder = order });
             NewStep = string.Empty;
         }
+        public void RemoveStep(int stepId, int displayOrder, DialogService ds)
+        {
+            if (ShowViewData) return;
+            ds.Close();
+            StepModel foundStep = Model.Steps.FirstOrDefault(x => x.StepID == stepId && x.DisplayOrder == displayOrder);
+            if (foundStep != null)
+            {
+                foundStep.DeletedDateTime = DateTime.UtcNow;
+                StateHasChanged();
+            }
+        }
+
 
         public async Task DeleteRecipe(DialogService ds)
         {
@@ -257,7 +290,7 @@ namespace RecipeLewis.Pages
             }
             if (foundTag != null)
             {
-                Model.Tags.Remove(foundTag);
+                foundTag.DeletedDateTime = DateTime.UtcNow;
                 StateHasChanged();
             }
         }
@@ -276,7 +309,7 @@ namespace RecipeLewis.Pages
             }
             if (foundDoc != null)
             {
-                Model.Documents.Remove(foundDoc);
+                foundDoc.DeletedDateTime = DateTime.UtcNow;
                 StateHasChanged();
             }
         }
