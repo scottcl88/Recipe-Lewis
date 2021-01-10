@@ -170,14 +170,15 @@
               </div>
             }
             <div class="row align-items-center mt-3">
-              <ul style="width: 75%">
+              <ul style="    width: 100%
+">
                 <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.IngredientModel">
                   <Template Context="ingredient">
                     <li>
                       <RadzenTextBox class="form-group" style="width: 95%;" Name="IngredientTitle" @bind-disabled="ShowViewData" @bind-Value="@ingredient.Title" />
                       @if (!ShowViewData)
                       {
-                        <span class="text-danger pointer" style="padding: 5px;" id="ingredientRemove" @onclick="(args => ConfirmDeleteIngredient(ingredient.IngredientID, ingredient.DisplayOrder))">X</span>
+                        <span class="text-danger pointer" style="padding: 5px;" id="ingredientRemove" @onclick="(args => ConfirmDeleteIngredient(ingredient.IngredientID, ingredient.TempID))">X</span>
                       }
                     </li>
                   </Template>
@@ -201,14 +202,14 @@
               </div>
             }
             <div class="row align-items-center mt-3">
-              <ol style="width: 75%">
+              <ol style="width: 100%">
                 <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.StepModel">
                   <Template Context="step">
                     <li>
                       <RadzenTextBox class="form-group" style="width: 95%;" Name="StepTitle" @bind-disabled="ShowViewData" @bind-Value="@step.Title" />
                       @if (!ShowViewData)
                       {
-                        <span class="text-danger pointer" style="padding: 5px;" id="stepRemove" @onclick="(args => ConfirmDeleteStep(step.StepID, step.DisplayOrder))">X</span>
+                        <span class="text-danger pointer" style="padding: 5px;" id="stepRemove" @onclick="(args => ConfirmDeleteStep(step.StepID, step.TempID))">X</span>
                       }
                     </li>
                   </Template>
@@ -333,23 +334,23 @@
     </div>
   </div>
   );
-  async Task ConfirmDeleteIngredient(int ingredientId, int displayOrder) => await DialogService.OpenAsync("Are you sure?", ds =>
+  async Task ConfirmDeleteIngredient(int ingredientId, int tempId) => await DialogService.OpenAsync("Are you sure?", ds =>
   @<div>
     <p Style="margin-bottom: 1rem">Are you sure you want to delete this ingredient?</p>
     <div class="row">
       <div class="col-md-12">
-        <RadzenButton Text="Yes" Click="() => RemoveIngredient(ingredientId, displayOrder, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Yes" Click="() => RemoveIngredient(ingredientId, tempId, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
         <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
       </div>
     </div>
   </div>
   );
-  async Task ConfirmDeleteStep(int stepId, int displayOrder) => await DialogService.OpenAsync("Are you sure?", ds =>
+  async Task ConfirmDeleteStep(int stepId, int tempId) => await DialogService.OpenAsync("Are you sure?", ds =>
   @<div>
     <p Style="margin-bottom: 1rem">Are you sure you want to delete this step?</p>
     <div class="row">
       <div class="col-md-12">
-        <RadzenButton Text="Yes" Click="() => RemoveStep(stepId, displayOrder, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Yes" Click="() => RemoveStep(stepId, tempId, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
         <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
       </div>
     </div>
