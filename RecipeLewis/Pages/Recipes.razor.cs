@@ -147,15 +147,17 @@ namespace RecipeLewis.Pages
             await LoadTags();
             ShowEditData = true;
             ShowViewData = false;
-            Model = model;
+            var fullModel = await RecipeService.GetRecipe(model.RecipeID);
+            Model = fullModel.Data;
             StateHasChanged();
         }
 
-        public void ViewData(MouseEventArgs e, RecipeModel model)
+        public async Task ViewData(MouseEventArgs e, RecipeModel model)
         {
             ShowViewData = true;
             ShowEditData = false;
-            Model = model;
+            var fullModel = await RecipeService.GetRecipe(model.RecipeID);
+            Model = fullModel.Data;
             StateHasChanged();
         }
 

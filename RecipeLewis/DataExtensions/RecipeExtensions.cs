@@ -33,6 +33,30 @@ namespace RecipeLewis.DataExtensions
             };
         }
 
+        public static RecipeModel ToGridModel(this Recipe data)
+        {
+            if (data == null) return null;
+            return new RecipeModel()
+            {
+                RecipeID = data.RecipeID,
+                Author = data.Author,
+                CookTime = data.CookTime,
+                Date = data.Date,
+                Description = data.Description,
+                InactiveTime = data.InactiveTime,
+                PrepTime = data.PrepTime,
+                ServingSize = data.ServingSize,
+                NumberOfServings = data.NumberOfServings,
+                Tags = data.Tags?.Select(x => x.ToModel()).ToList(),
+                Title = data.Title,
+                TotalTime = data.TotalTime,
+                TotalTimeCalculated = data.TotalTimeCalculated,
+                CreatedDateTime = data.CreatedDateTime,
+                ModifiedDateTime = data.ModifiedDateTime,
+                DeletedDateTime = data.DeletedDateTime
+            };
+        }
+
         public static Recipe ToData(this RecipeModel model, Recipe data)
         {
             if (model == null) return null;

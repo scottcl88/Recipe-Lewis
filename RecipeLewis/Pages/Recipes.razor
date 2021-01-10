@@ -94,13 +94,13 @@
                 <div class="images" style="display:inline-flex;">
                   @foreach (var document in Model.Documents)
                   {
-                    <div style="position:relative;">
-                      <img class="mr-2" src="@document.ImageSource" alt="@document.Filename" width="200" height="150">
-                      @if (!ShowViewData)
-                      {
-                        <span class="close-image" @onclick="(args => ConfirmDeleteDocument(document.DocumentID, document.TempID))"></span>
-                      }
-                    </div>
+                  <div style="position:relative;">
+                    <img class="mr-2" src="@($"/Recipes/GetRecipeImage?recipeId={Model.RecipeID}&documentId={document.DocumentID}")" alt="@document.Filename" width="200" height="150">
+                    @if (!ShowViewData)
+                    {
+                      <span class="close-image" @onclick="(args => ConfirmDeleteDocument(document.DocumentID, document.TempID))"></span>
+                    }
+                  </div>
                   }
                 </div>
               </div>

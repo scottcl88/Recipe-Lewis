@@ -30,7 +30,7 @@ namespace RecipeLewis.Services
                 _logger.LogInformation("Getting recipes");
                 var list = await _context.Recipes.Where(x => x.DeletedDateTime == null).ToListAsync();
                 _logger.LogInformation("Recipes returned: " + list.Count);
-                return new ServiceResult<RecipeModel>(true) { DataList = list.Select(x => x.ToModel()).ToList() };
+                return new ServiceResult<RecipeModel>(true) { DataList = list.Select(x => x.ToGridModel()).ToList() };
             }
             catch (Exception ex)
             {

@@ -62,6 +62,7 @@ namespace RecipeLewis
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddScoped<EmailSender>();
+            services.AddResponseCaching();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -85,6 +86,8 @@ namespace RecipeLewis
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseResponseCaching();
 
             app.UseEndpoints(endpoints =>
             {
