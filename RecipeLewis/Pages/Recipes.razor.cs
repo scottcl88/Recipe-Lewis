@@ -80,7 +80,7 @@ namespace RecipeLewis.Pages
             var result = await TagService.GetAllTags();
             if (result.Success)
             {
-                AllTags = result.DataList;
+                AllTags = result.DataList.Distinct().GroupBy(x => x.Title).Select(x => x.First()).ToList();
                 AvailableTags = string.Join(",", AllTags.Select(x => x.Title));
             }
             else

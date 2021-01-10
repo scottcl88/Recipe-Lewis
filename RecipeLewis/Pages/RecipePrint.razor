@@ -84,11 +84,11 @@
       <div class="col-md-6">
         <RadzenFieldset Text="Ingredients">
           <div class="row align-items-center mt-3">
-            <ul style="width: 75%">
+            <ul style="width: auto;">
               <RadzenDataList PageSize="15" class="datalist-block"  WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
                 <Template Context="ingredient">
                   <li>
-                    <RadzenTextBox class="form-group" style="width: 100%;" Name="IngredientTitle" Disabled="true" @bind-Value="@ingredient.Title" />
+                    <span>@ingredient.Title</span>
                   </li>
                 </Template>
               </RadzenDataList>
@@ -99,11 +99,11 @@
       <div class="col-md-6">
         <RadzenFieldset Text="Steps">
           <div class="row align-items-center mt-3">
-            <ol style="width: 75%">
+            <ol style="width: auto;">
               <RadzenDataList PageSize="15" class="datalist-block"  WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
                 <Template Context="step">
                   <li>
-                    <RadzenTextBox class="form-group" style="width: 100%;" Name="StepTitle" Disabled="true" @bind-Value="@step.Title" />
+                    <span>@step.Title</span>
                   </li>
                 </Template>
               </RadzenDataList>
