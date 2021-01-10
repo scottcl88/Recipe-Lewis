@@ -17,10 +17,10 @@ namespace RecipeLewis.Data
         public string ServingSize { get; set; }
         public string NumberOfServings { get; set; }
         public string Author { get; set; }
-        public TimeSpan PrepTime { get; set; }
-        public TimeSpan CookTime { get; set; }
-        public TimeSpan InactiveTime { get; set; }
-        public TimeSpan TotalTime { get; set; }
+        public string PrepTime { get; set; }
+        public string CookTime { get; set; }
+        public string InactiveTime { get; set; }
+        public string TotalTime { get; set; }
         public bool TotalTimeCalculated { get; set; }
         public virtual List<Tag> Tags { get; set; }
         public virtual List<Ingredient> Ingredients { get; set; }
