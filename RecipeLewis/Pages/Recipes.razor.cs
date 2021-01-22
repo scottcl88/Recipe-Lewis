@@ -183,7 +183,7 @@ namespace RecipeLewis.Pages
             int order = 1;
             if (Model.Ingredients.Any())
             {
-                order = Model.Ingredients.OrderBy(x => x.DisplayOrder).First().DisplayOrder + 1;
+                order = Model.Ingredients.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
             }
             Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient, DisplayOrder = order });
             NewIngredient = string.Empty;
@@ -216,7 +216,7 @@ namespace RecipeLewis.Pages
             int order = 1;
             if (Model.Steps.Any())
             {
-                order = Model.Steps.OrderBy(x => x.DisplayOrder).First().DisplayOrder + 1;
+                order = Model.Steps.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
             }
             Model.Steps.Add(new StepModel() { Title = NewStep, DisplayOrder = order });
             NewStep = string.Empty;
