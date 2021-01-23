@@ -172,15 +172,19 @@
             <div class="row align-items-center mt-3">
               <ul style="    width: 100%
 ">
-                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.IngredientModel">
-                  <Template Context="ingredient">
-                    <li>
-                      <RadzenTextBox class="form-group" style="width: 95%;" Name="IngredientTitle" @bind-disabled="ShowViewData" @bind-Value="@ingredient.Title" />
-                      @if (!ShowViewData)
-                      {
-                        <span class="text-danger pointer" style="padding: 5px;" id="ingredientRemove" @onclick="(args => ConfirmDeleteIngredient(ingredient.IngredientID, ingredient.TempID))">X</span>
-                      }
-                    </li>
+                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients" TItem="Models.SectionModel<IngredientModel>">
+                  <Template Context="section">                    
+                    <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@(section.List)" TItem="Models.IngredientModel">
+                      <Template Context="ingredient">
+                        <li>
+                          <RadzenTextBox class="form-group" style="width: 95%;" Name="IngredientTitle" @bind-disabled="ShowViewData" @bind-Value="@ingredient.Title" />
+                          @if (!ShowViewData)
+                          {
+                            <span class="text-danger pointer" style="padding: 5px;" id="ingredientRemove" @onclick="(args => ConfirmDeleteIngredient(ingredient.IngredientID, ingredient.TempID))">X</span>
+                          }
+                        </li>
+                      </Template>
+                    </RadzenDataList>
                   </Template>
                 </RadzenDataList>
               </ul>
@@ -203,15 +207,19 @@
             }
             <div class="row align-items-center mt-3">
               <ol style="width: 100%">
-                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.StepModel">
-                  <Template Context="step">
-                    <li>
-                      <RadzenTextBox class="form-group" style="width: 95%;" Name="StepTitle" @bind-disabled="ShowViewData" @bind-Value="@step.Title" />
-                      @if (!ShowViewData)
-                      {
-                        <span class="text-danger pointer" style="padding: 5px;" id="stepRemove" @onclick="(args => ConfirmDeleteStep(step.StepID, step.TempID))">X</span>
-                      }
-                    </li>
+                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps" TItem="Models.SectionModel<StepModel>">
+                  <Template Context="section">
+                    <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@(section.List)" TItem="Models.StepModel">
+                      <Template Context="step">
+                        <li>
+                          <RadzenTextBox class="form-group" style="width: 95%;" Name="StepTitle" @bind-disabled="ShowViewData" @bind-Value="@step.Title" />
+                          @if (!ShowViewData)
+                          {
+                            <span class="text-danger pointer" style="padding: 5px;" id="stepRemove" @onclick="(args => ConfirmDeleteStep(step.StepID, step.TempID))">X</span>
+                          }
+                        </li>
+                      </Template>
+                    </RadzenDataList>
                   </Template>
                 </RadzenDataList>
               </ol>

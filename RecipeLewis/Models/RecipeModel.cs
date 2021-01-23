@@ -8,8 +8,8 @@ namespace RecipeLewis.Models
     {
         public RecipeModel()
         {
-            Ingredients = new List<IngredientModel>();
-            Steps = new List<StepModel>();
+            Ingredients = new List<SectionModel<IngredientModel>>();
+            Steps = new List<SectionModel<StepModel>>();
             Documents = new List<DocumentModel>();
             Tags = new List<TagModel>();
             CreatedDateTime = DateTime.UtcNow;
@@ -28,8 +28,8 @@ namespace RecipeLewis.Models
         public string InactiveTime { get; set; }
         public string TotalTime { get; set; }
         public bool TotalTimeCalculated { get; set; }
-        public List<IngredientModel> Ingredients { get; set; }
-        public List<StepModel> Steps { get; set; }
+        public List<SectionModel<IngredientModel>> Ingredients { get; set; }
+        public List<SectionModel<StepModel>> Steps { get; set; }
         public List<DocumentModel> Documents { get; set; }
         public List<TagModel> Tags { get; set; }
 

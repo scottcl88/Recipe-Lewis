@@ -23,8 +23,10 @@ namespace RecipeLewis.Data
         public string TotalTime { get; set; }
         public bool TotalTimeCalculated { get; set; }
         public virtual List<Tag> Tags { get; set; }
-        public virtual List<Ingredient> Ingredients { get; set; }
-        public virtual List<Step> Steps { get; set; }
+        //public virtual List<Ingredient> Ingredients { get; set; }
+        public virtual List<Section<Ingredient>> Ingredients { get; set; }
+        public virtual List<Section<Step>> Steps { get; set; }
+        //public virtual List<Step> Steps { get; set; }
         [JsonIgnore]
         public virtual List<Document> Documents { get; set; }
 

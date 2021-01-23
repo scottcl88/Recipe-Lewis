@@ -1,20 +1,17 @@
-using RecipeLewis.DataExtensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Ingredient: IEntity
+    public class Section<T>
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int IngredientID { get; set; }
+        public int SectionID { get; set; }
 
-        public virtual Category Category { get; set; }
         public string Title { get; set; }
-        public string Amount { get; set; }
-        public bool IsLiquid { get; set; }
-        public int DisplayOrder { get; set; }
+        public virtual List<T> List { get; set; }
 
         [Required]
         [Display(Name = "Created Date")]

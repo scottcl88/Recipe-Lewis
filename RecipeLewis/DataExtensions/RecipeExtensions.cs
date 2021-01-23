@@ -18,11 +18,11 @@ namespace RecipeLewis.DataExtensions
                 Description = data.Description,
                 Documents = data.Documents?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 InactiveTime = data.InactiveTime,
-                Ingredients = data.Ingredients?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).OrderBy(x => x.DisplayOrder).ToList(),
+                Ingredients = data.Ingredients?.Select(x => x.ToModel<Ingredient, IngredientModel>()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 PrepTime = data.PrepTime,
                 ServingSize = data.ServingSize,
                 NumberOfServings = data.NumberOfServings,
-                Steps = data.Steps?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).OrderBy(x => x.DisplayOrder).ToList(),
+                Steps = data.Steps?.Select(x => x.ToModel<Step, StepModel>()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 Tags = data.Tags?.Select(x => x.ToModel()).ToList(),
                 Title = data.Title,
                 TotalTime = data.TotalTime,
@@ -66,11 +66,11 @@ namespace RecipeLewis.DataExtensions
             data.Description = model.Description;
             data.Documents = model.Documents?.Select(x => x.ToData()).ToList();
             data.InactiveTime = model.InactiveTime;
-            data.Ingredients = model.Ingredients?.Select(x => x.ToData()).ToList();
+            data.Ingredients = model.Ingredients?.Select(x => x.ToData<IngredientModel, Ingredient>()).ToList();
             data.PrepTime = model.PrepTime;
             data.ServingSize = model.ServingSize;
             data.NumberOfServings = model.NumberOfServings;
-            data.Steps = model.Steps?.Select(x => x.ToData()).ToList();
+            data.Steps = model.Steps?.Select(x => x.ToData<StepModel, Step>()).ToList();
             data.Tags = model.Tags?.Select(x => x.ToData()).Where(x => !x.DeletedDateTime.HasValue).ToList();
             data.Title = model.Title;
             data.TotalTime = model.TotalTime;

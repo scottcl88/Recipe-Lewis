@@ -41,6 +41,8 @@ namespace RecipeLewis.Pages
         protected DialogService DialogService { get; set; }
 
         public RecipeModel Model { get; set; }
+        public List<SectionModel<StepModel>> ModelSteps { get; set; }
+        //public List<IngredientModel> ModelIngredients { get; set; }
         public bool ShowEditData { get; set; }
         public bool ShowViewData { get; set; }
         public bool IsLoading { get; set; }

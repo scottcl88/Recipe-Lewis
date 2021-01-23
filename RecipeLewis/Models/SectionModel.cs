@@ -1,19 +1,14 @@
-using RecipeLewis.DataExtensions;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
-namespace RecipeLewis.Data
+namespace RecipeLewis.Models
 {
-    public class Step : IEntity
+    public class SectionModel<T>
     {
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int StepID { get; set; }
-
-        public virtual Category Category { get; set; }
-        public int DisplayOrder { get; set; }
+        public int SectionID { get; set; }
         public string Title { get; set; }
-        public string Description { get; set; }
+        public virtual List<T> List { get; set; }
 
         [Required]
         [Display(Name = "Created Date")]
