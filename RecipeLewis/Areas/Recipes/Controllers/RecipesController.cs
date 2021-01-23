@@ -21,7 +21,17 @@ namespace RecipeLewis.Areas.Recipes.Controllers
         public async Task<ActionResult> GetRecipeImage(int recipeId, int documentId)
         {
             var recipe = await _recipeService.GetRecipe(recipeId);
-            var document = recipe.Data.Documents.FirstOrDefault(x => x.DocumentID == documentId);
+            var document = recipe.Data.Documents.FirstOrDefault(x => x.DocumentID == documentId); 
+            var cd = new System.Net.Mime.ContentDisposition
+            {
+                // for example foo.bak
+                FileName = document.Filename,
+
+                // always prompt the user for downloading, set to true if you want 
+                // the browser to try to show the file inline
+                Inline = false,
+            };
+            Response.Headers.Add("Content-Disposition", cd.ToString());
             return File(document.Bytes, document.ContentType);
         }
     }

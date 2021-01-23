@@ -16,19 +16,19 @@
       <div class="col-md-12">
         <RadzenFieldset Text="Recipe Info">
           <div class="row">
-            <div class="col-md-1 col-offset-2 d-flex">
-              <RadzenLabel Text="Author" />
+            <div class="col-sm-2 d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Author" />
             </div>
-            <div class="col-md-4">
-              <RadzenTextBox Name="Author" Style="width: 100%;" Disabled="true" @bind-Value="Model.Author" />
+            <div class="col-sm-4">
+              <span>@Model.Author</span>
             </div>
           </div>
           <div class="row mt-2">
-            <div class="col-md-1 d-flex">
-              <RadzenLabel Text="Description" />
+            <div class="col-sm-2 d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Description" />
             </div>
             <div class="col-md-9">
-              <RadzenTextArea Name="Description" Style="width: 100%;" Disabled="true" @bind-Value="Model.Description" />
+              <span>@Model.Description</span>
             </div>
           </div>
         </RadzenFieldset>
@@ -37,44 +37,44 @@
     <div class="row">
       <div class="col-md-12">
         <RadzenFieldset Text="Details">
-          <div class="row">
-            <div class="col-md-1 d-flex">
-              <RadzenLabel Text="Serving Size" />
+          <div class="row align-items-center">
+            <div class="col-auto d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Serving Size" />
             </div>
-            <div class="col-md-3">
-              <RadzenTextBox Name="ServingSize" Style="width: 100%;" Disabled="true" @bind-Value="Model.ServingSize" />
+            <div class="col-auto">
+              <span>@Model.ServingSize</span>
             </div>
-            <div class="col-md-2 col-offset-2 d-flex">
-              <RadzenLabel Text="Number of Servings" />
+            <div class="col-auto col-offset-2 d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Number of Servings" />
             </div>
-            <div class="col-md-3">
-              <RadzenTextBox Name="ServingsAmount" Style="width: 100%;" Disabled="true" @bind-Value="Model.ServingSize" />
+            <div class="col-auto">
+              <span>@Model.NumberOfServings</span>
             </div>
           </div>
           <div class="row align-items-center mt-2">
-            <div class="col-md-1 d-flex">
-              <RadzenLabel Text="Prep Time" />
+            <div class="col-auto d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Prep Time" />
             </div>
-            <div class="col-md-2">
-              <RadzenTextBox Name="PrepTimeStr" Style="width: 100%;" Disabled="true" @bind-Value="Model.PrepTime" />
+            <div class="col-auto">
+              <span>@Model.PrepTime</span>
             </div>
-            <div class="col-md-1 d-flex">
-              <RadzenLabel Text="Cook Time" />
+            <div class="col-auto d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Cook Time" />
             </div>
-            <div class="col-md-2">
-              <RadzenTextBox Name="CookTimeStr" Style="width: 100%;" Disabled="true" @bind-Value="Model.CookTime" />
+            <div class="col-auto">
+              <span>@Model.CookTime</span>
             </div>
-            <div class="col-md-1 d-flex">
-              <RadzenLabel Text="Inactive Time" />
+            <div class="col-auto d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Inactive Time" />
             </div>
-            <div class="col-md-2">
-              <RadzenTextBox Name="InactiveTimeStr" Style="width: 100%;" Disabled="true" @bind-Value="Model.InactiveTime" />
+            <div class="col-auto">
+              <span>@Model.InactiveTime</span>
             </div>
-            <div class="col-md-1 d-flex">
-              <RadzenLabel Text="Total Time" />
+            <div class="col-auto d-flex">
+              <RadzenLabel Style="font-weight: bold;" Text="Total Time" />
             </div>
-            <div class="col-md-2">
-              <RadzenTextBox Name="TotalTimeStr" Style="width: 100%;" Disabled="true" @bind-Value="Model.TotalTime" />
+            <div class="col-auto">
+              <span>@Model.TotalTime</span>
             </div>
           </div>
         </RadzenFieldset>
@@ -83,7 +83,7 @@
     <div class="row">
       <div class="col-md-6">
         <RadzenFieldset Text="Ingredients">
-          <div class="row align-items-center mt-3">
+          <div class="row align-items-center">
             <ul style="width: auto;">
               <RadzenDataList PageSize="15" class="datalist-block"  WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
                 <Template Context="ingredient">
@@ -98,7 +98,7 @@
       </div>
       <div class="col-md-6">
         <RadzenFieldset Text="Steps">
-          <div class="row align-items-center mt-3">
+          <div class="row align-items-center">
             <ol style="width: auto;">
               <RadzenDataList PageSize="15" class="datalist-block"  WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
                 <Template Context="step">
