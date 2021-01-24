@@ -41,7 +41,7 @@ namespace RecipeLewis.Pages
         protected DialogService DialogService { get; set; }
 
         public RecipeModel Model { get; set; }
-        public List<SectionModel<StepModel>> ModelSteps { get; set; }
+        //public List<SectionModel<StepModel>> ModelSteps { get; set; }
         //public List<IngredientModel> ModelIngredients { get; set; }
         public bool ShowEditData { get; set; }
         public bool ShowViewData { get; set; }
@@ -183,11 +183,11 @@ namespace RecipeLewis.Pages
         {
             if (ShowViewData) return;
             int order = 1;
-            if (Model.Ingredients.Any())
-            {
-                order = Model.Ingredients.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
-            }
-            Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient, DisplayOrder = order });
+            //if (Model.Ingredients.Any())
+            //{
+            //    order = Model.Ingredients.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
+            //}
+            //Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient, DisplayOrder = order });
             NewIngredient = string.Empty;
         }
         public void RemoveIngredient(int ingredientId, int tempId, DialogService ds)
@@ -195,14 +195,14 @@ namespace RecipeLewis.Pages
             if (ShowViewData) return;
             ds.Close();
             IngredientModel foundIngredient = null;
-            if (ingredientId <= 0)
-            {
-                foundIngredient = Model.Ingredients.FirstOrDefault(x => x.TempID == tempId);
-            }
-            else
-            {
-                foundIngredient = Model.Ingredients.FirstOrDefault(x => x.IngredientID == ingredientId);
-            }
+            //if (ingredientId <= 0)
+            //{
+            //    foundIngredient = Model.Ingredients.FirstOrDefault(x => x.TempID == tempId);
+            //}
+            //else
+            //{
+            //    foundIngredient = Model.Ingredients.FirstOrDefault(x => x.IngredientID == ingredientId);
+            //}
             if (foundIngredient != null)
             {
                 foundIngredient.DeletedDateTime = DateTime.UtcNow;
@@ -216,11 +216,11 @@ namespace RecipeLewis.Pages
         {
             if (ShowViewData) return;
             int order = 1;
-            if (Model.Steps.Any())
-            {
-                order = Model.Steps.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
-            }
-            Model.Steps.Add(new StepModel() { Title = NewStep, DisplayOrder = order });
+            //if (Model.Steps.Any())
+            //{
+            //    order = Model.Steps.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
+            //}
+            //Model.Steps.Add(new StepModel() { Title = NewStep, DisplayOrder = order });
             NewStep = string.Empty;
         }
         public void RemoveStep(int stepId, int tempId, DialogService ds)
@@ -228,14 +228,14 @@ namespace RecipeLewis.Pages
             if (ShowViewData) return;
             ds.Close();
             StepModel foundStep = null;
-            if (stepId <= 0)
-            {
-                foundStep = Model.Steps.FirstOrDefault(x => x.TempID == tempId);
-            }
-            else
-            {
-                foundStep = Model.Steps.FirstOrDefault(x => x.StepID == stepId);
-            }
+            //if (stepId <= 0)
+            //{
+            //    foundStep = Model.Steps.FirstOrDefault(x => x.TempID == tempId);
+            //}
+            //else
+            //{
+            //    foundStep = Model.Steps.FirstOrDefault(x => x.StepID == stepId);
+            //}
             if (foundStep != null)
             {
                 foundStep.DeletedDateTime = DateTime.UtcNow;

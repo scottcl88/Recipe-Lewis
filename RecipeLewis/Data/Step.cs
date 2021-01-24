@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Step : IEntity
+    public class Step : EntityData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int StepID { get; set; }
@@ -15,14 +15,9 @@ namespace RecipeLewis.Data
         public string Title { get; set; }
         public string Description { get; set; }
 
-        [Required]
-        [Display(Name = "Created Date")]
-        public DateTime CreatedDateTime { get; set; }
-
-        [Display(Name = "Modified Date")]
-        public DateTime? ModifiedDateTime { get; set; }
-
-        [Display(Name = "Deleted Date")]
-        public DateTime? DeletedDateTime { get; set; }
+        public override EntityModel ToModel()
+        {
+            return StepExtensions.ToModel(this);
+        }
     }
 }

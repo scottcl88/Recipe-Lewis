@@ -1,5 +1,6 @@
 ﻿using RecipeLewis.Data;
 using RecipeLewis.Models;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RecipeLewis.DataExtensions
@@ -66,11 +67,11 @@ namespace RecipeLewis.DataExtensions
             data.Description = model.Description;
             data.Documents = model.Documents?.Select(x => x.ToData()).ToList();
             data.InactiveTime = model.InactiveTime;
-            data.Ingredients = model.Ingredients?.Select(x => x.ToData<IngredientModel, Ingredient>()).ToList();
+            data.Ingredients = model.Ingredients?.Select(x => (x.List as List<EntityModel>).ToData()).ToList();
             data.PrepTime = model.PrepTime;
             data.ServingSize = model.ServingSize;
             data.NumberOfServings = model.NumberOfServings;
-            data.Steps = model.Steps?.Select(x => x.ToData<StepModel, Step>()).ToList();
+            data.Steps = model.Steps?.Select(x => x.ToData()).ToList();
             data.Tags = model.Tags?.Select(x => x.ToData()).Where(x => !x.DeletedDateTime.HasValue).ToList();
             data.Title = model.Title;
             data.TotalTime = model.TotalTime;

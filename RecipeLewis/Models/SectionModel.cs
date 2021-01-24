@@ -1,10 +1,11 @@
+using RecipeLewis.DataExtensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.Models
 {
-    public class SectionModel<T>
+    public class SectionModel<T> where T : EntityModel
     {
         public int SectionID { get; set; }
         public string Title { get; set; }

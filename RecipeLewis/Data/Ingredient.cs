@@ -1,11 +1,12 @@
 using RecipeLewis.DataExtensions;
+using RecipeLewis.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Ingredient: IEntity
+    public class Ingredient : EntityData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IngredientID { get; set; }
@@ -16,14 +17,9 @@ namespace RecipeLewis.Data
         public bool IsLiquid { get; set; }
         public int DisplayOrder { get; set; }
 
-        [Required]
-        [Display(Name = "Created Date")]
-        public DateTime CreatedDateTime { get; set; }
-
-        [Display(Name = "Modified Date")]
-        public DateTime? ModifiedDateTime { get; set; }
-
-        [Display(Name = "Deleted Date")]
-        public DateTime? DeletedDateTime { get; set; }
+        public override EntityModel ToModel()
+        {
+            return IngredientExtensions.ToModel(this);
+        }
     }
 }
