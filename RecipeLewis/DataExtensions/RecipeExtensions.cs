@@ -19,11 +19,11 @@ namespace RecipeLewis.DataExtensions
                 Description = data.Description,
                 Documents = data.Documents?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 InactiveTime = data.InactiveTime,
-                Ingredients = data.Ingredients?.Select(x => x.ToModel<Ingredient, IngredientModel>()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
+                Ingredients = data.Ingredients?.Select(x => SectionExtensions.ToModel((Section<EntityData>)x)).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 PrepTime = data.PrepTime,
                 ServingSize = data.ServingSize,
                 NumberOfServings = data.NumberOfServings,
-                Steps = data.Steps?.Select(x => x.ToModel<Step, StepModel>()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
+                Steps = data.Steps?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 Tags = data.Tags?.Select(x => x.ToModel()).ToList(),
                 Title = data.Title,
                 TotalTime = data.TotalTime,
@@ -67,7 +67,7 @@ namespace RecipeLewis.DataExtensions
             data.Description = model.Description;
             data.Documents = model.Documents?.Select(x => x.ToData()).ToList();
             data.InactiveTime = model.InactiveTime;
-            data.Ingredients = model.Ingredients?.Select(x => (x.List as List<EntityModel>).ToData()).ToList();
+            data.Ingredients = model.Ingredients?.Select(x => x.ToData()).ToList();
             data.PrepTime = model.PrepTime;
             data.ServingSize = model.ServingSize;
             data.NumberOfServings = model.NumberOfServings;

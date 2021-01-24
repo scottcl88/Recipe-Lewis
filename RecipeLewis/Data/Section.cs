@@ -1,4 +1,5 @@
 using RecipeLewis.DataExtensions;
+using RecipeLewis.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +7,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Section<T> where T: EntityData
+    public class Section<T> where T : EntityData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SectionID { get; set; }

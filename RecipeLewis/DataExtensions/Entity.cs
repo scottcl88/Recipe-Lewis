@@ -3,7 +3,11 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.DataExtensions
 {
-    public abstract class EntityData
+    public interface IDataConvertable
+    {
+        public EntityModel ToModel();
+    }
+    public abstract class EntityData: IDataConvertable
     {
         public int Id { get; set; }
         public abstract EntityModel ToModel();
@@ -18,7 +22,11 @@ namespace RecipeLewis.DataExtensions
         [Display(Name = "Deleted Date")]
         public DateTime? DeletedDateTime { get; set; }
     }
-    public abstract class EntityModel
+    public interface IModelConvertable
+    {
+        public EntityData ToData();
+    }
+    public abstract class EntityModel: IModelConvertable
     {
         public int Id { get; set; }
         public abstract EntityData ToData();
