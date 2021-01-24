@@ -1,4 +1,5 @@
 using RecipeLewis.DataExtensions;
+using RecipeLewis.Models;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -15,7 +16,7 @@ namespace RecipeLewis.Data
         public string Title { get; set; }
         public string Description { get; set; }
 
-        public override EntityModel ToModel()
+        public override StepModel ToModel()
         {
             return StepExtensions.ToModel(this);
         }

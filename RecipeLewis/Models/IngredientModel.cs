@@ -1,7 +1,9 @@
 using RecipeLewis.Data;
 using RecipeLewis.DataExtensions;
 using System;
+using System.Runtime.CompilerServices;
 
+[assembly: InternalsVisibleTo("DynamicProxyGenAssembly2")]
 namespace RecipeLewis.Models
 {
     public class IngredientModel: EntityModel
@@ -19,7 +21,7 @@ namespace RecipeLewis.Models
         public bool IsLiquid { get; set; }
         public int DisplayOrder { get; set; }
 
-        public override EntityData ToData()
+        public override Ingredient ToData()
         {
             return IngredientExtensions.ToData(this);
         }

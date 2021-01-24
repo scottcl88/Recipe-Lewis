@@ -19,7 +19,7 @@ namespace RecipeLewis.DataExtensions
                 Description = data.Description,
                 Documents = data.Documents?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 InactiveTime = data.InactiveTime,
-                Ingredients = data.Ingredients?.Select(x => SectionExtensions.ToModel((Section<EntityData>)x)).Where(x => !x.DeletedDateTime.HasValue).ToList(),
+                Ingredients = data.Ingredients?.Select(x => x.ToModel()).Where(x => !x.DeletedDateTime.HasValue).ToList(),
                 PrepTime = data.PrepTime,
                 ServingSize = data.ServingSize,
                 NumberOfServings = data.NumberOfServings,
