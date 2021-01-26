@@ -4,16 +4,17 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.Models
 {
-    public class TagModel: EntityModel
+    public class SectionModel: EntityModel
     {
-        public TagModel()
+        public SectionModel()
         {
-            TempID = (int)DateTime.Now.Ticks;
             CreatedDateTime = DateTime.UtcNow;
+            TempID = (int)DateTime.Now.Ticks;
         }
-        public int TagID { get; set; }
+        public int SectionID { get; set; }
         public int TempID { get; set; }//Used to identify tags that have not yet been saved to db
-        [Required]
         public string Title { get; set; }
+        public int DisplayOrder { get; set; }
+        public string NewIngredient { get; set; }
     }
 }

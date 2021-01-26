@@ -1,9 +1,10 @@
+using RecipeLewis.Data;
 using System;
 using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.Models
 {
-    public class DocumentModel
+    public class DocumentModel: EntityModel
     {
         public DocumentModel()
         {
@@ -20,15 +21,5 @@ namespace RecipeLewis.Models
         public string Extension { get; set; }
         public string ContentType { get; set; }
         public static readonly long MaxSize = 26214400;//20 MB
-
-        [Required]
-        [Display(Name = "Created Date")]
-        public DateTime CreatedDateTime { get; set; }
-
-        [Display(Name = "Modified Date")]
-        public DateTime? ModifiedDateTime { get; set; }
-
-        [Display(Name = "Deleted Date")]
-        public DateTime? DeletedDateTime { get; set; }
     }
 }

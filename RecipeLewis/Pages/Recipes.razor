@@ -160,30 +160,57 @@
             @if (!ShowViewData)
             {
               <div class="row align-items-center">
-                <div class="col-auto align-items-center d-flex">
-                  <RadzenLabel Text="Ingredient" />
-                </div>
+                @*<div class="col-auto align-items-center d-flex">
+                    <RadzenLabel Text="Section" />
+                  </div>*@
                 <div class="col-md-6">
-                  <RadzenTextBox class="col-md-10" Name="Ingredient" id="ingredientInput" @bind-Value="NewIngredient" />
-                  <button type="button" class="btn btn-secondary btn-sm" id="ingredientAdd" @onclick="AddIngredient">Add</button>
+                  <RadzenTextBox class="col-auto" Name="IngredientSection" id="ingredientSectionInput" @bind-Value="NewIngredientSection" />
+                  <button type="button" class="btn btn-secondary btn-sm" id="ingredientSectionAdd" @onclick="AddIngredientSection">New Section</button>
                 </div>
               </div>
+              @*<div class="row align-items-center">
+                  <div class="col-auto align-items-center d-flex">
+                    <RadzenLabel Text="Ingredient" />
+                  </div>
+                  <div class="col-md-6">
+                    <RadzenTextBox class="col-md-10" Name="Ingredient" id="ingredientInput" @bind-Value="NewIngredient" />
+                    <button type="button" class="btn btn-secondary btn-sm" id="ingredientAdd" @onclick="AddIngredient">Add</button>
+                  </div>
+                </div>*@
             }
             <div class="row align-items-center mt-3">
-              <ul style="    width: 100%
-">
-                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.IngredientModel">
-                  <Template Context="ingredient">
-                    <li>
-                      <RadzenTextBox class="form-group" style="width: 95%;" Name="IngredientTitle" @bind-disabled="ShowViewData" @bind-Value="@ingredient.Title" />
-                      @if (!ShowViewData)
-                      {
-                        <span class="text-danger pointer" style="padding: 5px;" id="ingredientRemove" @onclick="(args => ConfirmDeleteIngredient(ingredient.IngredientID, ingredient.TempID))">X</span>
-                      }
-                    </li>
-                  </Template>
-                </RadzenDataList>
-              </ul>
+              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.SectionModel">
+                <Template Context="section">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="col-auto mb-2" style="position: relative; margin-left: -35px;">
+                        <RadzenLabel Text="@(section.Title)" />
+                        @if (!ShowViewData)
+                        {
+                          <span class="text-danger pointer" style="padding: 5px;" id="ingredientSectionRemove" @onclick="(args => ConfirmDeleteIngredientSection(section.SectionID, section.TempID))">X</span>
+                        }
+                      </div>
+                      <div class="col-auto mb-3">
+                        <RadzenTextBox class="col-9 ingredientInput" Name="Ingredient" data-section-id="@(section.SectionID)" @bind-Value="section.NewIngredient" />
+                        <button type="button" class="btn btn-secondary btn-sm ingredientAdd" data-section-id="@(section.SectionID)" @onclick="args => AddIngredient(args, section.SectionID, section.TempID)">Add Ingredient</button>
+                      </div>
+                      <ul style="width: 100%">
+                        <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.Where(x => ((x.Section.SectionID > 0 && x.Section.SectionID == section.SectionID) || x.Section.TempID == section.TempID) && !x.DeletedDateTime.HasValue).ToList()" TItem="Models.IngredientModel">
+                          <Template Context="ingredient">
+                            <li>
+                              <RadzenTextBox class="form-group" style="width: 95%;" Name="IngredientTitle" @bind-disabled="ShowViewData" @bind-Value="@ingredient.Title" />
+                              @if (!ShowViewData)
+                              {
+                                <span class="text-danger pointer" style="padding: 5px;" id="ingredientRemove" @onclick="(args => ConfirmDeleteIngredient(ingredient.IngredientID, ingredient.TempID))">X</span>
+                              }
+                            </li>
+                          </Template>
+                        </RadzenDataList>
+                      </ul>
+                    </div>
+                  </div>
+                </Template>
+              </RadzenDataList>
             </div>
           </RadzenFieldset>
         </div>
@@ -340,6 +367,17 @@
     <div class="row">
       <div class="col-md-12">
         <RadzenButton Text="Yes" Click="() => RemoveIngredient(ingredientId, tempId, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
+        <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
+      </div>
+    </div>
+  </div>
+  );
+  async Task ConfirmDeleteIngredientSection(int sectionId, int tempId) => await DialogService.OpenAsync("Are you sure?", ds =>
+  @<div>
+    <p Style="margin-bottom: 1rem">Are you sure you want to delete this section?</p>
+    <div class="row">
+      <div class="col-md-12">
+        <RadzenButton Text="Yes" Click="() => RemoveIngredientSection(sectionId, tempId, ds)" ButtonStyle="ButtonStyle.Danger" Style="margin-bottom: 10px; width: 150px" />
         <RadzenButton Text="Cancel" Click="() => ds.Close(false)" ButtonStyle="ButtonStyle.Secondary" Style="margin-bottom: 10px; width: 150px" />
       </div>
     </div>

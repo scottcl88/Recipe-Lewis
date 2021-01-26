@@ -23,12 +23,13 @@ $(document).on('keyup', '#tags:not(".readonly") > input[type=text]', function (e
         }, 100);
     }
 });
-$(document).on('keyup', '#ingredientInput', function (e) {
+$(document).on('keyup', '.ingredientInput', function (e) {
     if (event.keyCode == 13) {
-        $("#ingredientAdd").focus();
+        var sectionId = $(e.target).data("section-id");
+        $(".ingredientAdd[data-section-id='" + sectionId + "']").focus();
         setTimeout(() => {
-            $("#ingredientAdd").click();
-            $("#ingredientInput").focus();
+            $(".ingredientAdd[data-section-id='" + sectionId + "']").click();
+            $(".ingredientInput[data-section-id='" + sectionId + "']").focus();
         }, 100);
     }
 });

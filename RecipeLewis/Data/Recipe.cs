@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Recipe
+    public class Recipe : EntityData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int RecipeID { get; set; }
@@ -22,20 +22,11 @@ namespace RecipeLewis.Data
         public string InactiveTime { get; set; }
         public string TotalTime { get; set; }
         public bool TotalTimeCalculated { get; set; }
+        public virtual List<Section> Sections { get; set; }
         public virtual List<Tag> Tags { get; set; }
         public virtual List<Ingredient> Ingredients { get; set; }
         public virtual List<Step> Steps { get; set; }
         [JsonIgnore]
         public virtual List<Document> Documents { get; set; }
-
-        [Required]
-        [Display(Name = "Created Date")]
-        public DateTime CreatedDateTime { get; set; }
-
-        [Display(Name = "Modified Date")]
-        public DateTime? ModifiedDateTime { get; set; }
-
-        [Display(Name = "Deleted Date")]
-        public DateTime? DeletedDateTime { get; set; }
     }
 }

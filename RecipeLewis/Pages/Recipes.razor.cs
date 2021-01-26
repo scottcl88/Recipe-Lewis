@@ -139,6 +139,7 @@ namespace RecipeLewis.Pages
             {
                 CreatedDateTime = DateTime.UtcNow
             };
+            Model.Sections.Add(new SectionModel() { Title = "General" });
             StateHasChanged();
         }
 
@@ -175,18 +176,59 @@ namespace RecipeLewis.Pages
             ShowViewData = false;
             StateHasChanged();
         }
-        public string NewIngredient { get; set; }
+        public string NewIngredientSection { get; set; }
 
-        public void AddIngredient(MouseEventArgs e)
+        public void AddIngredientSection(MouseEventArgs e)
         {
             if (ShowViewData) return;
+            int order = 1;
+            if (Model.Sections.Any())
+            {
+                order = Model.Sections.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
+            }
+            Model.Sections.Add(new SectionModel() { Title = NewIngredientSection, DisplayOrder = order });
+            NewIngredientSection = string.Empty;
+        }
+        public void RemoveIngredientSection(int sectionId, int tempId, DialogService ds)
+        {
+            if (ShowViewData) return;
+            ds.Close();
+            SectionModel foundIngredientSection = null;
+            if (sectionId <= 0)
+            {
+                foundIngredientSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId);
+            }
+            else
+            {
+                foundIngredientSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId);
+            }
+            if (foundIngredientSection != null)
+            {
+                foundIngredientSection.DeletedDateTime = DateTime.UtcNow;
+                StateHasChanged();
+            }
+        }
+        public string NewIngredient { get; set; }
+
+        public void AddIngredient(MouseEventArgs e, int sectionId, int tempId)
+        {
+            if (ShowViewData) return;
+            SectionModel foundSection = null;
+            if (sectionId <= 0)
+            {
+                foundSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId);
+            }
+            else
+            {
+                foundSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId);
+            }
             int order = 1;
             if (Model.Ingredients.Any())
             {
                 order = Model.Ingredients.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
             }
-            Model.Ingredients.Add(new IngredientModel() { Title = NewIngredient, DisplayOrder = order });
-            NewIngredient = string.Empty;
+            Model.Ingredients.Add(new IngredientModel() { Title = foundSection.NewIngredient, DisplayOrder = order, Section = foundSection });
+            foundSection.NewIngredient = string.Empty;
         }
         public void RemoveIngredient(int ingredientId, int tempId, DialogService ds)
         {

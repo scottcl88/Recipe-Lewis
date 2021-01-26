@@ -163,8 +163,12 @@ app {
   color: #4d5556 !important;
 }
 
+#recipePage .ui-datalist-content.ui-widget-content.datalist-block{
+    width: 95% !important;
+}
+
 @media (max-width: 1023.9px) {
-  .main .top-row:not(.auth) {
+    .main .top-row:not(.auth) {
     display: none;
   }
 

@@ -4,11 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Category : EntityData
+    public class Section : EntityData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int CategoryID { get; set; }
+        public int SectionID { get; set; }
 
         public string Title { get; set; }
+        public int DisplayOrder { get; set; }
     }
 }

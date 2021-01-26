@@ -1,10 +1,11 @@
+using RecipeLewis.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.Models
 {
-    public class RecipeModel
+    public class RecipeModel: EntityModel
     {
         public RecipeModel()
         {
@@ -12,12 +13,14 @@ namespace RecipeLewis.Models
             Steps = new List<StepModel>();
             Documents = new List<DocumentModel>();
             Tags = new List<TagModel>();
+            Sections = new List<SectionModel>();
             CreatedDateTime = DateTime.UtcNow;
             TotalTimeCalculated = true;
         }
 
         public int RecipeID { get; set; }
         public DateTime Date { get; set; }
+        [Required]
         public string Title { get; set; }
         public string Description { get; set; }
         public string ServingSize { get; set; }
@@ -29,18 +32,9 @@ namespace RecipeLewis.Models
         public string TotalTime { get; set; }
         public bool TotalTimeCalculated { get; set; }
         public List<IngredientModel> Ingredients { get; set; }
+        public List<SectionModel> Sections { get; set; }
         public List<StepModel> Steps { get; set; }
         public List<DocumentModel> Documents { get; set; }
         public List<TagModel> Tags { get; set; }
-
-        [Required]
-        [Display(Name = "Created Date")]
-        public DateTime CreatedDateTime { get; set; }
-
-        [Display(Name = "Modified Date")]
-        public DateTime? ModifiedDateTime { get; set; }
-
-        [Display(Name = "Deleted Date")]
-        public DateTime? DeletedDateTime { get; set; }
     }
 }
