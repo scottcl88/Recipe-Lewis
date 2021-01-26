@@ -33,12 +33,13 @@ $(document).on('keyup', '.ingredientInput', function (e) {
         }, 100);
     }
 });
-$(document).on('keyup', '#stepInput', function (e) {
+$(document).on('keyup', '.stepInput', function (e) {
     if (event.keyCode == 13) {
-        $("#stepAdd").focus();
+        var sectionId = $(e.target).data("section-id");
+        $(".stepAdd[data-section-id='" + sectionId + "']").focus();
         setTimeout(() => {
-            $("#stepAdd").click();
-            $("#stepInput").focus();
+            $(".stepAdd[data-section-id='" + sectionId + "']").click();
+            $(".stepInput[data-section-id='" + sectionId + "']").focus();
         }, 100);
     }
 });

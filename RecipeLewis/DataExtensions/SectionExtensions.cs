@@ -13,6 +13,7 @@ namespace RecipeLewis.DataExtensions
             {
                 SectionID = data.SectionID,
                 Title = data.Title,
+                EntityType = data.EntityType,
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
@@ -22,11 +23,12 @@ namespace RecipeLewis.DataExtensions
         public static Section ToData(this SectionModel model, Recipe recipe)
         {
             if (model == null) return null;
-            if(model.SectionID >= 0 && recipe != null)
+            if(model.SectionID > 0 && recipe != null)
             {
                 var foundSection = recipe.Sections.FirstOrDefault(x => x.SectionID == model.SectionID);
                 if(foundSection != null)
                 {
+                    foundSection.EntityType = model.EntityType;
                     foundSection.Title = model.Title;
                     return foundSection;
                 }
@@ -34,6 +36,7 @@ namespace RecipeLewis.DataExtensions
             return new Section()
             {
                 Title = model.Title,
+                EntityType = model.EntityType,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,
                 DeletedDateTime = model.DeletedDateTime

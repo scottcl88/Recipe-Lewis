@@ -15,13 +15,14 @@ namespace RecipeLewis.DataExtensions
                 Category = data.Category.ToModel(),
                 Description = data.Description,
                 DisplayOrder = data.DisplayOrder,
+                Section = data.Section.ToModel(),
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
             };
         }
 
-        public static Step ToData(this StepModel model)
+        public static Step ToData(this StepModel model, Recipe recipe)
         {
             if (model == null) return null;
             return new Step()
@@ -30,6 +31,7 @@ namespace RecipeLewis.DataExtensions
                 Category = model.Category.ToData(),
                 Description = model.Description,
                 DisplayOrder = model.DisplayOrder,
+                Section = model.Section.ToData(recipe),
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,
                 DeletedDateTime = model.DeletedDateTime

@@ -179,7 +179,7 @@
                 </div>*@
             }
             <div class="row align-items-center mt-3">
-              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.SectionModel">
+              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Ingredient).ToList()" TItem="Models.SectionModel">
                 <Template Context="section">
                   <div class="row">
                     <div class="col-12">
@@ -219,29 +219,58 @@
             @if (!ShowViewData)
             {
               <div class="row align-items-center">
-                <div class="col-md-1 align-items-center d-flex">
-                  <RadzenLabel Text="Step" />
-                </div>
+                @*<div class="col-auto align-items-center d-flex">
+          <RadzenLabel Text="Section" />
+        </div>*@
                 <div class="col-md-6">
-                  <RadzenTextBox class="col-md-10" Name="Step" id="stepInput" @bind-Value="NewStep" />
-                  <button type="button" class="btn btn-secondary btn-sm" id="stepAdd" @onclick="AddStep">Add</button>
+                  <RadzenTextBox class="col-auto" Name="StepSection" id="stepSectionInput" @bind-Value="NewStepSection" />
+                  <button type="button" class="btn btn-secondary btn-sm" id="stepSectionAdd" @onclick="AddStepSection">New Section</button>
                 </div>
               </div>
+              @*<div class="row align-items-center">
+        <div class="col-md-1 align-items-center d-flex">
+          <RadzenLabel Text="Step" />
+        </div>
+        <div class="col-md-6">
+          <RadzenTextBox class="col-md-10" Name="Step" id="stepInput" @bind-Value="NewStep" />
+          <button type="button" class="btn btn-secondary btn-sm" id="stepAdd" @onclick="AddStep">Add</button>
+        </div>
+      </div>*@
             }
+
             <div class="row align-items-center mt-3">
-              <ol style="width: 100%">
-                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.Where(x => !x.DeletedDateTime.HasValue).ToList()" TItem="Models.StepModel">
-                  <Template Context="step">
-                    <li>
-                      <RadzenTextBox class="form-group" style="width: 95%;" Name="StepTitle" @bind-disabled="ShowViewData" @bind-Value="@step.Title" />
-                      @if (!ShowViewData)
-                      {
-                        <span class="text-danger pointer" style="padding: 5px;" id="stepRemove" @onclick="(args => ConfirmDeleteStep(step.StepID, step.TempID))">X</span>
-                      }
-                    </li>
-                  </Template>
-                </RadzenDataList>
-              </ol>
+              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Step).ToList()" TItem="Models.SectionModel">
+                <Template Context="section">
+                  <div class="row">
+                    <div class="col-12">
+                      <div class="col-auto mb-2" style="position: relative; margin-left: -35px;">
+                        <RadzenLabel Text="@(section.Title)" />
+                        @if (!ShowViewData)
+                        {
+                          <span class="text-danger pointer" style="padding: 5px;" id="ingredientSectionRemove" @onclick="(args => ConfirmDeleteIngredientSection(section.SectionID, section.TempID))">X</span>
+                        }
+                      </div>
+                      <div class="col-auto mb-3">
+                        <RadzenTextBox class="col-9 stepInput" Name="Step" data-section-id="@(section.SectionID)" @bind-Value="section.NewStep" />
+                        <button type="button" class="btn btn-secondary btn-sm stepAdd" data-section-id="@(section.SectionID)" @onclick="args => AddStep(args, section.SectionID, section.TempID)">Add Step</button>
+                      </div>
+                      <ul style="width: 100%">
+                        <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.Where(x => ((x.Section.SectionID > 0 && x.Section.SectionID == section.SectionID) || x.Section.TempID == section.TempID) && !x.DeletedDateTime.HasValue).ToList()" TItem="Models.StepModel">
+                          <Template Context="step">
+                            <li>
+                              <RadzenTextBox class="form-group" style="width: 95%;" Name="StepTitle" @bind-disabled="ShowViewData" @bind-Value="@step.Title" />
+                              @if (!ShowViewData)
+                              {
+                                <span class="text-danger pointer" style="padding: 5px;" id="stepRemove" @onclick="(args => ConfirmDeleteStep(step.StepID, step.TempID))">X</span>
+                              }
+                            </li>
+                          </Template>
+                        </RadzenDataList>
+                      </ul>
+                    </div>
+                  </div>
+                </Template>
+              </RadzenDataList>
             </div>
           </RadzenFieldset>
         </div>

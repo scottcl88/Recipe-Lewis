@@ -72,7 +72,7 @@ namespace RecipeLewis.DataExtensions
             data.ServingSize = model.ServingSize;
             data.NumberOfServings = model.NumberOfServings;
             data.Sections = model.Sections?.Select(x => x.ToData(data)).ToList();
-            data.Steps = model.Steps?.Select(x => x.ToData()).ToList();
+            data.Steps = model.Steps?.Select(x => x.ToData(data)).ToList();
             data.Tags = model.Tags?.Select(x => x.ToData()).Where(x => !x.DeletedDateTime.HasValue).ToList();
             data.Title = model.Title;
             data.TotalTime = model.TotalTime;

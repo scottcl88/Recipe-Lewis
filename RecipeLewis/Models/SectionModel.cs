@@ -16,5 +16,7 @@ namespace RecipeLewis.Models
         public string Title { get; set; }
         public int DisplayOrder { get; set; }
         public string NewIngredient { get; set; }
+        public string NewStep { get; set; }
+        public EntityType EntityType { get; set; }
     }
 }

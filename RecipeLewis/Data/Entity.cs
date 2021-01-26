@@ -4,6 +4,12 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
+    public enum EntityType
+    {
+        Unknown = 0,
+        Ingredient = 1,
+        Step = 2
+    }
     public abstract class EntityData
     {
         [Required]

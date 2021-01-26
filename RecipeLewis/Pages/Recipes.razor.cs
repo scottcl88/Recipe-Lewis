@@ -139,7 +139,8 @@ namespace RecipeLewis.Pages
             {
                 CreatedDateTime = DateTime.UtcNow
             };
-            Model.Sections.Add(new SectionModel() { Title = "General" });
+            Model.Sections.Add(new SectionModel() { Title = "General", EntityType = Data.EntityType.Ingredient });
+            Model.Sections.Add(new SectionModel() { Title = "General", EntityType = Data.EntityType.Step });
             StateHasChanged();
         }
 
@@ -186,7 +187,7 @@ namespace RecipeLewis.Pages
             {
                 order = Model.Sections.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
             }
-            Model.Sections.Add(new SectionModel() { Title = NewIngredientSection, DisplayOrder = order });
+            Model.Sections.Add(new SectionModel() { Title = NewIngredientSection, DisplayOrder = order, EntityType = Data.EntityType.Ingredient });
             NewIngredientSection = string.Empty;
         }
         public void RemoveIngredientSection(int sectionId, int tempId, DialogService ds)
@@ -196,11 +197,11 @@ namespace RecipeLewis.Pages
             SectionModel foundIngredientSection = null;
             if (sectionId <= 0)
             {
-                foundIngredientSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId);
+                foundIngredientSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId && x.EntityType == Data.EntityType.Ingredient);
             }
             else
             {
-                foundIngredientSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId);
+                foundIngredientSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId && x.EntityType == Data.EntityType.Ingredient);
             }
             if (foundIngredientSection != null)
             {
@@ -208,7 +209,6 @@ namespace RecipeLewis.Pages
                 StateHasChanged();
             }
         }
-        public string NewIngredient { get; set; }
 
         public void AddIngredient(MouseEventArgs e, int sectionId, int tempId)
         {
@@ -216,11 +216,11 @@ namespace RecipeLewis.Pages
             SectionModel foundSection = null;
             if (sectionId <= 0)
             {
-                foundSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId);
+                foundSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId && x.EntityType == Data.EntityType.Ingredient);
             }
             else
             {
-                foundSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId);
+                foundSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId && x.EntityType == Data.EntityType.Ingredient);
             }
             int order = 1;
             if (Model.Ingredients.Any())
@@ -249,19 +249,58 @@ namespace RecipeLewis.Pages
                 StateHasChanged();
             }
         }
+        public string NewStepSection { get; set; }
 
-        public string NewStep { get; set; }
-
-        public void AddStep(MouseEventArgs e)
+        public void AddStepSection(MouseEventArgs e)
         {
             if (ShowViewData) return;
+            int order = 1;
+            if (Model.Sections.Any())
+            {
+                order = Model.Sections.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
+            }
+            Model.Sections.Add(new SectionModel() { Title = NewStepSection, DisplayOrder = order, EntityType = Data.EntityType.Step });
+            NewStepSection = string.Empty;
+        }
+        public void RemoveStepSection(int sectionId, int tempId, DialogService ds)
+        {
+            if (ShowViewData) return;
+            ds.Close();
+            SectionModel foundStepSection = null;
+            if (sectionId <= 0)
+            {
+                foundStepSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId && x.EntityType == Data.EntityType.Step);
+            }
+            else
+            {
+                foundStepSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId && x.EntityType == Data.EntityType.Step);
+            }
+            if (foundStepSection != null)
+            {
+                foundStepSection.DeletedDateTime = DateTime.UtcNow;
+                StateHasChanged();
+            }
+        }
+
+        public void AddStep(MouseEventArgs e, int sectionId, int tempId)
+        {
+            if (ShowViewData) return;
+            SectionModel foundSection = null;
+            if (sectionId <= 0)
+            {
+                foundSection = Model.Sections.FirstOrDefault(x => x.TempID == tempId && x.EntityType == Data.EntityType.Step);
+            }
+            else
+            {
+                foundSection = Model.Sections.FirstOrDefault(x => x.SectionID == sectionId && x.EntityType == Data.EntityType.Step);
+            }
             int order = 1;
             if (Model.Steps.Any())
             {
                 order = Model.Steps.OrderByDescending(x => x.DisplayOrder).First().DisplayOrder + 1;
             }
-            Model.Steps.Add(new StepModel() { Title = NewStep, DisplayOrder = order });
-            NewStep = string.Empty;
+            Model.Steps.Add(new StepModel() { Title = foundSection.NewStep, DisplayOrder = order, Section = foundSection });
+            foundSection.NewStep = string.Empty;
         }
         public void RemoveStep(int stepId, int tempId, DialogService ds)
         {
@@ -282,7 +321,6 @@ namespace RecipeLewis.Pages
                 StateHasChanged();
             }
         }
-
 
         public async Task DeleteRecipe(DialogService ds)
         {
