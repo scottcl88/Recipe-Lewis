@@ -1,10 +1,8 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
-    public class Ingredient: EntityData
+    public class Ingredient : EntityData
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IngredientID { get; set; }

@@ -19,6 +19,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
             _userManager = userManager;
             Input = new InputModel();
         }
+
         public IdentityUser FoundUser { get; set; }
         public bool FoundUserIsMod { get; set; }
         public IList<string> FoundUserRoles { get; set; }
@@ -39,7 +40,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
         public async Task<IActionResult> OnGetMakeModerator(string id)
         {
             var foundUser = await _userManager.FindByIdAsync(id);
-            if(foundUser == null)
+            if (foundUser == null)
             {
                 StatusMessage = "User was not found";
                 return Page();
@@ -64,6 +65,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
             }
             return Page();
         }
+
         public async Task<IActionResult> OnGetRemoveRoles(string id)
         {
             var foundUser = await _userManager.FindByIdAsync(id);
@@ -92,6 +94,7 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
             }
             return Page();
         }
+
         public async Task<IActionResult> OnPostAsync()
         {
             FoundUser = null;
@@ -105,13 +108,13 @@ namespace RecipeLewis.Areas.Identity.Pages.Account.Manage
             {
                 return Page();
             }
-            
+
             FoundUser = await _userManager.FindByEmailAsync(Input.Username);
-            if(FoundUser == null)
+            if (FoundUser == null)
             {
                 FoundUser = await _userManager.FindByNameAsync(Input.Username);
             }
-            if(FoundUser == null)
+            if (FoundUser == null)
             {
                 StatusMessage = "No user found";
             }

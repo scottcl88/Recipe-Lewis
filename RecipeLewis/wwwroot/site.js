@@ -1,5 +1,4 @@
-﻿
-$(document).on('focusin', '#tags:not(".readonly") > input[type=text]', function () {
+﻿$(document).on('focusin', '#tags:not(".readonly") > input[type=text]', function () {
     var tagValue = $("#hiddenTagInput").val();
     var availableTags = tagValue.split(',');
     $('#tags:not(".readonly") > input[type=text]').autocomplete({

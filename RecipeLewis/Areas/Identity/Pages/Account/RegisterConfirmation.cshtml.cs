@@ -17,7 +17,6 @@ namespace RecipeLewis.Areas.Identity.Pages.Account
         private readonly IEmailSender _sender;
         private readonly EmailSender _myEmailSender;
 
-
         public RegisterConfirmationModel(UserManager<IdentityUser> userManager, IEmailSender sender, EmailSender myEmailSender)
         {
             _userManager = userManager;

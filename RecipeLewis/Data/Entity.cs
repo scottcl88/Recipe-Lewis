@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
 {
@@ -10,6 +9,7 @@ namespace RecipeLewis.Data
         Ingredient = 1,
         Step = 2
     }
+
     public abstract class EntityData
     {
         [Required]
@@ -22,6 +22,7 @@ namespace RecipeLewis.Data
         [Display(Name = "Deleted Date")]
         public DateTime? DeletedDateTime { get; set; }
     }
+
     public abstract class EntityModel
     {
         [Required]

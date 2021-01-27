@@ -160,23 +160,11 @@
             @if (!ShowViewData)
             {
               <div class="row align-items-center">
-                @*<div class="col-auto align-items-center d-flex">
-                    <RadzenLabel Text="Section" />
-                  </div>*@
                 <div class="col-md-6">
                   <RadzenTextBox class="col-auto" Name="IngredientSection" id="ingredientSectionInput" @bind-Value="NewIngredientSection" />
                   <button type="button" class="btn btn-secondary btn-sm" id="ingredientSectionAdd" @onclick="AddIngredientSection">New Section</button>
                 </div>
               </div>
-              @*<div class="row align-items-center">
-                  <div class="col-auto align-items-center d-flex">
-                    <RadzenLabel Text="Ingredient" />
-                  </div>
-                  <div class="col-md-6">
-                    <RadzenTextBox class="col-md-10" Name="Ingredient" id="ingredientInput" @bind-Value="NewIngredient" />
-                    <button type="button" class="btn btn-secondary btn-sm" id="ingredientAdd" @onclick="AddIngredient">Add</button>
-                  </div>
-                </div>*@
             }
             <div class="row align-items-center mt-3">
               <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Ingredient).ToList()" TItem="Models.SectionModel">
@@ -219,23 +207,11 @@
             @if (!ShowViewData)
             {
               <div class="row align-items-center">
-                @*<div class="col-auto align-items-center d-flex">
-          <RadzenLabel Text="Section" />
-        </div>*@
                 <div class="col-md-6">
                   <RadzenTextBox class="col-auto" Name="StepSection" id="stepSectionInput" @bind-Value="NewStepSection" />
                   <button type="button" class="btn btn-secondary btn-sm" id="stepSectionAdd" @onclick="AddStepSection">New Section</button>
                 </div>
               </div>
-              @*<div class="row align-items-center">
-        <div class="col-md-1 align-items-center d-flex">
-          <RadzenLabel Text="Step" />
-        </div>
-        <div class="col-md-6">
-          <RadzenTextBox class="col-md-10" Name="Step" id="stepInput" @bind-Value="NewStep" />
-          <button type="button" class="btn btn-secondary btn-sm" id="stepAdd" @onclick="AddStep">Add</button>
-        </div>
-      </div>*@
             }
 
             <div class="row align-items-center mt-3">

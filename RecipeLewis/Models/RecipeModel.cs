@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.Models
 {
-    public class RecipeModel: EntityModel
+    public class RecipeModel : EntityModel
     {
         public RecipeModel()
         {
@@ -20,8 +20,10 @@ namespace RecipeLewis.Models
 
         public int RecipeID { get; set; }
         public DateTime Date { get; set; }
+
         [Required]
         public string Title { get; set; }
+
         public string Description { get; set; }
         public string ServingSize { get; set; }
         public string NumberOfServings { get; set; }

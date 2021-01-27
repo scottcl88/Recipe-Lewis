@@ -24,10 +24,10 @@ namespace RecipeLewis.DataExtensions
         public static Section ToData(this SectionModel model, Recipe recipe)
         {
             if (model == null) return null;
-            if(model.SectionID > 0 && recipe != null)
+            if (model.SectionID > 0 && recipe != null)
             {
                 var foundSection = recipe.Sections.FirstOrDefault(x => x.SectionID == model.SectionID);
-                if(foundSection != null)
+                if (foundSection != null)
                 {
                     foundSection.TempID = model.TempID;
                     foundSection.EntityType = model.EntityType;

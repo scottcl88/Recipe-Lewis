@@ -1,6 +1,4 @@
 using Newtonsoft.Json;
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
@@ -12,8 +10,10 @@ namespace RecipeLewis.Data
 
         public string Filename { get; set; }
         public string Description { get; set; }
+
         [JsonIgnore]
         public byte[] Bytes { get; set; }
+
         public string Extension { get; set; }
         public string ContentType { get; set; }
     }

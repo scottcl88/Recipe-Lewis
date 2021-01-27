@@ -1,10 +1,9 @@
 using RecipeLewis.Data;
 using System;
-using System.ComponentModel.DataAnnotations;
 
 namespace RecipeLewis.Models
 {
-    public class DocumentModel: EntityModel
+    public class DocumentModel : EntityModel
     {
         public DocumentModel()
         {

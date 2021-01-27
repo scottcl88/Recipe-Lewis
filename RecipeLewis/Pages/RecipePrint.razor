@@ -85,7 +85,7 @@
         <RadzenFieldset Text="Ingredients">
           <div class="row align-items-center">
             <ul style="width: auto;">
-              <RadzenDataList PageSize="15" class="datalist-block"  WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
+              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
                 <Template Context="ingredient">
                   <li>
                     <span>@ingredient.Title</span>
@@ -100,7 +100,7 @@
         <RadzenFieldset Text="Steps">
           <div class="row align-items-center">
             <ol style="width: auto;">
-              <RadzenDataList PageSize="15" class="datalist-block"  WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
+              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
                 <Template Context="step">
                   <li>
                     <span>@step.Title</span>

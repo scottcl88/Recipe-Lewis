@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace RecipeLewis.Pages
@@ -28,11 +27,12 @@ namespace RecipeLewis.Pages
 
         public List<TagModel> AllTags { get; set; }
         public string AvailableTags { get; set; }
+
         [Inject]
         public RecipeService RecipeService { get; set; }
+
         [Inject]
         public TagService TagService { get; set; }
-
 
         [Inject]
         public NotificationService NotificationService { get; set; }
@@ -72,6 +72,7 @@ namespace RecipeLewis.Pages
             IsLoading = false;
             StateHasChanged();
         }
+
         private async Task LoadTags()
         {
             if (AllTags.Count > 0) return;//Already loadded it
@@ -97,7 +98,7 @@ namespace RecipeLewis.Pages
             IsSaving = true;
             StateHasChanged();
 
-            //Make sure they only add new unique tags            
+            //Make sure they only add new unique tags
             List<TagModel> newTags = Model.Tags.ToList();
             foreach (var newTag in newTags)
             {
@@ -177,6 +178,7 @@ namespace RecipeLewis.Pages
             ShowViewData = false;
             StateHasChanged();
         }
+
         public string NewIngredientSection { get; set; }
 
         public void AddIngredientSection(MouseEventArgs e)
@@ -190,6 +192,7 @@ namespace RecipeLewis.Pages
             Model.Sections.Add(new SectionModel() { Title = NewIngredientSection, DisplayOrder = order, EntityType = Data.EntityType.Ingredient });
             NewIngredientSection = string.Empty;
         }
+
         public void RemoveIngredientSection(int sectionId, int tempId, DialogService ds)
         {
             if (ShowViewData) return;
@@ -230,6 +233,7 @@ namespace RecipeLewis.Pages
             Model.Ingredients.Add(new IngredientModel() { Title = foundSection.NewIngredient, DisplayOrder = order, Section = foundSection });
             foundSection.NewIngredient = string.Empty;
         }
+
         public void RemoveIngredient(int ingredientId, int tempId, DialogService ds)
         {
             if (ShowViewData) return;
@@ -249,6 +253,7 @@ namespace RecipeLewis.Pages
                 StateHasChanged();
             }
         }
+
         public string NewStepSection { get; set; }
 
         public void AddStepSection(MouseEventArgs e)
@@ -262,6 +267,7 @@ namespace RecipeLewis.Pages
             Model.Sections.Add(new SectionModel() { Title = NewStepSection, DisplayOrder = order, EntityType = Data.EntityType.Step });
             NewStepSection = string.Empty;
         }
+
         public void RemoveStepSection(int sectionId, int tempId, DialogService ds)
         {
             if (ShowViewData) return;
@@ -302,6 +308,7 @@ namespace RecipeLewis.Pages
             Model.Steps.Add(new StepModel() { Title = foundSection.NewStep, DisplayOrder = order, Section = foundSection });
             foundSection.NewStep = string.Empty;
         }
+
         public void RemoveStep(int stepId, int tempId, DialogService ds)
         {
             if (ShowViewData) return;
@@ -342,6 +349,7 @@ namespace RecipeLewis.Pages
         }
 
         public string SearchText { get; set; }
+
         public void Search(ChangeEventArgs changeEvent)
         {
             SearchText = (string)changeEvent?.Value;
@@ -359,7 +367,9 @@ namespace RecipeLewis.Pages
             }
             StateHasChanged();
         }
+
         public string NewTag { get; set; }
+
         public void AddTag()
         {
             if (ShowViewData) return;
@@ -372,6 +382,7 @@ namespace RecipeLewis.Pages
             NewTag = "";
             StateHasChanged();
         }
+
         public void RemoveTag(int tagId, int tempId)
         {
             if (ShowViewData) return;
@@ -390,6 +401,7 @@ namespace RecipeLewis.Pages
                 StateHasChanged();
             }
         }
+
         public void RemoveDocument(int documentId, int tempId, DialogService ds)
         {
             if (ShowViewData) return;

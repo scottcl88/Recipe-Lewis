@@ -76,7 +76,7 @@ namespace RecipeLewis.Services
                     }
                 }
                 _context.Add(data);
-                foreach(var ingredient in data.Ingredients)
+                foreach (var ingredient in data.Ingredients)
                 {
                     var foundSection = data.Sections.FirstOrDefault(x => x.TempID == ingredient.Section.TempID);
                     if (foundSection != null)

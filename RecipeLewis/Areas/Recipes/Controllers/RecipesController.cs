@@ -10,6 +10,7 @@ namespace RecipeLewis.Areas.Recipes.Controllers
     public class RecipesController : Controller
     {
         private readonly RecipeService _recipeService;
+
         public RecipesController(RecipeService recipeService)
         {
             _recipeService = recipeService;
@@ -17,17 +18,17 @@ namespace RecipeLewis.Areas.Recipes.Controllers
 
         [HttpGet("[action]")]
         //3 day cache by paramaters
-        [ResponseCache(Duration = 259200, VaryByQueryKeys = new []{ "recipeId", "documentId" })]
+        [ResponseCache(Duration = 259200, VaryByQueryKeys = new[] { "recipeId", "documentId" })]
         public async Task<ActionResult> GetRecipeImage(int recipeId, int documentId)
         {
             var recipe = await _recipeService.GetRecipe(recipeId);
-            var document = recipe.Data.Documents.FirstOrDefault(x => x.DocumentID == documentId); 
+            var document = recipe.Data.Documents.FirstOrDefault(x => x.DocumentID == documentId);
             var cd = new System.Net.Mime.ContentDisposition
             {
                 // for example foo.bak
                 FileName = document.Filename,
 
-                // always prompt the user for downloading, set to true if you want 
+                // always prompt the user for downloading, set to true if you want
                 // the browser to try to show the file inline
                 Inline = false,
             };

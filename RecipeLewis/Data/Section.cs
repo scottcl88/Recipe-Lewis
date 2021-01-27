@@ -1,5 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
@@ -8,8 +6,10 @@ namespace RecipeLewis.Data
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int SectionID { get; set; }
+
         [NotMapped]
         public int TempID { get; set; }//Used to identify tags that have not yet been saved to db
+
         public string Title { get; set; }
         public int DisplayOrder { get; set; }
         public EntityType EntityType { get; set; }

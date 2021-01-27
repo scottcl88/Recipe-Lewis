@@ -1,5 +1,3 @@
-using System;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RecipeLewis.Data
@@ -8,6 +6,7 @@ namespace RecipeLewis.Data
     {
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int TagID { get; set; }
+
         public string Title { get; set; }
     }
 }
