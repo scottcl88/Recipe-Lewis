@@ -12,6 +12,7 @@ namespace RecipeLewis.DataExtensions
             return new SectionModel()
             {
                 SectionID = data.SectionID,
+                TempID = data.TempID,
                 Title = data.Title,
                 EntityType = data.EntityType,
                 CreatedDateTime = data.CreatedDateTime,
@@ -28,6 +29,7 @@ namespace RecipeLewis.DataExtensions
                 var foundSection = recipe.Sections.FirstOrDefault(x => x.SectionID == model.SectionID);
                 if(foundSection != null)
                 {
+                    foundSection.TempID = model.TempID;
                     foundSection.EntityType = model.EntityType;
                     foundSection.Title = model.Title;
                     return foundSection;
@@ -35,6 +37,7 @@ namespace RecipeLewis.DataExtensions
             }
             return new Section()
             {
+                TempID = model.TempID,
                 Title = model.Title,
                 EntityType = model.EntityType,
                 CreatedDateTime = model.CreatedDateTime,
