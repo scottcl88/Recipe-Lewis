@@ -178,10 +178,13 @@
                           <span class="text-danger pointer" style="padding: 5px;" id="ingredientSectionRemove" @onclick="(args => ConfirmDeleteIngredientSection(section.SectionID, section.TempID))">X</span>
                         }
                       </div>
-                      <div class="col-12 mb-3" style="padding: 0;">
-                        <RadzenTextBox class="col-10 ingredientInput" Name="Ingredient" data-section-id="@(section.SectionID)" @bind-Value="section.NewIngredient" />
-                        <button type="button" class="btn btn-secondary btn-sm ingredientAdd" data-section-id="@(section.SectionID)" @onclick="args => AddIngredient(args, section.SectionID, section.TempID)">Add Ingredient</button>
-                      </div>
+                      @if (!ShowViewData)
+                      {
+                        <div class="col-12 mb-3" style="padding: 0;">
+                          <RadzenTextBox class="col-10 ingredientInput" Name="Ingredient" data-section-id="@(section.SectionID)" @bind-Value="section.NewIngredient" />
+                          <button type="button" class="btn btn-secondary btn-sm ingredientAdd" data-section-id="@(section.SectionID)" @onclick="args => AddIngredient(args, section.SectionID, section.TempID)">Add Ingredient</button>
+                        </div>
+                      }
                       <ul style="width: 100%; padding: 0;">
                         <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.Where(x => ((x.Section.SectionID > 0 && x.Section.SectionID == section.SectionID) || x.Section.TempID == section.TempID) && !x.DeletedDateTime.HasValue).ToList()" TItem="Models.IngredientModel">
                           <Template Context="ingredient">
@@ -226,10 +229,13 @@
                           <span class="text-danger pointer" style="padding: 5px;" id="ingredientSectionRemove" @onclick="(args => ConfirmDeleteIngredientSection(section.SectionID, section.TempID))">X</span>
                         }
                       </div>
-                      <div class="col-12 mb-3" style="padding: 0;">
-                        <RadzenTextBox class="col-10 stepInput" Name="Step" data-section-id="@(section.SectionID)" @bind-Value="section.NewStep" />
-                        <button type="button" class="btn btn-secondary btn-sm stepAdd" data-section-id="@(section.SectionID)" @onclick="args => AddStep(args, section.SectionID, section.TempID)">Add Step</button>
-                      </div>
+                      @if (!ShowViewData)
+                      {
+                        <div class="col-12 mb-3" style="padding: 0;">
+                          <RadzenTextBox class="col-10 stepInput" Name="Step" data-section-id="@(section.SectionID)" @bind-Value="section.NewStep" />
+                          <button type="button" class="btn btn-secondary btn-sm stepAdd" data-section-id="@(section.SectionID)" @onclick="args => AddStep(args, section.SectionID, section.TempID)">Add Step</button>
+                        </div>
+                      }
                       <ol style="width: 100%; padding: 0;">
                         <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.Where(x => ((x.Section.SectionID > 0 && x.Section.SectionID == section.SectionID) || x.Section.TempID == section.TempID) && !x.DeletedDateTime.HasValue).ToList()" TItem="Models.StepModel">
                           <Template Context="step">

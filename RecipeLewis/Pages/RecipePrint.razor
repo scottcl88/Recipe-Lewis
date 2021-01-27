@@ -84,30 +84,70 @@
       <div class="col-md-6">
         <RadzenFieldset Text="Ingredients">
           <div class="row align-items-center">
-            <ul style="width: auto;">
-              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
-                <Template Context="ingredient">
-                  <li>
-                    <span>@ingredient.Title</span>
-                  </li>
-                </Template>
-              </RadzenDataList>
-            </ul>
+            <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Ingredient).ToList()" TItem="Models.SectionModel">
+              <Template Context="section">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="col-auto mb-2" style="position: relative; margin-left: -35px;">
+                      <RadzenLabel Text="@(section.Title)" />
+                    </div>
+                    <ul style="width: 100%; padding: 0;">
+                      <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.Where(x => ((x.Section.SectionID > 0 && x.Section.SectionID == section.SectionID) || x.Section.TempID == section.TempID) && !x.DeletedDateTime.HasValue).ToList()" TItem="Models.IngredientModel">
+                        <Template Context="ingredient">
+                          <li>
+                            <span>@ingredient.Title</span>
+                          </li>
+                        </Template>
+                      </RadzenDataList>
+                    </ul>
+                  </div>
+                </div>
+              </Template>
+            </RadzenDataList>
+            @*<ul style="width: auto;">
+                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Ingredients.ToList()" TItem="Models.IngredientModel">
+                  <Template Context="ingredient">
+                    <li>
+                      <span>@ingredient.Title</span>
+                    </li>
+                  </Template>
+                </RadzenDataList>
+              </ul>*@
           </div>
         </RadzenFieldset>
       </div>
       <div class="col-md-6">
         <RadzenFieldset Text="Steps">
           <div class="row align-items-center">
-            <ol style="width: auto;">
-              <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
-                <Template Context="step">
-                  <li>
-                    <span>@step.Title</span>
-                  </li>
-                </Template>
-              </RadzenDataList>
-            </ol>
+            <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Step).ToList()" TItem="Models.SectionModel">
+              <Template Context="section">
+                <div class="row">
+                  <div class="col-12">
+                    <div class="col-auto mb-2" style="position: relative; margin-left: -35px;">
+                      <RadzenLabel Text="@(section.Title)" />
+                    </div>
+                    <ol style="width: 100%; padding: 0;">
+                      <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.Where(x => ((x.Section.SectionID > 0 && x.Section.SectionID == section.SectionID) || x.Section.TempID == section.TempID) && !x.DeletedDateTime.HasValue).ToList()" TItem="Models.StepModel">
+                        <Template Context="step">
+                          <li>
+                            <span>@step.Title</span>
+                          </li>
+                        </Template>
+                      </RadzenDataList>
+                    </ol>
+                  </div>
+                </div>
+              </Template>
+            </RadzenDataList>
+            @*<ol style="width: auto;">
+                <RadzenDataList PageSize="15" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Steps.ToList()" TItem="Models.StepModel">
+                  <Template Context="step">
+                    <li>
+                      <span>@step.Title</span>
+                    </li>
+                  </Template>
+                </RadzenDataList>
+              </ol>*@
           </div>
         </RadzenFieldset>
       </div>

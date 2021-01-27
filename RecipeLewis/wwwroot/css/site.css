@@ -167,6 +167,11 @@ app {
     width: 100% !important;
 }
 
+#recipePrintPage .ui-datalist-content.ui-widget-content.datalist-block {
+    width: 100% !important;
+}
+
+
 @media (max-width: 1023.9px) {
     .main .top-row:not(.auth) {
         display: none;
