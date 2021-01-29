@@ -121,6 +121,22 @@ namespace RecipeLewis.Services
                     }
                 }
                 _context.Update(data);
+                foreach (var ingredient in data.Ingredients)
+                {
+                    var foundSection = data.Sections.FirstOrDefault(x => x.TempID == ingredient.Section.TempID);
+                    if (foundSection != null)
+                    {
+                        ingredient.Section.SectionID = foundSection.SectionID;
+                    }
+                }
+                foreach (var step in data.Steps)
+                {
+                    var foundSection = data.Sections.FirstOrDefault(x => x.TempID == step.Section.TempID);
+                    if (foundSection != null)
+                    {
+                        step.Section.SectionID = foundSection.SectionID;
+                    }
+                }
                 var result = await _context.SaveChangesAsync();
                 return result > 0 ? ServiceResult.SuccessResult : ServiceResult.FailureResult;
             }

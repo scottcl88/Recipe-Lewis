@@ -151,6 +151,21 @@ namespace RecipeLewis.Pages
             ShowViewData = false;
             var fullModel = await RecipeService.GetRecipe(model.RecipeID);
             Model = fullModel.Data;
+            if (!Model.Sections.Any())
+            {
+                Model.Sections.Add(new SectionModel() { Title = "General", EntityType = Data.EntityType.Ingredient });
+                Model.Sections.Add(new SectionModel() { Title = "General", EntityType = Data.EntityType.Step });
+                var ingredientSection = Model.Sections.FirstOrDefault(x => x.EntityType == Data.EntityType.Ingredient);
+                foreach(var ingredient in Model.Ingredients)
+                {
+                    ingredient.Section = ingredientSection;
+                }
+                var stepSection = Model.Sections.FirstOrDefault(x => x.EntityType == Data.EntityType.Step);
+                foreach (var step in Model.Steps)
+                {
+                    step.Section = stepSection;
+                }
+            }            
             await LoadTags();
             StateHasChanged();
         }
