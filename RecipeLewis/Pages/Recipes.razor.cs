@@ -149,6 +149,8 @@ namespace RecipeLewis.Pages
         {
             ShowEditData = true;
             ShowViewData = false;
+            IsLoading = true;
+            StateHasChanged();
             var fullModel = await RecipeService.GetRecipe(model.RecipeID);
             Model = fullModel.Data;
             if (!Model.Sections.Any())
@@ -168,14 +170,20 @@ namespace RecipeLewis.Pages
             }            
             await LoadTags();
             StateHasChanged();
+            IsLoading = false;
+            StateHasChanged();
         }
 
         public async Task ViewData(MouseEventArgs e, RecipeModel model)
         {
             ShowViewData = true;
             ShowEditData = false;
+            IsLoading = true;
+            StateHasChanged();
             var fullModel = await RecipeService.GetRecipe(model.RecipeID);
             Model = fullModel.Data;
+            StateHasChanged();
+            IsLoading = false;
             StateHasChanged();
         }
 
@@ -183,6 +191,7 @@ namespace RecipeLewis.Pages
         {
             ShowEditData = false;
             ShowViewData = false;
+            Model = new RecipeModel();
             StateHasChanged();
         }
 
@@ -191,6 +200,7 @@ namespace RecipeLewis.Pages
             ds.Close();
             ShowEditData = false;
             ShowViewData = false;
+            Model = new RecipeModel();
             StateHasChanged();
         }
 

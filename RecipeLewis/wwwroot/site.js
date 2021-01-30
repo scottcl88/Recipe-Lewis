@@ -61,3 +61,6 @@ $(document).on("click", "#image-viewer .close", () => {
 $(document).on("click", "#selectFileButton", () => {
     $('#files').click();
 });
+$(document).on("click", ".reload", () => {
+    window.location.reload();
+});

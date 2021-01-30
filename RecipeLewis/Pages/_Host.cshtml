@@ -24,10 +24,16 @@
   <script src="https://unpkg.com/material-components-web@latest/dist/material-components-web.min.js"></script>
 </head>
 <body>
+  <div id="components-reconnect-modal" class="my-reconnect-modal components-reconnect-hide">
+    <div>
+      An error has occurred or you have been inactive for too long. This application may no longer respond until reloaded.
+      <a href="" class="reload">Reload</a>
+      <a class="dismiss">🗙</a>
+    </div>
+  </div>
   <app>
     <component type="typeof(App)" render-mode="ServerPrerendered" />
   </app>
-
   <div id="blazor-error-ui">
     <environment include="Staging,Production">
       An error has occurred. This application may no longer respond until reloaded.

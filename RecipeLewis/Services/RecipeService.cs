@@ -123,18 +123,18 @@ namespace RecipeLewis.Services
                 _context.Update(data);
                 foreach (var ingredient in data.Ingredients)
                 {
-                    var foundSection = data.Sections.FirstOrDefault(x => x.TempID == ingredient.Section.TempID);
+                    var foundSection = data.Sections.FirstOrDefault(x => (ingredient.Section.SectionID > 0 && x.SectionID == ingredient.Section.SectionID) || x.TempID == ingredient.Section.TempID);
                     if (foundSection != null)
                     {
-                        ingredient.Section.SectionID = foundSection.SectionID;
+                        ingredient.Section = foundSection;
                     }
                 }
                 foreach (var step in data.Steps)
                 {
-                    var foundSection = data.Sections.FirstOrDefault(x => x.TempID == step.Section.TempID);
+                    var foundSection = data.Sections.FirstOrDefault(x => (step.Section.SectionID > 0 && x.SectionID == step.Section.SectionID) || x.TempID == step.Section.TempID);
                     if (foundSection != null)
                     {
-                        step.Section.SectionID = foundSection.SectionID;
+                        step.Section = foundSection;
                     }
                 }
                 var result = await _context.SaveChangesAsync();
