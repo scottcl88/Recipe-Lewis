@@ -15,6 +15,7 @@ namespace RecipeLewis.DataExtensions
                 TempID = data.TempID,
                 Title = data.Title,
                 EntityType = data.EntityType,
+                DisplayOrder = data.DisplayOrder,
                 CreatedDateTime = data.CreatedDateTime,
                 ModifiedDateTime = data.ModifiedDateTime,
                 DeletedDateTime = data.DeletedDateTime
@@ -32,6 +33,7 @@ namespace RecipeLewis.DataExtensions
                     foundSection.TempID = model.TempID;
                     foundSection.EntityType = model.EntityType;
                     foundSection.Title = model.Title;
+                    foundSection.DisplayOrder = model.DisplayOrder;
                     return foundSection;
                 }
             }
@@ -39,6 +41,7 @@ namespace RecipeLewis.DataExtensions
             {
                 TempID = model.TempID,
                 Title = model.Title,
+                DisplayOrder = model.DisplayOrder,
                 EntityType = model.EntityType,
                 CreatedDateTime = model.CreatedDateTime,
                 ModifiedDateTime = model.ModifiedDateTime,

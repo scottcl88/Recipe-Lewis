@@ -31,6 +31,19 @@
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.ui-fieldset-legend {
+    color: #000000 !important;
+    font-size: 0.9rem !important;
+}
+
+.read-only-section {
+    border: none !important;
+    box-shadow: 0 !important;
+    padding: 0 !important;
+    margin-top: -1em !important;
+}
+
 html,
 body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -246,6 +259,6 @@ app {
 
     .sidebar .collapse {
         /* Never collapse the sidebar for wide screens */
-        display: block;
-    }
+    display: block;
+}
 }

@@ -179,13 +179,18 @@
               <div class="row align-items-center mt-3">
                 <RadzenDataList PageSize="25" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Ingredient).ToList()" TItem="Models.SectionModel">
                   <Template Context="section">
-                    <div class="row">
+                    <div class="row @(section.DisplayTitle ? "" : "read-only-section")">
                       <div class="col-12">
                         <div class="col-auto mb-2" style="position: relative; margin-left: -35px;">
-                          <RadzenLabel Text="@(section.Title)" />
                           @if (!ShowViewData)
                           {
+                            <RadzenTextBox class="form-group" Name="SectionTitle" @bind-disabled="ShowViewData" @bind-Value="@(section.Title)" />
+                            <RadzenCheckBox @bind-Value=@(section.DisplayTitle) TValue="bool" />
                             <span class="text-danger pointer" style="padding: 5px;" id="ingredientSectionRemove" @onclick="(args => ConfirmDeleteIngredientSection(section.SectionID, section.TempID))">X</span>
+                          }
+                          else if(section.DisplayTitle)
+                          {
+                            <RadzenLabel Text="@(section.Title)" />
                           }
                         </div>
                         @if (!ShowViewData)
@@ -230,13 +235,18 @@
               <div class="row align-items-center mt-3">
                 <RadzenDataList PageSize="25" class="datalist-block" WrapItems="true" AllowPaging="true" Data="@Model.Sections.Where(x => !x.DeletedDateTime.HasValue && x.EntityType == EntityType.Step).ToList()" TItem="Models.SectionModel">
                   <Template Context="section">
-                    <div class="row">
+                    <div class="row @(section.DisplayTitle ? "" : "read-only-section")">
                       <div class="col-12">
                         <div class="col-auto mb-2" style="position: relative; margin-left: -35px;">
-                          <RadzenLabel Text="@(section.Title)" />
                           @if (!ShowViewData)
                           {
+                            <RadzenTextBox class="form-group" Name="SectionTitle" @bind-disabled="ShowViewData" @bind-Value="@(section.Title)" />
+                            <RadzenCheckBox @bind-Value=@(section.DisplayTitle) TValue="bool" />
                             <span class="text-danger pointer" style="padding: 5px;" id="ingredientSectionRemove" @onclick="(args => ConfirmDeleteIngredientSection(section.SectionID, section.TempID))">X</span>
+                          }
+                          else if (section.DisplayTitle)
+                          {
+                            <RadzenLabel Text="@(section.Title)" />
                           }
                         </div>
                         @if (!ShowViewData)

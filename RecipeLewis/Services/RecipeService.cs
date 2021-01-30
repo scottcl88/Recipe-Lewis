@@ -126,7 +126,9 @@ namespace RecipeLewis.Services
                     var foundSection = data.Sections.FirstOrDefault(x => (ingredient.Section.SectionID > 0 && x.SectionID == ingredient.Section.SectionID) || x.TempID == ingredient.Section.TempID);
                     if (foundSection != null)
                     {
+                        string newTitle = ingredient.Title;
                         ingredient.Section = foundSection;
+                        ingredient.Section.Title = newTitle;
                     }
                 }
                 foreach (var step in data.Steps)
@@ -134,7 +136,9 @@ namespace RecipeLewis.Services
                     var foundSection = data.Sections.FirstOrDefault(x => (step.Section.SectionID > 0 && x.SectionID == step.Section.SectionID) || x.TempID == step.Section.TempID);
                     if (foundSection != null)
                     {
+                        string newTitle = step.Title;
                         step.Section = foundSection;
+                        step.Section.Title = newTitle;
                     }
                 }
                 var result = await _context.SaveChangesAsync();
