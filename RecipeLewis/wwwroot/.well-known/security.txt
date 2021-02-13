@@ -1,0 +1,5 @@
+Contact: mailto:admin@recipelewis.com
+Encryption: https://keybase.io/scottcl88
+Preferred-Languages: en
+Canonical: https://www.recipelewis.com/.well-known/security.txt
+Policy: https://github.com/scottcl88/Recipe-Lewis/security/policy
