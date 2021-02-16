@@ -27,6 +27,12 @@ namespace RecipeLewis
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddHsts(options =>
+            {
+                options.Preload = true;
+                options.IncludeSubDomains = true;
+                options.MaxAge = TimeSpan.FromDays(365);
+            });
             services.AddDbContext<ApplicationDbContext>(options =>
                  options.UseLazyLoadingProxies()
                 .UseSqlServer(
@@ -45,14 +51,6 @@ namespace RecipeLewis
             services.AddLogging(builder => builder
                 .SetMinimumLevel(LogLevel.Trace)
             );
-            services.AddHsts(options =>
-            {
-                options.Preload = true;
-                options.IncludeSubDomains = true;
-                options.MaxAge = TimeSpan.FromDays(60);
-                options.ExcludedHosts.Add("recipelewis.com");
-                options.ExcludedHosts.Add("www.recipelewis.com");
-            });
             services.AddAuthentication()
                 .AddGoogle(options =>
                 {
