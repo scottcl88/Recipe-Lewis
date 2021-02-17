@@ -80,7 +80,9 @@ namespace RecipeLewis
             app.Use(async (ctx, next) =>
             {
                 ctx.Response.Headers.Add("Content-Security-Policy",
-                                         @"base-uri 'self';block-all-mixed-content;default-src 'self'; report-uri https://recipelewis.report-uri.com/r/d/csp/enforce;");
+                                         @"base-uri 'self';block-all-mixed-content;default-src 'self'; report-uri https://recipelewis.report-uri.com/r/d/csp/reportOnly;");
+                ctx.Response.Headers.Add("Report-To",
+                                         "{\"group\":\"default\",\"max_age\":31536000,\"endpoints\":[{\"url\":\"https://recipelewis.report-uri.com/a/d/g\"}],\"include_subdomains\":true}");
                 await next();
             });
 
