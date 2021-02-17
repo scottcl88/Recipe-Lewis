@@ -79,8 +79,9 @@ namespace RecipeLewis
 
             app.Use(async (ctx, next) =>
             {
+                //  <!-- Got hashes for src tags in html from https://www.srihash.org/ -->
                 ctx.Response.Headers.Add("Content-Security-Policy",
-                                         @"base-uri 'self';block-all-mixed-content; default-src 'self'; frame-ancestors 'none'; form-action 'self'; style-src 'self' 'unsafe-inline' https://unpkg.com; script-src 'self' 'unsafe-inline' https://ajax.aspnetcdn.com https://code.jquery.com https://unpkg.com; report-uri https://recipelewis.report-uri.com/r/d/csp/reportOnly;");
+                                         @"base-uri 'self';block-all-mixed-content; default-src 'self'; frame-ancestors 'none'; form-action 'self'; style-src 'self' 'unsafe-hashes' 'sha256-7W8xHu0tqHDkDW2kEP4KSnp2wgzuUFTfA6muyo1zgQE=' 'sha256-0RLfJ5/cKZctV8KWy8KO8XjuA2RbRgEA29A4w0kWsmU=' https://unpkg.com; script-src 'self' https://ajax.aspnetcdn.com https://code.jquery.com https://unpkg.com; report-uri https://recipelewis.report-uri.com/r/d/csp/reportOnly;");
                 ctx.Response.Headers.Add("Report-To",
                                          "{\"group\":\"default\",\"max_age\":31536000,\"endpoints\":[{\"url\":\"https://recipelewis.report-uri.com/a/d/g\"}],\"include_subdomains\":true}"); 
                 ctx.Response.Headers.Add("Referrer-Policy", "strict-origin-when-cross-origin");
