@@ -80,9 +80,12 @@ namespace RecipeLewis
             app.Use(async (ctx, next) =>
             {
                 ctx.Response.Headers.Add("Content-Security-Policy",
-                                         @"base-uri 'self';block-all-mixed-content;default-src 'self'; report-uri https://recipelewis.report-uri.com/r/d/csp/reportOnly;");
+                                         @"base-uri 'self';block-all-mixed-content; default-src 'self'; frame-ancestors 'none'; form-action 'self'; style-src 'self' 'unsafe-inline' https://unpkg.com; script-src 'self' 'unsafe-inline' https://ajax.aspnetcdn.com https://code.jquery.com https://unpkg.com; report-uri https://recipelewis.report-uri.com/r/d/csp/reportOnly;");
                 ctx.Response.Headers.Add("Report-To",
-                                         "{\"group\":\"default\",\"max_age\":31536000,\"endpoints\":[{\"url\":\"https://recipelewis.report-uri.com/a/d/g\"}],\"include_subdomains\":true}");
+                                         "{\"group\":\"default\",\"max_age\":31536000,\"endpoints\":[{\"url\":\"https://recipelewis.report-uri.com/a/d/g\"}],\"include_subdomains\":true}"); 
+                ctx.Response.Headers.Add("Referrer-Policy", "strict-origin-when-cross-origin");
+                ctx.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+                ctx.Response.Headers.Add("X-Frame-Options", "deny");
                 await next();
             });
 
