@@ -77,6 +77,13 @@ namespace RecipeLewis
                 app.UseHsts();
             }
 
+            app.Use(async (ctx, next) =>
+            {
+                ctx.Response.Headers.Add("Content-Security-Policy",
+                                         @"base-uri 'self';block-all-mixed-content;default-src 'self'; report-uri https://recipelewis.report-uri.com/r/d/csp/enforce;");
+                await next();
+            });
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
